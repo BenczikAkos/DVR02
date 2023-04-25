@@ -1,17 +1,11 @@
-#version 150
+attribute highp vec4 posAttr;
+attribute lowp vec4 colAttr;
 
-in vec4 vertex;
-in vec3 normal;
+varying lowp vec4 col;
 
-uniform mat4 projMatrix;
-uniform mat4 mvMatrix;
+uniform highp mat4 matrix;
 
 void main() {
-    mat4 mine;
-    mine[0] = vec4(1.6f, 0.0f, 0.0f, 0.0f);
-    mine[1] = vec4(0.0f, -2.42f, 0.0f, 0.0f);
-    mine[2] = vec4(0.0f, 0.0f, 1.0f, 0.0f);
-    mine[3] = vec4(0.0f, 0.0f, 1.5f, 1.5f);
-   gl_Position = projMatrix * mvMatrix * vertex;
-   //gl_Position = mine * vertex;
+   col = colAttr;
+   gl_Position = matrix * posAttr;
 }
