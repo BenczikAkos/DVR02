@@ -48,7 +48,7 @@
 **
 ****************************************************************************/
 
-#include "openglwindow.h"
+#include "volumerenderwindow.h"
 
 #include <QGuiApplication>
 #include <QMatrix4x4>
@@ -56,29 +56,6 @@
 #include <QScreen>
 #include <QtMath>
 
-
-//! [1]
-class TriangleWindow : public OpenGLWindow
-{
-public:
-    using OpenGLWindow::OpenGLWindow;
-
-    void initialize() override;
-    void render() override;
-
-private:
-    GLint m_posAttr = 0;
-    GLint m_colAttr = 0;
-    GLint m_matrixUniform = 0;
-    GLint LocCameraPos = 0;
-    GLint LocWindowSize = 0;
-
-    QOpenGLShaderProgram *m_program = nullptr;
-    int m_frame = 0;
-};
-//! [1]
-
-//! [2]
 int main(int argc, char **argv)
 {
     QGuiApplication app(argc, argv);
@@ -86,7 +63,7 @@ int main(int argc, char **argv)
     QSurfaceFormat format;
     format.setSamples(16);
 
-    TriangleWindow window;
+    VolumeRenderWindow window;
     window.setFormat(format);
     window.resize(640, 480);
     window.show();
@@ -95,80 +72,3 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
-//! [2]
-
-//! [4]
-void TriangleWindow::initialize()
-{
-    m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl");
-    m_program->link();
-    m_posAttr = m_program->attributeLocation("posAttr");
-    Q_ASSERT(m_posAttr != -1);
-    m_matrixUniform = m_program->uniformLocation("matrix");
-    Q_ASSERT(m_matrixUniform != -1);
-    LocCameraPos = m_program->uniformLocation("cameraPos");
-    Q_ASSERT(LocCameraPos != -1);
-    LocWindowSize = m_program->uniformLocation("WindowSize");
-    Q_ASSERT(LocWindowSize != -1);
-}
-//! [4]
-
-//! [5]
-void TriangleWindow::render()
-{
-    const qreal retinaScale = devicePixelRatio();
-    glViewport(0, 0, width() * retinaScale, height() * retinaScale);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    m_program->bind();
-
-    QMatrix4x4 matrix;
-    matrix.perspective(60.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-    matrix.translate(0, 0, -2);
-    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 1, 0, 0);
-    matrix.setToIdentity();
-    m_program->setUniformValue(m_matrixUniform, matrix);
-
-    QVector3D camera = QVector3D(0.0f, 0.0f, -2.0f);
-    m_program->setUniformValue(LocCameraPos, camera);
-
-    QVector2D windowSize = QVector2D(this->width(), this->height());
-    m_program->setUniformValue(LocWindowSize, windowSize);
-
-    static const GLfloat vertices[] = {
-         1.0f,  1.0f,
-         1.0f, -1.0f,
-         -1.0f, -1.0f,
-        -1.0f, -1.0f,
-        -1.0f, 1.0f,
-        1.0f, 1.0f
-    };
-
-    static const GLfloat colors[] = {
-        1.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f
-    };
-
-    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    //glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors);
-
-    glEnableVertexAttribArray(m_posAttr);
-    //glEnableVertexAttribArray(m_colAttr);
-
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-
-    glDisableVertexAttribArray(m_colAttr);
-    glDisableVertexAttribArray(m_posAttr);
-
-    m_program->release();
-
-    ++m_frame;
-}
-//! [5]
