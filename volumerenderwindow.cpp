@@ -1,5 +1,6 @@
 
 #include "volumerenderwindow.h"
+#include <QKeyEvent>
 
 void VolumeRenderWindow::initialize()
 {
@@ -15,6 +16,8 @@ void VolumeRenderWindow::initialize()
     Q_ASSERT(LocCameraPos != -1);
     LocWindowSize = m_program->uniformLocation("WindowSize");
     Q_ASSERT(LocWindowSize != -1);
+
+    CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
 }
 //! [4]
 
@@ -32,8 +35,8 @@ void VolumeRenderWindow::render()
     matrix.setToIdentity();
     m_program->setUniformValue(m_matrixUniform, matrix);
 
-    QVector3D camera = QVector3D(0.0f, 0.0f, -3.0f);
-    m_program->setUniformValue(LocCameraPos, camera);
+    //QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
+    m_program->setUniformValue(LocCameraPos, CameraPos);
 
     QVector2D windowSize = QVector2D(this->width(), this->height());
     m_program->setUniformValue(LocWindowSize, windowSize);
@@ -62,3 +65,21 @@ void VolumeRenderWindow::render()
     ++m_frame;
 }
 
+void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
+{
+    switch(ev->key())
+    {
+    case Qt::Key_A:
+        CameraPos += QVector3D(-0.01f, 0.0f, 0.0f); break;
+    case Qt::Key_D:
+        CameraPos += QVector3D(0.01f, 0.0f, 0.0f); break;
+    case Qt::Key_W:
+        CameraPos += QVector3D(0.0f, 0.01f, 0.0f); break;
+    case Qt::Key_S:
+        CameraPos += QVector3D(0.0f, -0.01f, 0.0f); break;
+    case Qt::Key_Q:
+        CameraPos += QVector3D(0.0f, 0.0f, 0.01f); break;
+    case Qt::Key_E:
+        CameraPos += QVector3D(0.0f, 0.0f, -0.01f); break;
+    }
+}
