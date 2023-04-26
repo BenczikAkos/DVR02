@@ -2,17 +2,19 @@
 #ifndef VOLUMERENDERWINDOW_H
 #define VOLUMERENDERWINDOW_H
 
-#include "openglwindow.h"
+#include <QOpenGLWindow>
+#include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 
 
-class VolumeRenderWindow : public OpenGLWindow
+class VolumeRenderWindow : public QOpenGLWindow, protected QOpenGLFunctions
 {
+    Q_OBJECT
 public:
-    using OpenGLWindow::OpenGLWindow;
+    using QOpenGLWindow::QOpenGLWindow;
 
-    void initialize() override;
-    void render() override;
+    void initializeGL() override;
+    void paintGL() override;
 
 private:
     GLint m_posAttr = 0;

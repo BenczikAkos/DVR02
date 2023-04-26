@@ -1,7 +1,7 @@
 
 #include "volumerenderwindow.h"
 
-void VolumeRenderWindow::initialize()
+void VolumeRenderWindow::initializeGL()
 {
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
@@ -19,7 +19,7 @@ void VolumeRenderWindow::initialize()
 //! [4]
 
 //! [5]
-void VolumeRenderWindow::render()
+void VolumeRenderWindow::paintGL()
 {
     const qreal retinaScale = devicePixelRatio();
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);

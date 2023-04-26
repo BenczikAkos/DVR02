@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     window.resize(640, 480);
     window.show();
 
-    window.setAnimating(true);
+   // window.setAnimating(true);
 
     return app.exec();
 }
