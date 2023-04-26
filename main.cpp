@@ -70,6 +70,8 @@ private:
     GLint m_posAttr = 0;
     GLint m_colAttr = 0;
     GLint m_matrixUniform = 0;
+    GLint LocCameraPos = 0;
+    GLint LocWindowSize = 0;
 
     QOpenGLShaderProgram *m_program = nullptr;
     int m_frame = 0;
@@ -104,10 +106,12 @@ void TriangleWindow::initialize()
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
-    m_colAttr = m_program->attributeLocation("colAttr");
-    Q_ASSERT(m_colAttr != -1);
     m_matrixUniform = m_program->uniformLocation("matrix");
     Q_ASSERT(m_matrixUniform != -1);
+    LocCameraPos = m_program->uniformLocation("cameraPos");
+    Q_ASSERT(LocCameraPos != -1);
+    LocWindowSize = m_program->uniformLocation("WindowSize");
+    Q_ASSERT(LocWindowSize != -1);
 }
 //! [4]
 
@@ -126,8 +130,13 @@ void TriangleWindow::render()
     matrix.translate(0, 0, -2);
     matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 1, 0, 0);
     matrix.setToIdentity();
-
     m_program->setUniformValue(m_matrixUniform, matrix);
+
+    QVector3D camera = QVector3D(0.0f, 0.0f, -2.0f);
+    m_program->setUniformValue(LocCameraPos, camera);
+
+    QVector2D windowSize = QVector2D(this->width(), this->height());
+    m_program->setUniformValue(LocWindowSize, windowSize);
 
     static const GLfloat vertices[] = {
          1.0f,  1.0f,
@@ -148,10 +157,10 @@ void TriangleWindow::render()
     };
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors);
+    //glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors);
 
     glEnableVertexAttribArray(m_posAttr);
-    glEnableVertexAttribArray(m_colAttr);
+    //glEnableVertexAttribArray(m_colAttr);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
