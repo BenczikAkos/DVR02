@@ -18,7 +18,7 @@ struct AABB {
     vec3 Max;
 };
 
-void IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
+bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
 {
     vec3 invR = 1.0 / r.Dir;
     vec3 tbot = invR * (aabb.Min-r.Origin);
@@ -28,6 +28,7 @@ void IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
     t0 = max(t_enter.x, max(t_enter.y, t_enter.z));
     t0 = max(0, t0);
     t1 = min(t_exit.x, min(t_exit.y, t_exit.z));
+    return t1 > t0;
 }
 
 void main()
@@ -41,7 +42,7 @@ void main()
    AABB aabb = AABB(vec3(-1.0f), vec3(1.0f));
 
    float tnear, tfar;
-   IntersectBox(eye, aabb, tnear, tfar);
+   if(IntersectBox(eye, aabb, tnear, tfar)){
 
    vec3 rayStart = eye.Origin + eye.Dir * tnear;
    vec3 rayStop = eye.Origin + eye.Dir * tfar;
@@ -60,5 +61,8 @@ void main()
        outcolor += abs(step);
    }
    fragColor = vec4(outcolor, 1);
-
+   }
+   else{
+       fragColor = vec4(0.0f);
+   }
 }

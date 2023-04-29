@@ -16,8 +16,6 @@ void VolumeRenderWindow::initialize()
     Q_ASSERT(LocCameraPos != -1);
     LocWindowSize = m_program->uniformLocation("WindowSize");
     Q_ASSERT(LocWindowSize != -1);
-
-    CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
 }
 
 void VolumeRenderWindow::render()
