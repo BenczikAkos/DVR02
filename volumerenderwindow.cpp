@@ -45,43 +45,51 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
 {
     switch(ev->key())
     {
-    case Qt::Key_A:
-        CameraPos += QVector3D(-0.01f, 0.0f, 0.0f) * viewMatrix; break;
-    case Qt::Key_D:
-        CameraPos += QVector3D(0.01f, 0.0f, 0.0f) * viewMatrix; break;
-    case Qt::Key_Q:
-        CameraPos += QVector3D(0.0f, 0.01f, 0.0f); break;
-    case Qt::Key_E:
-        CameraPos += QVector3D(0.0f, -0.01f, 0.0f); break;
     case Qt::Key_W:
-        CameraPos += QVector3D(0.0f, 0.0f, 0.01f) * viewMatrix; break;
+        CameraPos += QVector3D(0.0f, 0.0f, 0.03f) * viewMatrix; break;
     case Qt::Key_S:
-        CameraPos += QVector3D(0.0f, 0.0f, -0.01f) * viewMatrix; break;
+        CameraPos += QVector3D(0.0f, 0.0f, -0.03f) * viewMatrix; break;
+    case Qt::Key_A:
+        CameraPos += QVector3D(-0.03f, 0.0f, 0.0f) * viewMatrix; break;
+    case Qt::Key_D:
+        CameraPos += QVector3D(0.03f, 0.0f, 0.0f) * viewMatrix; break;
+    case Qt::Key_Q:
+        CameraPos += QVector3D(0.0f, 0.03f, 0.0f); break;
+    case Qt::Key_E:
+        CameraPos += QVector3D(0.0f, -0.03f, 0.0f); break;
     }
 }
 
 void VolumeRenderWindow::mousePressEvent(QMouseEvent *event)
 {
-    m_lastPos = event->pos();
+    mouse_lastPos = event->pos();
 }
 
 
 void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    int dx = event->x() - m_lastPos.x();
-    int dy = event->y() - m_lastPos.y();
+    int dx = event->x() - mouse_lastPos.x();
+    int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
         setXRotation(m_xRot + 8 * dy);
         setYRotation(m_yRot + 8 * dx);
-    } else if (event->buttons() & Qt::RightButton) {
-        setZRotation(m_zRot + 8 * dx);
+    }
+    else if (event->buttons() & Qt::RightButton) {
+
+        QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
+        QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
+        float radius = CameraPos.distanceToLine(origo, upY);
+        CameraPos.setX(radius * cos(0.1f * dx));
+        setYRotation(m_yRot + 0.1 * dx);
+        CameraPos.setZ(radius * sin(0.1f * dx));
     }
     viewMatrix.setToIdentity();
     viewMatrix.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
     viewMatrix.rotate(m_yRot / 16.0f, 0, 1, 0);
     viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);
-    m_lastPos = event->pos();
+    qWarning() << CameraPos;
+    mouse_lastPos = event->pos();
 }
 
 static void qNormalizeAngle(int &angle)

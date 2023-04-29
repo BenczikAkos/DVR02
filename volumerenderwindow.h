@@ -43,7 +43,7 @@ private:
     int m_xRot = 0;
     int m_yRot = 16*180;
     int m_zRot = 16*180;
-    QPoint m_lastPos;
+    QPoint mouse_lastPos;
 };
 
 #endif // VOLUMERENDERWINDOW_H
