@@ -21,6 +21,7 @@ protected:
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
+    void rotateScene(float angle);
 private:
     inline static const GLfloat vertices[] = {
         1.0f,  1.0f,
