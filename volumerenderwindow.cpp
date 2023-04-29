@@ -29,15 +29,13 @@ void VolumeRenderWindow::render()
 
     m_program->bind();
 
-    QMatrix4x4 viewMatrix;
+    /*QMatrix4x4 viewMatrix;
     viewMatrix.setToIdentity();
     viewMatrix.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
     viewMatrix.rotate(m_yRot / 16.0f, 0, 1, 0);
-    viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);
-    qWarning() << viewMatrix;
+    viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);*/
     m_program->setUniformValue(LocViewMatrix, viewMatrix);
 
-    //QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     m_program->setUniformValue(LocCameraPos, CameraPos);
 
     QVector2D windowSize = QVector2D(this->width(), this->height());
@@ -60,18 +58,18 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
 {
     switch(ev->key())
     {
-    case Qt::Key_D:
-        CameraPos += QVector3D(-0.01f, 0.0f, 0.0f); break;
     case Qt::Key_A:
-        CameraPos += QVector3D(0.01f, 0.0f, 0.0f); break;
-    case Qt::Key_W:
-        CameraPos += QVector3D(0.0f, 0.01f, 0.0f); break;
-    case Qt::Key_S:
-        CameraPos += QVector3D(0.0f, -0.01f, 0.0f); break;
+        CameraPos += QVector3D(-0.01f, 0.0f, 0.0f) * viewMatrix; break;
+    case Qt::Key_D:
+        CameraPos += QVector3D(0.01f, 0.0f, 0.0f) * viewMatrix; break;
     case Qt::Key_Q:
-        CameraPos += QVector3D(0.0f, 0.0f, 0.01f); break;
+        CameraPos += QVector3D(0.0f, 0.01f, 0.0f) * viewMatrix; break;
     case Qt::Key_E:
-        CameraPos += QVector3D(0.0f, 0.0f, -0.01f); break;
+        CameraPos += QVector3D(0.0f, -0.01f, 0.0f) * viewMatrix; break;
+    case Qt::Key_W:
+        CameraPos += QVector3D(0.0f, 0.0f, 0.01f) * viewMatrix; break;
+    case Qt::Key_S:
+        CameraPos += QVector3D(0.0f, 0.0f, -0.01f) * viewMatrix; break;
     }
 }
 
@@ -87,12 +85,15 @@ void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - m_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        setXRotation(m_xRot - 8 * dy);
-        setYRotation(m_yRot - 8 * dx);
-    }/* else if (event->buttons() & Qt::RightButton) {
-        setXRotation(m_xRot - 8 * dy);
+        setXRotation(m_xRot + 8 * dy);
+        setYRotation(m_yRot + 8 * dx);
+    } else if (event->buttons() & Qt::RightButton) {
         setZRotation(m_zRot + 8 * dx);
-    }*/
+    }
+    viewMatrix.setToIdentity();
+    viewMatrix.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
+    viewMatrix.rotate(m_yRot / 16.0f, 0, 1, 0);
+    viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);
     m_lastPos = event->pos();
 }
 
