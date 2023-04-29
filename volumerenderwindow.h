@@ -39,7 +39,6 @@ private:
     QMatrix4x4 viewMatrix = QMatrix4x4();
 
     QOpenGLShaderProgram *m_program = nullptr;
-    int m_frame = 0;
 
     int m_xRot = 0;
     int m_yRot = 16*180;
