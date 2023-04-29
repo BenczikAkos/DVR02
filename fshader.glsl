@@ -3,7 +3,7 @@ out highp vec4 fragColor;
 
 uniform mat4 ViewMatrix;
 uniform vec2 WindowSize;
-uniform vec3 cameraPos;
+uniform vec3 CameraPos;
 //Not used:
 uniform mat4 projMatrix;
 uniform float FocalLength;
@@ -37,7 +37,7 @@ void main()
    rayDirection.z = 1.0f;
    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
 
-   Ray eye = Ray( cameraPos, normalize(rayDirection) );
+   Ray eye = Ray(CameraPos, normalize(rayDirection));
    AABB aabb = AABB(vec3(-1.0f), vec3(1.0f));
 
    float tnear, tfar;

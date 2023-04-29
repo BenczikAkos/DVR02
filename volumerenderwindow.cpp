@@ -12,7 +12,7 @@ void VolumeRenderWindow::initialize()
     Q_ASSERT(m_posAttr != -1);
     LocViewMatrix = m_program->uniformLocation("ViewMatrix");
     Q_ASSERT(LocViewMatrix != -1);
-    LocCameraPos = m_program->uniformLocation("cameraPos");
+    LocCameraPos = m_program->uniformLocation("CameraPos");
     Q_ASSERT(LocCameraPos != -1);
     LocWindowSize = m_program->uniformLocation("WindowSize");
     Q_ASSERT(LocWindowSize != -1);
