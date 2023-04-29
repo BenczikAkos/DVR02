@@ -16,10 +16,22 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *ev) override;
-
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void setXRotation(int angle);
+    void setYRotation(int angle);
+    void setZRotation(int angle);
 private:
+    inline static const GLfloat vertices[] = {
+        1.0f,  1.0f,
+        1.0f, -1.0f,
+        -1.0f, -1.0f,
+        -1.0f, -1.0f,
+        -1.0f, 1.0f,
+        1.0f, 1.0f
+    };
     GLint m_posAttr = 0;
-    GLint m_matrixUniform = 0;
+    GLint LocViewMatrix = 0;
     GLint LocCameraPos = 0;
     GLint LocWindowSize = 0;
 
@@ -27,6 +39,11 @@ private:
 
     QOpenGLShaderProgram *m_program = nullptr;
     int m_frame = 0;
+
+    int m_xRot = 0;
+    int m_yRot = 0;
+    int m_zRot = 0;
+    QPoint m_lastPos;
 };
 
 #endif // VOLUMERENDERWINDOW_H

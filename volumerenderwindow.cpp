@@ -10,8 +10,8 @@ void VolumeRenderWindow::initialize()
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
-    m_matrixUniform = m_program->uniformLocation("matrix");
-    Q_ASSERT(m_matrixUniform != -1);
+    LocViewMatrix = m_program->uniformLocation("ViewMatrix");
+    Q_ASSERT(LocViewMatrix != -1);
     LocCameraPos = m_program->uniformLocation("cameraPos");
     Q_ASSERT(LocCameraPos != -1);
     LocWindowSize = m_program->uniformLocation("WindowSize");
@@ -19,9 +19,7 @@ void VolumeRenderWindow::initialize()
 
     CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
 }
-//! [4]
 
-//! [5]
 void VolumeRenderWindow::render()
 {
     const qreal retinaScale = devicePixelRatio();
@@ -31,26 +29,19 @@ void VolumeRenderWindow::render()
 
     m_program->bind();
 
-    QMatrix4x4 matrix;
-    matrix.setToIdentity();
-    m_program->setUniformValue(m_matrixUniform, matrix);
+    QMatrix4x4 viewMatrix;
+    viewMatrix.setToIdentity();
+    viewMatrix.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
+    viewMatrix.rotate(m_yRot / 16.0f, 0, 1, 0);
+    viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);
+    qWarning() << viewMatrix;
+    m_program->setUniformValue(LocViewMatrix, viewMatrix);
 
     //QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     m_program->setUniformValue(LocCameraPos, CameraPos);
 
     QVector2D windowSize = QVector2D(this->width(), this->height());
     m_program->setUniformValue(LocWindowSize, windowSize);
-
-    static const GLfloat vertices[] = {
-        1.0f,  1.0f,
-        1.0f, -1.0f,
-        -1.0f, -1.0f,
-        -1.0f, -1.0f,
-        -1.0f, 1.0f,
-        1.0f, 1.0f
-    };
-
-
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
@@ -69,9 +60,9 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
 {
     switch(ev->key())
     {
-    case Qt::Key_A:
-        CameraPos += QVector3D(-0.01f, 0.0f, 0.0f); break;
     case Qt::Key_D:
+        CameraPos += QVector3D(-0.01f, 0.0f, 0.0f); break;
+    case Qt::Key_A:
         CameraPos += QVector3D(0.01f, 0.0f, 0.0f); break;
     case Qt::Key_W:
         CameraPos += QVector3D(0.0f, 0.01f, 0.0f); break;
@@ -81,5 +72,58 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
         CameraPos += QVector3D(0.0f, 0.0f, 0.01f); break;
     case Qt::Key_E:
         CameraPos += QVector3D(0.0f, 0.0f, -0.01f); break;
+    }
+}
+
+void VolumeRenderWindow::mousePressEvent(QMouseEvent *event)
+{
+    m_lastPos = event->pos();
+}
+
+
+void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    int dx = event->x() - m_lastPos.x();
+    int dy = event->y() - m_lastPos.y();
+
+    if (event->buttons() & Qt::LeftButton) {
+        setXRotation(m_xRot - 8 * dy);
+        setYRotation(m_yRot - 8 * dx);
+    }/* else if (event->buttons() & Qt::RightButton) {
+        setXRotation(m_xRot - 8 * dy);
+        setZRotation(m_zRot + 8 * dx);
+    }*/
+    m_lastPos = event->pos();
+}
+
+static void qNormalizeAngle(int &angle)
+{
+    while (angle < 0)
+        angle += 360 * 16;
+    while (angle > 360 * 16)
+        angle -= 360 * 16;
+}
+
+void VolumeRenderWindow::setXRotation(int angle)
+{
+    qNormalizeAngle(angle);
+    if (angle != m_xRot) {
+        m_xRot = angle;
+    }
+}
+
+void VolumeRenderWindow::setYRotation(int angle)
+{
+    qNormalizeAngle(angle);
+    if (angle != m_yRot) {
+        m_yRot = angle;
+    }
+}
+
+void VolumeRenderWindow::setZRotation(int angle)
+{
+    qNormalizeAngle(angle);
+    if (angle != m_zRot) {
+        m_zRot = angle;
     }
 }
