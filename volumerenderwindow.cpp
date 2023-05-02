@@ -76,23 +76,25 @@ void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
         setYRotation(m_yRot + 8 * dx);
     }
     else if (event->buttons() & Qt::RightButton) {
-        rotateScene(event->x());
+        rotateScene(event->x()/100.0f);
     }
     viewMatrix.setToIdentity();
     viewMatrix.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
     viewMatrix.rotate(m_yRot / 16.0f, 0, 1, 0);
     viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);
     qWarning() << CameraPos;
+    qWarning() << "yrot: " << this->m_yRot;
     mouse_lastPos = event->pos();
 }
 
 void VolumeRenderWindow::rotateScene(float angle){
+    //qWarning() << angle;
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
     QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
     float radius = CameraPos.distanceToLine(origo, upY);
     CameraPos.setX(radius * cos(angle));
-    setYRotation(angle);
-    CameraPos.setZ(radius * sin(1.0f * angle));
+    setYRotation((M_PI/2 - angle)*180*16/M_PI);
+    CameraPos.setZ(radius * sin(angle));
 }
 
 static void qNormalizeAngle(int &angle)

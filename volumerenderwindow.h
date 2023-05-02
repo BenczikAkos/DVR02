@@ -41,9 +41,9 @@ private:
 
     QOpenGLShaderProgram *m_program = nullptr;
 
-    int m_xRot = 0;
-    int m_yRot = 16*180;
-    int m_zRot = 16*180;
+    float m_xRot = 0;
+    float m_yRot = 16*180;
+    float m_zRot = 16*180;
     QPoint mouse_lastPos;
 };
 
