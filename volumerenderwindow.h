@@ -37,6 +37,7 @@ private:
     GLint LocWindowSize = 0;
 
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
+    QVector3D LookAtPoint = QVector3D(0.0f, 0.0f, -1.0f);
     QMatrix4x4 viewMatrix = QMatrix4x4();
 
     QOpenGLShaderProgram *m_program = nullptr;
@@ -44,6 +45,7 @@ private:
     int m_xRot = 0;
     int m_yRot = 16*180;
     int m_zRot = 16*180;
+
     QPoint mouse_lastPos;
 };
 
