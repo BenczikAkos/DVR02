@@ -57,14 +57,29 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
         CameraPos += QVector3D(0.0f, 0.03f, 0.0f); break;
     case Qt::Key_E:
         CameraPos += QVector3D(0.0f, -0.03f, 0.0f); break;
+    case Qt::Key_O:
+        loadVolume("D:\\Egyetem\\6semester\\Onlab\\datasets\\raw\\skull-256x256x256\\skull.raw");
     }
 }
 
 void VolumeRenderWindow::mousePressEvent(QMouseEvent *event)
 {
     mouse_lastPos = event->pos();
+    if(MouseFirstPressed){
+        camera_lastPos = CameraPos;
+        //qWarning() << camera_lastPos;
+        MouseFirstPressed = false;
+    }
 }
 
+void VolumeRenderWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    MouseFirstPressed = true;
+}
+
+void VolumeRenderWindow::loadVolume(QString path){
+    qWarning() << path;
+}
 
 void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
 {
@@ -72,29 +87,30 @@ void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        setXRotation(m_xRot + 8 * dy);
-        setYRotation(m_yRot + 8 * dx);
+        setXRotation(xRot + 8 * dy);
+        setYRotation(yRot + 8 * dx);
     }
     else if (event->buttons() & Qt::RightButton) {
-        rotateScene(event->x()/100.0f);
+        aroundAngle += dx;
+        qWarning() << aroundAngle;
+        rotateScene(-aroundAngle/10);
     }
     viewMatrix.setToIdentity();
-    viewMatrix.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
-    viewMatrix.rotate(m_yRot / 16.0f, 0, 1, 0);
-    viewMatrix.rotate(m_zRot / 16.0f, 0, 0, 1);
-    qWarning() << CameraPos;
-    qWarning() << "yrot: " << this->m_yRot;
+    viewMatrix.rotate(180.0f - (xRot / 16.0f), 1, 0, 0);
+    viewMatrix.rotate(yRot / 16.0f, 0, 1, 0);
+    viewMatrix.rotate(zRot / 16.0f, 0, 0, 1);
     mouse_lastPos = event->pos();
 }
 
 void VolumeRenderWindow::rotateScene(float angle){
-    //qWarning() << angle;
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
     QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
     float radius = CameraPos.distanceToLine(origo, upY);
+    //angle += aroundAngle;
+
     CameraPos.setX(radius * cos(angle));
-    setYRotation((M_PI/2 - angle)*180*16/M_PI);
     CameraPos.setZ(radius * sin(angle));
+    setYRotation((M_PI/2 - angle)*180*16/M_PI);
 }
 
 static void qNormalizeAngle(int &angle)
@@ -108,23 +124,23 @@ static void qNormalizeAngle(int &angle)
 void VolumeRenderWindow::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
-    if (angle != m_xRot) {
-        m_xRot = angle;
+    if (angle != xRot) {
+        xRot = angle;
     }
 }
 
 void VolumeRenderWindow::setYRotation(int angle)
 {
     qNormalizeAngle(angle);
-    if (angle != m_yRot) {
-        m_yRot = angle;
+    if (angle != yRot) {
+        yRot = angle;
     }
 }
 
 void VolumeRenderWindow::setZRotation(int angle)
 {
     qNormalizeAngle(angle);
-    if (angle != m_zRot) {
-        m_zRot = angle;
+    if (angle != zRot) {
+        zRot = angle;
     }
 }

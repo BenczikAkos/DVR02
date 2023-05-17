@@ -17,7 +17,9 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *ev) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void loadVolume(QString path);
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
@@ -35,16 +37,19 @@ private:
     GLint LocViewMatrix = 0;
     GLint LocCameraPos = 0;
     GLint LocWindowSize = 0;
+    boolean MouseFirstPressed = true;
 
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 viewMatrix = QMatrix4x4();
 
     QOpenGLShaderProgram *m_program = nullptr;
 
-    float m_xRot = 0;
-    float m_yRot = 16*180;
-    float m_zRot = 16*180;
+    float xRot = 0;
+    float yRot = 16*180;
+    float zRot = 16*180;
+    float aroundAngle = 0;
     QPoint mouse_lastPos;
+    QVector3D camera_lastPos = QVector3D(0.0f, 0.0f, -3.0f);
 };
 
 #endif // VOLUMERENDERWINDOW_H
