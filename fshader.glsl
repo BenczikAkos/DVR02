@@ -4,9 +4,7 @@ out highp vec4 fragColor;
 uniform mat4 ViewMatrix;
 uniform vec2 WindowSize;
 uniform vec3 CameraPos;
-//Not used:
-uniform mat4 projMatrix;
-uniform float FocalLength;
+uniform sampler3D Volume;
 
 struct Ray {
     vec3 Origin;
@@ -56,9 +54,14 @@ void main()
    float stepSize = 0.001f;
    vec3 step = normalize(rayStop-rayStart) * stepSize;
    float travel = distance(rayStop, rayStart);
+   float maximum_intensity = 0.0;
    for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
    {
-       outcolor += abs(step);
+        float intensity = texture(Volume, pos).r;
+
+        if (intensity > maximum_intensity) {
+            maximum_intensity = intensity;
+        }
    }
    fragColor = vec4(outcolor, 1);
    }

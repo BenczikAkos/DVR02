@@ -2,6 +2,8 @@
 #include "volumerenderwindow.h"
 #include <QKeyEvent>
 #include <qfile.h>
+#include "qopenglextrafunctions.h"
+
 
 void VolumeRenderWindow::initialize()
 {
@@ -17,6 +19,9 @@ void VolumeRenderWindow::initialize()
     Q_ASSERT(LocCameraPos != -1);
     LocWindowSize = m_program->uniformLocation("WindowSize");
     Q_ASSERT(LocWindowSize != -1);
+    LocVolumeSampler = m_program->uniformLocation("Volume");
+    Q_ASSERT(LocVolumeSampler != -1);
+
 }
 
 void VolumeRenderWindow::render()
@@ -85,10 +90,32 @@ void VolumeRenderWindow::loadVolume(QString path){
         return;
     };
     QByteArray blob = file.readAll();
+    unsigned char max = 0;
     for (int i = 0; i < 25; i++) {
-        qWarning() << (int)(blob.at(i));
+        qWarning() << (unsigned char)(blob.at(i));
+
     }
-    qWarning() << "Blobsize: " << blob.size();
+    for (int i = 0; i < blob.size(); ++i) {
+        if ((unsigned char)blob.at(i) > max) {
+            max = (unsigned char)blob.at(i);
+        }
+    }
+    qWarning() << "Blobsize: " << blob.size() << " max value: " << max;
+    generateTexture(blob.data());
+}
+
+void VolumeRenderWindow::generateTexture(const char* data) {
+    glDeleteTextures(1, &LocVolumeSampler);
+    glGenTextures(1, &LocVolumeSampler);
+    glBindTexture(GL_TEXTURE_3D, LocVolumeSampler);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_ALPHA, 256, 256, 256, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+    glBindTexture(GL_TEXTURE_3D, 0);
 }
 
 void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)

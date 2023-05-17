@@ -20,6 +20,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void loadVolume(QString path);
+    void generateTexture(const char* data);
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
@@ -37,6 +38,7 @@ private:
     GLint LocViewMatrix = 0;
     GLint LocCameraPos = 0;
     GLint LocWindowSize = 0;
+    GLuint LocVolumeSampler = 0;
     boolean MouseFirstPressed = true;
 
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
