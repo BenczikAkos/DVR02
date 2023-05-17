@@ -1,6 +1,7 @@
 
 #include "volumerenderwindow.h"
 #include <QKeyEvent>
+#include <qfile.h>
 
 void VolumeRenderWindow::initialize()
 {
@@ -78,7 +79,16 @@ void VolumeRenderWindow::mouseReleaseEvent(QMouseEvent *event)
 }
 
 void VolumeRenderWindow::loadVolume(QString path){
-    qWarning() << path;
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Not successful";
+        return;
+    };
+    QByteArray blob = file.readAll();
+    for (int i = 0; i < 25; i++) {
+        qWarning() << (int)(blob.at(i));
+    }
+    qWarning() << "Blobsize: " << blob.size();
 }
 
 void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
