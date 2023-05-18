@@ -40,31 +40,28 @@ void main()
    AABB aabb = AABB(vec3(-1.0f), vec3(1.0f));
 
    float tnear, tfar;
-   if(IntersectBox(eye, aabb, tnear, tfar)){
+    if(IntersectBox(eye, aabb, tnear, tfar)){
+        vec3 rayStart = (eye.Origin + eye.Dir * tnear - vec3(-1.0f)) / (vec3(1.0f) - vec3(-1.0f));
+        vec3 rayStop = (eye.Origin + eye.Dir * tfar - vec3(-1.0f)) / (vec3(1.0f) - vec3(-1.0f));
+         // Transform from object space to texture coordinate space:
+        // rayStart = 0.5 * (rayStart + 1.0);
+        // rayStop = 0.5 * (rayStop + 1.0);
+        // Perform the ray marching:
+        vec3 pos = rayStart;
+        float stepSize = 0.001f;
+        vec3 step = normalize(rayStop-rayStart) * stepSize;
+        float travel = distance(rayStop, rayStart);
+        float maximum_intensity = 0.0f;
+        for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
+        {
+             float intensity = texture(Volume, pos).r;
 
-   vec3 rayStart = eye.Origin + eye.Dir * tnear;
-   vec3 rayStop = eye.Origin + eye.Dir * tfar;
-
-    // Transform from object space to texture coordinate space:
-   rayStart = 0.5 * (rayStart + 1.0);
-   rayStop = 0.5 * (rayStop + 1.0);
-   vec3 outcolor = vec3(0.0f);
-   // Perform the ray marching:
-   vec3 pos = rayStart;
-   float stepSize = 0.001f;
-   vec3 step = normalize(rayStop-rayStart) * stepSize;
-   float travel = distance(rayStop, rayStart);
-   float maximum_intensity = 0.0;
-   for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
-   {
-        float intensity = texture(Volume, pos).r;
-
-        if (intensity > maximum_intensity) {
-            maximum_intensity = intensity;
+             if (intensity > maximum_intensity) {
+                 maximum_intensity = intensity;
+             }
         }
-   }
-   fragColor = vec4(outcolor, 1);
-   }
+        fragColor = vec4(maximum_intensity, maximum_intensity,  maximum_intensity, 1.0f);
+    }
    else{
        fragColor = vec4(0.0f);
    }

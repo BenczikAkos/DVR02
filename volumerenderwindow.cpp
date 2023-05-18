@@ -35,6 +35,7 @@ void VolumeRenderWindow::render()
 
     m_program->setUniformValue(LocViewMatrix, viewMatrix);
     m_program->setUniformValue(LocCameraPos, CameraPos);
+    glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_3D, LocVolumeSampler);
 
     QVector2D windowSize = QVector2D(this->width(), this->height());
     m_program->setUniformValue(LocWindowSize, windowSize);
@@ -64,7 +65,7 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
     case Qt::Key_E:
         CameraPos += QVector3D(0.0f, -0.03f, 0.0f); break;
     case Qt::Key_O:
-        loadVolume("D:\\Egyetem\\6semester\\Onlab\\datasets\\raw\\skull-256x256x256\\skull.raw");
+        loadVolume("D:\\Egyetem\\6semester\\Onlab\\datasets\\raw\\bonsai.raw");
     }
 }
 
@@ -89,19 +90,15 @@ void VolumeRenderWindow::loadVolume(QString path){
         qWarning() << "Not successful";
         return;
     };
-    QByteArray blob = file.readAll();
+    VolumeData = file.readAll();
     unsigned char max = 0;
-    for (int i = 0; i < 25; i++) {
-        qWarning() << (unsigned char)(blob.at(i));
-
-    }
-    for (int i = 0; i < blob.size(); ++i) {
-        if ((unsigned char)blob.at(i) > max) {
-            max = (unsigned char)blob.at(i);
+    for (int i = 0; i < VolumeData.size(); ++i) {
+        if ((unsigned char)VolumeData.at(i) > max) {
+            max = (unsigned char)VolumeData.at(i);
         }
     }
-    qWarning() << "Blobsize: " << blob.size() << " max value: " << max;
-    generateTexture(blob.data());
+    qWarning() << "Blobsize: " << VolumeData.size() << " max value: " << max;
+    generateTexture(VolumeData.data());
 }
 
 void VolumeRenderWindow::generateTexture(const char* data) {
@@ -114,7 +111,7 @@ void VolumeRenderWindow::generateTexture(const char* data) {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_ALPHA, 256, 256, 256, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, 256, 256, 256, 0, GL_RED, GL_UNSIGNED_BYTE, data);
     glBindTexture(GL_TEXTURE_3D, 0);
 }
 
@@ -129,7 +126,6 @@ void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() & Qt::RightButton) {
         aroundAngle += dx;
-        qWarning() << aroundAngle;
         rotateScene(-aroundAngle/10);
     }
     viewMatrix.setToIdentity();

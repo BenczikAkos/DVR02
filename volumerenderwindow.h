@@ -43,6 +43,7 @@ private:
 
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 viewMatrix = QMatrix4x4();
+    QByteArray VolumeData = QByteArray();
 
     QOpenGLShaderProgram *m_program = nullptr;
 
