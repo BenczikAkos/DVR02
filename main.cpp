@@ -2,7 +2,7 @@
 
 #include "mainwindow.h"
 #include "volumerenderwidget.h"
-#include <QApplication>
+#include "qmainwindow.h"
 /*
 #include <QOpenGLShaderProgram>
 #include <QScreen>
