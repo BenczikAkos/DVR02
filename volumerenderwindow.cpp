@@ -65,7 +65,7 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
     case Qt::Key_E:
         CameraPos += QVector3D(0.0f, -0.03f, 0.0f); break;
     case Qt::Key_O:
-        loadVolume("D:\\Egyetem\\6semester\\Onlab\\datasets\\raw\\bonsai.raw");
+        loadVolume("D:\\Egyetem\\6semester\\Onlab\\datasets\\raw\\foot.raw");
     }
 }
 

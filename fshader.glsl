@@ -29,6 +29,14 @@ bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
     return t1 > t0;
 }
 
+vec4 colour_transfer(float intensity)
+{
+    vec3 high = vec3(1.0, 1.0, 1.0);
+    vec3 low = vec3(0.0, 0.0, 0.0);
+    float alpha = (exp(intensity) - 1.0) / (exp(1.0) - 1.0);
+    return vec4(intensity * high + (1.0 - intensity) * low, alpha);
+}
+
 void main()
 {
    vec3 rayDirection;
@@ -52,6 +60,7 @@ void main()
         vec3 step = normalize(rayStop-rayStart) * stepSize;
         float travel = distance(rayStop, rayStart);
         float maximum_intensity = 0.0f;
+        vec4 colour = vec4(0.0f);
         for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
         {
              float intensity = texture(Volume, pos).r;
@@ -59,8 +68,13 @@ void main()
              if (intensity > maximum_intensity) {
                  maximum_intensity = intensity;
              }
+            // float intensity = texture(Volume, pos).r;
+            // vec4 act_tex = colour_transfer(intensity);
+            // colour.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * colour.a * colour.rgb;
+            // colour.a = act_tex.a + (1 - act_tex.a) * colour.a;
         }
         fragColor = vec4(maximum_intensity, maximum_intensity,  maximum_intensity, 1.0f);
+        // fragColor = colour;
     }
    else{
        fragColor = vec4(0.0f);
