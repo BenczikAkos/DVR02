@@ -1,24 +1,19 @@
-#include "volumerenderwidget.h"
+#pragma once
 
-#include <QGuiApplication>
-#include <QMatrix4x4>
+#include "mainwindow.h"
+#include "volumerenderwidget.h"
+#include <QApplication>
+/*
 #include <QOpenGLShaderProgram>
 #include <QScreen>
-#include <QtMath>
+#include <QtMath>*/
 
 int main(int argc, char **argv)
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-    QSurfaceFormat format;
-    format.setSamples(16);
-
-    VolumeRenderWidget window;
-    window.setFormat(format);
-    window.resize(640, 480);
-    window.setVisible(true);
-
-    //window.setAnimating(true);
+    MainWindow window;
+    window.show();
 
     return app.exec();
 }

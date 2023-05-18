@@ -1,16 +1,18 @@
-
 #ifndef VOLUMERENDERWIDGET_H
 #define VOLUMERENDERWIDGET_H
 
 #include "QtOpenGLWidgets/QOpenGLWidget.h"
 #include <qopenglextrafunctions.h>
 #include <QOpenGLShaderProgram>
+#include "openglwindow.h"
 
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
+    Q_OBJECT
 public:
-    using QOpenGLWidget::QOpenGLWidget;
+    explicit VolumeRenderWidget(QWidget* parent = nullptr);
+    ~VolumeRenderWidget();
 
     void initializeGL() override;
     void paintGL() override;

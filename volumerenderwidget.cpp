@@ -5,6 +5,16 @@
 #include "qopenglextrafunctions.h"
 
 
+VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
+    : QOpenGLWidget {parent}
+{
+}
+
+VolumeRenderWidget::~VolumeRenderWidget()
+{
+
+}
+
 void VolumeRenderWidget::initializeGL()
 {
     m_program = new QOpenGLShaderProgram(this);
