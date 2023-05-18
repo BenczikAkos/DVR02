@@ -1,11 +1,11 @@
 
-#include "volumerenderwindow.h"
+#include "volumerenderwidget.h"
 #include <QKeyEvent>
 #include <qfile.h>
 #include "qopenglextrafunctions.h"
 
 
-void VolumeRenderWindow::initialize()
+void VolumeRenderWidget::initializeGL()
 {
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
@@ -24,7 +24,7 @@ void VolumeRenderWindow::initialize()
 
 }
 
-void VolumeRenderWindow::render()
+void VolumeRenderWidget::paintGL()
 {
     const qreal retinaScale = devicePixelRatio();
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
@@ -48,7 +48,7 @@ void VolumeRenderWindow::render()
     m_program->release();
 }
 
-void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
+void VolumeRenderWidget::keyPressEvent(QKeyEvent *ev)
 {
     switch(ev->key())
     {
@@ -69,7 +69,7 @@ void VolumeRenderWindow::keyPressEvent(QKeyEvent *ev)
     }
 }
 
-void VolumeRenderWindow::mousePressEvent(QMouseEvent *event)
+void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)
 {
     mouse_lastPos = event->pos();
     if(MouseFirstPressed){
@@ -79,12 +79,12 @@ void VolumeRenderWindow::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void VolumeRenderWindow::mouseReleaseEvent(QMouseEvent *event)
+void VolumeRenderWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     MouseFirstPressed = true;
 }
 
-void VolumeRenderWindow::loadVolume(QString path){
+void VolumeRenderWidget::loadVolume(QString path){
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "Not successful";
@@ -101,7 +101,7 @@ void VolumeRenderWindow::loadVolume(QString path){
     generateTexture(VolumeData.data());
 }
 
-void VolumeRenderWindow::generateTexture(const char* data) {
+void VolumeRenderWidget::generateTexture(const char* data) {
     glDeleteTextures(1, &LocVolumeSampler);
     glGenTextures(1, &LocVolumeSampler);
     glBindTexture(GL_TEXTURE_3D, LocVolumeSampler);
@@ -115,7 +115,7 @@ void VolumeRenderWindow::generateTexture(const char* data) {
     glBindTexture(GL_TEXTURE_3D, 0);
 }
 
-void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
+void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
 {
     int dx = event->x() - mouse_lastPos.x();
     int dy = event->y() - mouse_lastPos.y();
@@ -135,7 +135,7 @@ void VolumeRenderWindow::mouseMoveEvent(QMouseEvent *event)
     mouse_lastPos = event->pos();
 }
 
-void VolumeRenderWindow::rotateScene(float angle){
+void VolumeRenderWidget::rotateScene(float angle){
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
     QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
     float radius = CameraPos.distanceToLine(origo, upY);
@@ -154,7 +154,7 @@ static void qNormalizeAngle(int &angle)
         angle -= 360 * 16;
 }
 
-void VolumeRenderWindow::setXRotation(int angle)
+void VolumeRenderWidget::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
     if (angle != xRot) {
@@ -162,7 +162,7 @@ void VolumeRenderWindow::setXRotation(int angle)
     }
 }
 
-void VolumeRenderWindow::setYRotation(int angle)
+void VolumeRenderWidget::setYRotation(int angle)
 {
     qNormalizeAngle(angle);
     if (angle != yRot) {
@@ -170,7 +170,7 @@ void VolumeRenderWindow::setYRotation(int angle)
     }
 }
 
-void VolumeRenderWindow::setZRotation(int angle)
+void VolumeRenderWidget::setZRotation(int angle)
 {
     qNormalizeAngle(angle);
     if (angle != zRot) {

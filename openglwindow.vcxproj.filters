@@ -43,7 +43,7 @@
     <ClCompile Include="openglwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="volumerenderwindow.cpp">
+    <ClCompile Include="volumerenderwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,21 +51,17 @@
     <QtMoc Include="openglwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <ClInclude Include="volumerenderwindow.h">
+    <ClInclude Include="volumerenderwidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
-    
-    
   </ItemGroup>
   <ItemGroup>
     <None Include="fshader.glsl">

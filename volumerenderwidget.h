@@ -1,18 +1,19 @@
 
-#ifndef VOLUMERENDERWINDOW_H
-#define VOLUMERENDERWINDOW_H
+#ifndef VOLUMERENDERWIDGET_H
+#define VOLUMERENDERWIDGET_H
 
-#include "openglwindow.h"
+#include "QtOpenGLWidgets/QOpenGLWidget.h"
+#include <qopenglextrafunctions.h>
 #include <QOpenGLShaderProgram>
 
 
-class VolumeRenderWindow : public OpenGLWindow
+class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
 public:
-    using OpenGLWindow::OpenGLWindow;
+    using QOpenGLWidget::QOpenGLWidget;
 
-    void initialize() override;
-    void render() override;
+    void initializeGL() override;
+    void paintGL() override;
 
 protected:
     void keyPressEvent(QKeyEvent *ev) override;
@@ -55,4 +56,4 @@ private:
     QVector3D camera_lastPos = QVector3D(0.0f, 0.0f, -3.0f);
 };
 
-#endif // VOLUMERENDERWINDOW_H
+#endif //VOLUMERENDERWIDGET_H

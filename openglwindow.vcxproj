@@ -196,12 +196,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="openglwindow.cpp" />
-    <ClCompile Include="volumerenderwindow.cpp" />
+    <ClCompile Include="volumerenderwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="openglwindow.h">
     </QtMoc>
-    <ClInclude Include="volumerenderwindow.h" />
+    <ClInclude Include="volumerenderwidget.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
