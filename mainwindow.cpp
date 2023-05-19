@@ -4,8 +4,8 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent }
 {
-    VolumeRenderWidget canvas(this);
-    setCentralWidget(&canvas);
+    canvas = new VolumeRenderWidget(this);
+    setCentralWidget(canvas);
 }
 
 MainWindow::~MainWindow()

@@ -7,7 +7,8 @@
 VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
-    initializeGL();
+//    initializeGL();
+    update();
 }
 
 VolumeRenderWidget::~VolumeRenderWidget()
@@ -17,6 +18,7 @@ VolumeRenderWidget::~VolumeRenderWidget()
 
 void VolumeRenderWidget::initializeGL()
 {
+    initializeOpenGLFunctions();
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl");
@@ -86,7 +88,7 @@ void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)
     mouse_lastPos = event->pos();
     if(MouseFirstPressed){
         camera_lastPos = CameraPos;
-        //qWarning() << camera_lastPos;
+        qWarning() << camera_lastPos;
         MouseFirstPressed = false;
     }
 }

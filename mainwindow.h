@@ -1,6 +1,7 @@
 #pragma once
 
 #include "qmainwindow.h"
+#include "volumerenderwidget.h"
 
 
 class MainWindow : public QMainWindow
@@ -11,7 +12,8 @@ public:
 	explicit MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
-//private:
+private:
+    VolumeRenderWidget *canvas;
 	//MainWindow::MainWindow* ui;
 };
 
