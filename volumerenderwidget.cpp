@@ -57,10 +57,12 @@ void VolumeRenderWidget::paintGL()
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);
+    glBindVertexArray(m_posAttr);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glDisableVertexAttribArray(m_posAttr);
 
     m_program->release();
+    update();
 }
 
 void VolumeRenderWidget::keyPressEvent(QKeyEvent *ev)

@@ -37,10 +37,10 @@ private:
         -1.0f, 1.0f,
         1.0f, 1.0f
     };
-    GLint m_posAttr = 0;
-    GLint LocViewMatrix = 0;
-    GLint LocCameraPos = 0;
-    GLint LocWindowSize = 0;
+    GLuint m_posAttr = 0;
+    GLuint LocViewMatrix = 0;
+    GLuint LocCameraPos = 0;
+    GLuint LocWindowSize = 0;
     GLuint LocVolumeSampler = 0;
     boolean MouseFirstPressed = true;
 
