@@ -1,9 +1,9 @@
 #ifndef VOLUMERENDERWIDGET_H
 #define VOLUMERENDERWIDGET_H
 
-#include "QtOpenGLWidgets/QOpenGLWidget.h"
+#include "QtOpenGLWidgets/qopenglwidget.h"
 #include <qopenglextrafunctions.h>
-#include <QOpenGLShaderProgram>
+#include <QtOpenGL/QOpenGLShaderProgram>
 #include "openglwindow.h"
 
 

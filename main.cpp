@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "volumerenderwidget.h"
 #include "qmainwindow.h"
+#include "qapplication.h"
 /*
 #include <QOpenGLShaderProgram>
 #include <QScreen>

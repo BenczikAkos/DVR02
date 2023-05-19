@@ -40,9 +40,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="openglwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="volumerenderwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="openglwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="volumerenderwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>

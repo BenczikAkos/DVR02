@@ -196,12 +196,9 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="openglwindow.cpp" />
     <ClCompile Include="volumerenderwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="openglwindow.h">
-    </QtMoc>
     <QtMoc Include="volumerenderwidget.h" />
   </ItemGroup>
   <ItemGroup>

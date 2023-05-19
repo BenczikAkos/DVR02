@@ -2,12 +2,12 @@
 #include "volumerenderwidget.h"
 #include <QKeyEvent>
 #include <qfile.h>
-#include "qopenglextrafunctions.h"
 
 
 VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
+    initializeGL();
 }
 
 VolumeRenderWidget::~VolumeRenderWidget()
@@ -20,7 +20,9 @@ void VolumeRenderWidget::initializeGL()
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl");
-    m_program->link();
+    if(!m_program->link()){
+        qWarning() << m_program->log();
+    }
     m_posAttr = m_program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
     LocViewMatrix = m_program->uniformLocation("ViewMatrix");

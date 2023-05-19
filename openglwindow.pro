@@ -1,5 +1,3 @@
-include(openglwindow.pri)
-
 SOURCES += \
     main.cpp \
     volumerenderwidget.cpp \
@@ -8,9 +6,12 @@ SOURCES += \
 
 RESOURCES += shaders.qrc
 
-target.path = $$[QT_INSTALL_EXAMPLES]/opengl/openglwindow
+target.path = ./build_qt
 INSTALLS += target
 
 HEADERS += \
     volumerenderwidget.h \
     mainwindow.h
+
+QT += widgets
+QT += openglwidgets
