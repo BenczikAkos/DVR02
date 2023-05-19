@@ -43,6 +43,9 @@
     <ClCompile Include="mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="volumedata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="volumerenderwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,6 +54,9 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="volumedata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <QtMoc Include="volumerenderwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>

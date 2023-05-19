@@ -1,7 +1,8 @@
 SOURCES += \
     main.cpp \
     volumerenderwidget.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    volumedata.cpp
 
 
 RESOURCES += shaders.qrc
@@ -11,7 +12,8 @@ INSTALLS += target
 
 HEADERS += \
     volumerenderwidget.h \
-    mainwindow.h
+    mainwindow.h \
+    volumedata.h
 
 QT += widgets
 QT += openglwidgets

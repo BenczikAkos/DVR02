@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="volumedata.cpp" />
     <ClCompile Include="volumerenderwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
       
       
     </QtMoc>
+    <ClInclude Include="volumedata.h" />
     <QtMoc Include="volumerenderwidget.h">
       
       
