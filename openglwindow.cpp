@@ -49,16 +49,16 @@
 ****************************************************************************/
 
 #include "openglwindow.h"
-
+#include "volumerenderwidget.h"
 #include <QOpenGLContext>
 #include <QOpenGLPaintDevice>
 #include <QPainter>
 
 //! [1]
-OpenGLWindow::OpenGLWindow(QWindow *parent)
-    : QWindow(parent)
+OpenGLWindow::OpenGLWindow(QWidget *parent)
+    : QMainWindow{ parent }
 {
-    setSurfaceType(QWindow::OpenGLSurface);
+    //setCentralWidget(new VolumeRenderWidget(this));
 }
 //! [1]
 
@@ -89,73 +89,3 @@ void OpenGLWindow::render()
     QPainter painter(m_device);
     render(&painter);
 }
-//! [2]
-
-//! [3]
-void OpenGLWindow::renderLater()
-{
-    requestUpdate();
-}
-
-bool OpenGLWindow::event(QEvent *event)
-{
-    switch (event->type()) {
-    case QEvent::UpdateRequest:
-        renderNow();
-        return true;
-    default:
-        return QWindow::event(event);
-    }
-}
-
-void OpenGLWindow::exposeEvent(QExposeEvent *event)
-{
-    Q_UNUSED(event);
-
-    if (isExposed())
-        renderNow();
-}
-//! [3]
-
-//! [4]
-void OpenGLWindow::renderNow()
-{
-    if (!isExposed())
-        return;
-
-    bool needsInitialize = false;
-
-    if (!m_context) {
-        m_context = new QOpenGLContext(this);
-        m_context->setFormat(requestedFormat());
-        m_context->create();
-
-        needsInitialize = true;
-    }
-
-    m_context->makeCurrent(this);
-
-    if (needsInitialize) {
-        initializeOpenGLFunctions();
-        initialize();
-    }
-
-    render();
-
-    m_context->swapBuffers(this);
-
-    if (m_animating)
-        renderLater();
-}
-//! [4]
-
-//! [5]
-void OpenGLWindow::setAnimating(bool animating)
-{
-    m_animating = animating;
-
-    if (animating)
-        renderLater();
-}
-//! [5]
-
