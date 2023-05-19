@@ -7,7 +7,6 @@
 VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
-//    initializeGL();
     setFocusPolicy(Qt::StrongFocus);
     update();
 }
@@ -50,7 +49,8 @@ void VolumeRenderWidget::paintGL()
 
     m_program->setUniformValue(LocViewMatrix, viewMatrix);
     m_program->setUniformValue(LocCameraPos, CameraPos);
-    glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_3D, LocVolumeSampler);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_3D, LocVolumeSampler);
 
     QVector2D windowSize = QVector2D(this->width(), this->height());
     m_program->setUniformValue(LocWindowSize, windowSize);

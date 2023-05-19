@@ -73,7 +73,7 @@ void main()
             // colour.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * colour.a * colour.rgb;
             // colour.a = act_tex.a + (1 - act_tex.a) * colour.a;
         }
-        fragColor = vec4(maximum_intensity, maximum_intensity,  maximum_intensity, 1.0f);
+        fragColor = vec4(abs(normalize(CameraPos)), 1.0f);
         // fragColor = colour;
     }
    else{

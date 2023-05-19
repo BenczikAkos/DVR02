@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget* parent)
 {
     canvas = new VolumeRenderWidget(this);
     setCentralWidget(canvas);
+    resize(780, 560);
 }
 
 MainWindow::~MainWindow()
