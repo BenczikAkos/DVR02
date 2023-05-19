@@ -142,7 +142,7 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() & Qt::RightButton) {
         aroundAngle += dx;
-        rotateScene(-aroundAngle/10);
+        rotateScene(-aroundAngle/50);
     }
     viewMatrix.setToIdentity();
     viewMatrix.rotate(180.0f - (xRot / 16.0f), 1, 0, 0);
@@ -155,8 +155,6 @@ void VolumeRenderWidget::rotateScene(float angle){
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
     QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
     float radius = CameraPos.distanceToLine(origo, upY);
-    //angle += aroundAngle;
-
     CameraPos.setX(radius * cos(angle));
     CameraPos.setZ(radius * sin(angle));
     setYRotation((M_PI/2 - angle)*180*16/M_PI);

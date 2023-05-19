@@ -21,7 +21,7 @@ void MainWindow::paintEvent(QPaintEvent* event) {
             StatusBar->clearMessage();
             StatusBar->showMessage(QString("Elapsed time: %1 ms FPS: %2").arg(QString::number(diff), QString::number(1000/diff)));
         }
-        updateFrameRateTimer.setRemainingTime(100);
+        updateFrameRateTimer.setRemainingTime(300);
     }
     lastPaint = thisPaint;
     update();

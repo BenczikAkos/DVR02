@@ -51,9 +51,6 @@ void main()
     if(IntersectBox(eye, aabb, tnear, tfar)){
         vec3 rayStart = (eye.Origin + eye.Dir * tnear - vec3(-1.0f)) / (vec3(1.0f) - vec3(-1.0f));
         vec3 rayStop = (eye.Origin + eye.Dir * tfar - vec3(-1.0f)) / (vec3(1.0f) - vec3(-1.0f));
-         // Transform from object space to texture coordinate space:
-        // rayStart = 0.5 * (rayStart + 1.0);
-        // rayStop = 0.5 * (rayStop + 1.0);
         // Perform the ray marching:
         vec3 pos = rayStart;
         float stepSize = 0.001f;
