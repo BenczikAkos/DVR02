@@ -91,7 +91,6 @@ void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)
     mouse_lastPos = event->pos();
     if(MouseFirstPressed){
         camera_lastPos = CameraPos;
-        qWarning() << camera_lastPos;
         MouseFirstPressed = false;
     }
 }
