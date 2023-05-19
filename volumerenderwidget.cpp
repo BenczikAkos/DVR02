@@ -8,6 +8,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
 //    initializeGL();
+    setFocusPolicy(Qt::StrongFocus);
     update();
 }
 
