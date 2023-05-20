@@ -27,8 +27,9 @@ protected:
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
-    void rotateScene(float angle);
+    void rotateScene(float phi, float theta);
     void normalizeAngle(int& angle);
+    float fromRadian(float angle);
 private:
     inline static const GLfloat vertices[] = {
         1.0f,  1.0f,
@@ -51,9 +52,10 @@ private:
     QOpenGLShaderProgram *m_program = nullptr;
 
     float xRot = 0;
-    float yRot = 16*180;
-    float zRot = 16*180;
-    float aroundAngle = -M_PI_2;
+    float yRot = 0;
+    float zRot = 0;
+    float phi = -M_PI_2;
+    float theta = M_PI;
     QPoint mouse_lastPos = QPoint(0.0, 0.0);
     QVector3D camera_lastPos = QVector3D(0.0f, 0.0f, -3.0f);
 };

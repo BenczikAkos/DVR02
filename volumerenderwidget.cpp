@@ -111,28 +111,34 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        setXRotation(xRot + 8 * dy);
+        setXRotation(xRot - 8 * dy);
         setYRotation(yRot + 8 * dx);
     }
     else if (event->buttons() & Qt::RightButton) {
-        aroundAngle -= (float)dx/20;
-        rotateScene(aroundAngle);
+        phi -= (float)dx / 20;
+        theta -= (float)dy / 20;
+        rotateScene(phi, -M_PI);
     }
     viewMatrix.setToIdentity();
-    viewMatrix.rotate(180.0f - (xRot / 16.0f), 1, 0, 0);
+    viewMatrix.rotate(xRot / 16.0f, 1, 0, 0);
     viewMatrix.rotate(yRot / 16.0f, 0, 1, 0);
     viewMatrix.rotate(zRot / 16.0f, 0, 0, 1);
     mouse_lastPos = event->pos();
 }
 
-void VolumeRenderWidget::rotateScene(float angle){
-    qWarning() << CameraPos << " angle: " << angle;
+void VolumeRenderWidget::rotateScene(float phi, float theta){
+    theta = M_PI_2 +  theta;
+    qWarning() << CameraPos << " phi: " << phi << " theta: " << theta;
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
-    QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
-    float radius = CameraPos.distanceToLine(origo, upY);
-    CameraPos.setX(radius * cos(angle));
-    CameraPos.setZ(radius * sin(angle));
-    setYRotation((M_PI/2 - angle)*180*16/M_PI);
+    float radius = CameraPos.distanceToPoint(origo);
+
+    CameraPos.setX(radius * cos(phi));
+    CameraPos.setZ(radius * sin(phi));
+    setYRotation((M_PI / 2 - phi) * 180 * 16 / M_PI);
+}
+
+float VolumeRenderWidget::fromRadian(float angle) {
+    return angle * 180 * 16 / M_PI;
 }
 
 void VolumeRenderWidget::normalizeAngle(int &angle)

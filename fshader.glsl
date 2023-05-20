@@ -41,7 +41,7 @@ void main()
 {
    vec3 rayDirection;
    rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
-   rayDirection.z = 1.0f;
+   rayDirection.z = 2.0f;
    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
 
    Ray eye = Ray(CameraPos, normalize(rayDirection));
