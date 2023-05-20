@@ -116,8 +116,8 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 20;
-        theta -= (float)dy / 20;
-        rotateScene(phi, -M_PI);
+        elevation -= (float)dy / 20;
+        rotateScene(phi, elevation);
     }
     viewMatrix.setToIdentity();
     viewMatrix.rotate(xRot / 16.0f, 1, 0, 0);
@@ -127,14 +127,15 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 void VolumeRenderWidget::rotateScene(float phi, float theta){
-    theta = M_PI_2 +  theta;
     qWarning() << CameraPos << " phi: " << phi << " theta: " << theta;
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
     float radius = CameraPos.distanceToPoint(origo);
 
-    CameraPos.setX(radius * cos(phi));
-    CameraPos.setZ(radius * sin(phi));
-    setYRotation((M_PI / 2 - phi) * 180 * 16 / M_PI);
+    CameraPos.setX(radius * cos(phi) * cos(theta));
+    CameraPos.setY(radius * sin(theta));
+    CameraPos.setZ(radius * sin(phi) * cos(theta));
+    setXRotation(fromRadian(M_PI - theta));
+    setYRotation(fromRadian(M_PI / 2 - phi));
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {

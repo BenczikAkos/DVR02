@@ -51,11 +51,11 @@ private:
    
     QOpenGLShaderProgram *m_program = nullptr;
 
-    float xRot = 0;
-    float yRot = 0;
-    float zRot = 0;
+    float xRot = 16*180;
+    float yRot = 16*180;
+    float zRot = 16*180;
     float phi = -M_PI_2;
-    float theta = M_PI;
+    float elevation = 0.0;
     QPoint mouse_lastPos = QPoint(0.0, 0.0);
     QVector3D camera_lastPos = QVector3D(0.0f, 0.0f, -3.0f);
 };
