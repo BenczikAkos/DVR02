@@ -116,7 +116,7 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 20;
-        elevation -= (float)dy / 20;
+        elevation += (float)dy / 20;
         rotateScene(phi, elevation);
     }
     viewMatrix.setToIdentity();
@@ -124,6 +124,10 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     viewMatrix.rotate(yRot / 16.0f, 0, 1, 0);
     viewMatrix.rotate(zRot / 16.0f, 0, 0, 1);
     mouse_lastPos = event->pos();
+}
+
+void VolumeRenderWidget::wheelEvent(QWheelEvent* event) {
+    CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.01f) * viewMatrix;
 }
 
 void VolumeRenderWidget::rotateScene(float phi, float theta){
