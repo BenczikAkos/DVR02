@@ -53,7 +53,7 @@ private:
     float xRot = 0;
     float yRot = 16*180;
     float zRot = 16*180;
-    float aroundAngle = 0;
+    float aroundAngle = -M_PI_2;
     QPoint mouse_lastPos = QPoint(0.0, 0.0);
     QVector3D camera_lastPos = QVector3D(0.0f, 0.0f, -3.0f);
 };

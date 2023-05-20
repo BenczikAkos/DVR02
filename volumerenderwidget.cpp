@@ -8,6 +8,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
     setFocusPolicy(Qt::StrongFocus);
+    //setMouseTracking(true);
     update();
 }
 
@@ -114,8 +115,8 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
         setYRotation(yRot + 8 * dx);
     }
     else if (event->buttons() & Qt::RightButton) {
-        aroundAngle += dx;
-        rotateScene(-aroundAngle/50);
+        aroundAngle -= (float)dx/20;
+        rotateScene(aroundAngle);
     }
     viewMatrix.setToIdentity();
     viewMatrix.rotate(180.0f - (xRot / 16.0f), 1, 0, 0);
@@ -125,6 +126,7 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 void VolumeRenderWidget::rotateScene(float angle){
+    qWarning() << CameraPos << " angle: " << angle;
     QVector3D origo = QVector3D(0.0f, 0.0f, 0.0f);
     QVector3D upY = QVector3D(0.0f, 1.0f, 0.0f);
     float radius = CameraPos.distanceToLine(origo, upY);
