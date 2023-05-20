@@ -111,8 +111,8 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        setXRotation(xRot - 8 * dy);
-        setYRotation(yRot + 8 * dx);
+        setXRotation(xRot - dy);
+        setYRotation(yRot + dx);
     }
     else if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 20;
@@ -120,9 +120,9 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
         rotateScene(phi, elevation);
     }
     viewMatrix.setToIdentity();
-    viewMatrix.rotate(xRot / 16.0f, 1, 0, 0);
-    viewMatrix.rotate(yRot / 16.0f, 0, 1, 0);
-    viewMatrix.rotate(zRot / 16.0f, 0, 0, 1);
+    viewMatrix.rotate(xRot, 1, 0, 0);
+    viewMatrix.rotate(yRot, 0, 1, 0);
+    viewMatrix.rotate(zRot, 0, 0, 1);
     mouse_lastPos = event->pos();
 }
 
@@ -143,15 +143,15 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {
-    return angle * 180 * 16 / M_PI;
+    return angle * 180 / M_PI;
 }
 
 void VolumeRenderWidget::normalizeAngle(int &angle)
 {
     while (angle < 0)
-        angle += 360 * 16;
-    while (angle > 360 * 16)
-        angle -= 360 * 16;
+        angle += 360;
+    while (angle > 360)
+        angle -= 360;
 }
 
 void VolumeRenderWidget::setXRotation(int angle)

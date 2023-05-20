@@ -49,9 +49,9 @@ private:
     QMatrix4x4 viewMatrix = QMatrix4x4();
     VolumeData *volume = nullptr;
    
-    float xRot = 16*180;
-    float yRot = 16*180;
-    float zRot = 16*180;
+    float xRot = 180;
+    float yRot = 180;
+    float zRot = 180;
     float phi = -M_PI_2;
     float elevation = 0.0;
     QPoint mouse_lastPos = QPoint(0.0, 0.0);
