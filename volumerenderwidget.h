@@ -1,12 +1,11 @@
-#ifndef VOLUMERENDERWIDGET_H
-#define VOLUMERENDERWIDGET_H
+#pragma once
 
 #include "QtOpenGLWidgets/qopenglwidget.h"
 #include "QtWidgets/qfiledialog.h"
 #include <qopenglextrafunctions.h>
 #include <QtOpenGL/QOpenGLShaderProgram>
 #include "openglwindow.h"
-#include <volumedata.h>
+#include "volumedata.h"
 
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
@@ -59,5 +58,3 @@ private:
     void normalizeAngle(int& angle);
     float fromRadian(float angle);
 };
-
-#endif //VOLUMERENDERWIDGET_H

@@ -1,14 +1,19 @@
 #include "volumedata.h"
+#include <QVector3D>
 #include <qfile.h>
 
 VolumeData::VolumeData()
 {
+    location = 0;
+    mainWindow = nullptr;
     initializeOpenGLFunctions();
 }
 
-VolumeData::VolumeData(GLuint loc)
-    : location { loc }
+VolumeData::VolumeData(GLuint loc, const MainWindow* _mainWindow)
+    : location { loc },
+    mainWindow { _mainWindow }
 {
+    qWarning() << _mainWindow;
     initializeOpenGLFunctions();
 }
 
@@ -19,11 +24,12 @@ void VolumeData::loadVolume(QString path) {
         return;
     };
     data = file.readAll();
-    qWarning() << "Blobsize: " << data.size();
+    qWarning() << "Nb of datapoints: " << data.size();
     uploadTexture(data.data());
 }
 
 void VolumeData::uploadTexture(const char* data) {
+    auto sizes = mainWindow->getDataSizes();
     glDeleteTextures(1, &location);
     glGenTextures(1, &location);
     glBindTexture(GL_TEXTURE_3D, location);
@@ -33,7 +39,7 @@ void VolumeData::uploadTexture(const char* data) {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, 256, 256, 256, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, (int)sizes.x(), (int)sizes.y(), (int)sizes.z(), 0, GL_RED, GL_UNSIGNED_BYTE, data);
     glBindTexture(GL_TEXTURE_3D, 0);
 }
 

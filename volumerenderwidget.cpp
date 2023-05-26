@@ -1,4 +1,3 @@
-
 #include "volumerenderwidget.h"
 #include <QKeyEvent>
 #include <qfile.h>
@@ -36,7 +35,7 @@ void VolumeRenderWidget::initializeGL()
 
     GLuint VolumeLocation = m_program->uniformLocation("Volume");
     Q_ASSERT(VolumeLocation != -1);
-    volume = new VolumeData(VolumeLocation);
+    volume = new VolumeData(VolumeLocation, (MainWindow*)parentWidget()->parentWidget());
 
 }
 

@@ -1,9 +1,12 @@
 #pragma once
 
 #include "qmainwindow.h"
-#include "volumerenderwidget.h"
 #include "QtCore/qdeadlinetimer.h"
 
+
+namespace Ui {
+	class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
@@ -12,12 +15,13 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget* parent = nullptr);
 	void paintEvent(QPaintEvent* event) override;
+	QVector3D getDataSizes() const;
 	~MainWindow();
 
 private:
 	int lastPaint = 0;
 	QDeadlineTimer updateFrameRateTimer = QDeadlineTimer();
-    VolumeRenderWidget *canvas;
-	//MainWindow::MainWindow* ui;
+    //VolumeRenderWidget *canvas;
+	Ui::MainWindow* ui;
 };
 

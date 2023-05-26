@@ -1,14 +1,19 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+
 #include "volumerenderwidget.h"
 #include "qstatusbar.h"
 #include "QtCore/QTime"
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow{ parent }
+    : QMainWindow{ parent },
+    ui {new Ui::MainWindow}
 {
+    ui->setupUi(this);
+    qWarning() << this;
     updateFrameRateTimer.setRemainingTime(100);
-    canvas = new VolumeRenderWidget(this);
-    setCentralWidget(canvas);
+    //canvas = new VolumeRenderWidget(this);
+    //setCentralWidget(canvas);
     resize(780, 560);
 }
 
@@ -27,6 +32,15 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     update();
 }
 
+QVector3D MainWindow::getDataSizes() const
+{
+    auto x = ui->datasetSize_x->value();
+    auto y = ui->datasetSize_y->value();
+    auto z = ui->datasetSize_z->value();
+    return QVector3D(x, y, z);
+}
+
 MainWindow::~MainWindow()
 {
+    delete ui;
 }
