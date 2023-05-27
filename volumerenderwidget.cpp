@@ -93,7 +93,6 @@ void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)
 {
     mouse_lastPos = event->pos();
     if(MouseFirstPressed){
-        camera_lastPos = CameraPos;
         MouseFirstPressed = false;
     }
 }
@@ -109,8 +108,9 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        setXRotation(xRot - dy);
-        setYRotation(yRot + dx);
+        //setRotation(xRot - dy, xRot);
+        setRotation(zRot - dy, zRot);
+        //setRotation(yRot + dx, yRot);
     }
     else if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 40;
@@ -125,7 +125,7 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 void VolumeRenderWidget::wheelEvent(QWheelEvent* event) {
-    CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.01f) * viewMatrix;
+    CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.0033f) * viewMatrix;
 }
 
 void VolumeRenderWidget::rotateScene(float phi, float theta){
@@ -135,42 +135,24 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
     CameraPos.setX(radius * cos(phi) * cos(theta));
     CameraPos.setY(radius * sin(theta));
     CameraPos.setZ(radius * sin(phi) * cos(theta));
-    setXRotation(fromRadian(M_PI - theta));
-    setYRotation(fromRadian(M_PI / 2 - phi));
+    setRotation(fromRadian(M_PI - theta), xRot);
+    setRotation(fromRadian(M_PI / 2 - phi), yRot);
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {
     return angle * 180 / M_PI;
 }
 
-void VolumeRenderWidget::normalizeAngle(int &angle)
+void VolumeRenderWidget::normalizeAngle(float &angle)
 {
-    while (angle < 0)
-        angle += 360;
-    while (angle > 360)
-        angle -= 360;
+    while (angle < 0.0)
+        angle += 360.0;
+    while (angle > 360.0)
+        angle -= 360.0;
 }
 
-void VolumeRenderWidget::setXRotation(int angle)
-{
+void VolumeRenderWidget::setRotation(float angle, float& changeable) {
     normalizeAngle(angle);
-    if (angle != xRot) {
-        xRot = angle;
-    }
+    changeable = angle;
 }
 
-void VolumeRenderWidget::setYRotation(int angle)
-{
-    normalizeAngle(angle);
-    if (angle != yRot) {
-        yRot = angle;
-    }
-}
-
-void VolumeRenderWidget::setZRotation(int angle)
-{
-    normalizeAngle(angle);
-    if (angle != zRot) {
-        zRot = angle;
-    }
-}

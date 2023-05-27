@@ -24,9 +24,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
-    void setXRotation(int angle);
-    void setYRotation(int angle);
-    void setZRotation(int angle);
+    void setRotation(float angle, float& changeable);
     void rotateScene(float phi, float theta);
 private:
     inline static const GLfloat vertices[] = {
@@ -54,7 +52,6 @@ private:
     float phi = -M_PI_2;
     float elevation = 0.0;
     QPoint mouse_lastPos = QPoint(0.0, 0.0);
-    QVector3D camera_lastPos = QVector3D(0.0f, 0.0f, -3.0f);
-    void normalizeAngle(int& angle);
+    void normalizeAngle(float& angle);
     float fromRadian(float angle);
 };
