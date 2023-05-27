@@ -49,3 +49,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_loadVolumeButton_clicked(bool checked)
+{
+    ui->openGLWidget->openFile();
+}

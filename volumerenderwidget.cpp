@@ -86,10 +86,14 @@ void VolumeRenderWidget::keyPressEvent(QKeyEvent *ev)
     case Qt::Key_E:
         CameraPos += QVector3D(0.0f, -0.03f, 0.0f); break;
     case Qt::Key_O:
-        QString path = QFileDialog::getOpenFileName(this, tr("Open volume"), "..\\datasets\\raw", tr("RAW images(*.raw);;DAT files(*.dat)"));
-        if (!path.isNull()) {
-            volume->loadVolume(path);
-        }
+        openFile();
+    }
+}
+
+void VolumeRenderWidget::openFile() {
+    QString path = QFileDialog::getOpenFileName(this, tr("Open volume"), "..\\datasets\\raw", tr("RAW images(*.raw);;DAT files(*.dat)"));
+    if (!path.isNull()) {
+        volume->loadVolume(path);
     }
 }
 

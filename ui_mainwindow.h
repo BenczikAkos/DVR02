@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
@@ -34,6 +35,7 @@ public:
     QSlider *AABBScale_y;
     QSlider *AABBScale_z;
     QChartView *barGraph;
+    QPushButton *loadVolumeButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -93,6 +95,9 @@ public:
         barGraph = new QChartView(centralwidget);
         barGraph->setObjectName(QString::fromUtf8("barGraph"));
         barGraph->setGeometry(QRect(10, 550, 631, 101));
+        loadVolumeButton = new QPushButton(centralwidget);
+        loadVolumeButton->setObjectName(QString::fromUtf8("loadVolumeButton"));
+        loadVolumeButton->setGeometry(QRect(750, 130, 101, 24));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -110,6 +115,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        loadVolumeButton->setText(QCoreApplication::translate("MainWindow", "Load volume", nullptr));
     } // retranslateUi
 
 };

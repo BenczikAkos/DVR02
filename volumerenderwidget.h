@@ -17,6 +17,7 @@ public:
 
     void initializeGL() override;
     void paintGL() override;
+    void openFile();
 
 protected:
     void keyPressEvent(QKeyEvent *ev) override;

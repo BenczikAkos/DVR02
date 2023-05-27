@@ -30,6 +30,7 @@ private slots:
 	void on_AABBScale_x_valueChanged(int value) { emit AABBChangedX(value); }
 	void on_AABBScale_y_valueChanged(int value) { emit AABBChangedY(value); }
 	void on_AABBScale_z_valueChanged(int value) { emit AABBChangedZ(value); }
+	void on_loadVolumeButton_clicked(bool checked);
 
 private:
 	int lastPaint = 0;
