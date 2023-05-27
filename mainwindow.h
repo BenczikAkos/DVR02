@@ -2,7 +2,7 @@
 
 #include "qmainwindow.h"
 #include "QtCore/qdeadlinetimer.h"
-
+#include <QtDebug>
 
 namespace Ui {
 	class MainWindow;
@@ -17,6 +17,16 @@ public:
 	void paintEvent(QPaintEvent* event) override;
 	QVector3D getDataSizes() const;
 	~MainWindow();
+
+signals:
+	void AABBChangedX(int value);
+	void AABBChangedY(int value);
+	void AABBChangedZ(int value);
+
+private slots:
+	void on_AABBScale_x_valueChanged(int value) { emit AABBChangedX(value); }
+	void on_AABBScale_y_valueChanged(int value) { emit AABBChangedY(value); }
+	void on_AABBScale_z_valueChanged(int value) { emit AABBChangedZ(value); }
 
 private:
 	int lastPaint = 0;

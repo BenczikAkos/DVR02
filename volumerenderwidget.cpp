@@ -143,6 +143,22 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
     setRotation(fromRadian(M_PI / 2 - phi), yRot);
 }
 
+void VolumeRenderWidget::setAABBScaleX(int value)
+{
+    qWarning() << value;
+    AABBScale.setX(value / 100.0);
+}
+
+void VolumeRenderWidget::setAABBScaleY(int value)
+{
+    AABBScale.setY(value / 100.0);
+}
+
+void VolumeRenderWidget::setAABBScaleZ(int value)
+{
+    AABBScale.setZ(value / 100.0);
+}
+
 float VolumeRenderWidget::fromRadian(float angle) {
     return angle * 180 / M_PI;
 }

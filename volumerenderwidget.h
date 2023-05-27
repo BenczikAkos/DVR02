@@ -26,6 +26,12 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
     void setRotation(float angle, float& changeable);
     void rotateScene(float phi, float theta);
+
+public slots:
+    void setAABBScaleX(int value);
+    void setAABBScaleY(int value);
+    void setAABBScaleZ(int value);
+
 private:
     inline static const GLfloat vertices[] = {
         1.0f,  1.0f,

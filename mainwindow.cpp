@@ -12,9 +12,10 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
     qWarning() << this;
     updateFrameRateTimer.setRemainingTime(100);
-    //canvas = new VolumeRenderWidget(this);
-    //setCentralWidget(canvas);
     resize(880, 580);
+    QObject::connect(this, SIGNAL(AABBChangedX(int )), ui->openGLWidget, SLOT(setAABBScaleX(int )));
+    QObject::connect(this, SIGNAL(AABBChangedY(int )), ui->openGLWidget, SLOT(setAABBScaleY(int )));
+    QObject::connect(this, SIGNAL(AABBChangedZ(int )), ui->openGLWidget, SLOT(setAABBScaleZ(int )));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {
