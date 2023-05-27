@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget* parent)
     updateFrameRateTimer.setRemainingTime(100);
     //canvas = new VolumeRenderWidget(this);
     //setCentralWidget(canvas);
-    resize(780, 560);
+    resize(880, 580);
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

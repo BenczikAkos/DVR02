@@ -35,16 +35,19 @@ private:
         -1.0f, 1.0f,
         1.0f, 1.0f
     };
+    QOpenGLShaderProgram *m_program = nullptr;
+    boolean MouseFirstPressed = true;
+    //uniform locations
     GLuint m_posAttr = 0;
     GLuint LocViewMatrix = 0;
     GLuint LocCameraPos = 0;
     GLuint LocWindowSize = 0;
-    boolean MouseFirstPressed = true;
-    QOpenGLShaderProgram *m_program = nullptr;
+    GLuint LocAABBScale = 0;
     //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();
-    QVector3D AABBScale = QVector3D();
+    QVector3D AABBScale = QVector3D(1.0f, 1.0f, 1.0f);
+
     VolumeData *volume = nullptr;
    
     float xRot = 180;

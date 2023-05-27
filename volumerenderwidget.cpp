@@ -32,6 +32,9 @@ void VolumeRenderWidget::initializeGL()
     Q_ASSERT(LocCameraPos != -1);
     LocWindowSize = m_program->uniformLocation("WindowSize");
     Q_ASSERT(LocWindowSize != -1);
+    LocAABBScale = m_program->uniformLocation("AABBScale");
+    Q_ASSERT(LocAABBScale != -1);
+
 
     GLuint VolumeLocation = m_program->uniformLocation("Volume");
     Q_ASSERT(VolumeLocation != -1);
@@ -50,6 +53,7 @@ void VolumeRenderWidget::paintGL()
 
     m_program->setUniformValue(LocViewMatrix, ViewMatrix);
     m_program->setUniformValue(LocCameraPos, CameraPos);
+    m_program->setUniformValue(LocAABBScale, AABBScale);
     volume->bind();
     //TODO: ne kérjük már el minden frame-ben, legyen tagváltozó
     QVector2D windowSize = QVector2D(this->width(), this->height());

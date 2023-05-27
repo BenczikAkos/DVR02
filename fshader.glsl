@@ -4,6 +4,7 @@ out highp vec4 fragColor;
 uniform mat4 ViewMatrix;
 uniform vec2 WindowSize;
 uniform vec3 CameraPos;
+uniform vec3 AABBScale;
 uniform sampler3D Volume;
 
 struct Ray {
@@ -45,12 +46,12 @@ void main()
    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
 
    Ray eye = Ray(CameraPos, normalize(rayDirection));
-   AABB aabb = AABB(vec3(-1.0f), vec3(1.0f));
+   AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f));
 
    float tnear, tfar;
     if(IntersectBox(eye, aabb, tnear, tfar)){
-        vec3 rayStart = (eye.Origin + eye.Dir * tnear - vec3(-1.0f)) / (vec3(1.0f) - vec3(-1.0f));
-        vec3 rayStop = (eye.Origin + eye.Dir * tfar - vec3(-1.0f)) / (vec3(1.0f) - vec3(-1.0f));
+        vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
+        vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
         // Perform the ray marching:
         vec3 pos = rayStart;
         float stepSize = 0.001f;

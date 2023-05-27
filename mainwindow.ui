@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>881</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,8 +27,8 @@
    <widget class="QSpinBox" name="datasetSize_x">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>50</y>
+      <x>810</x>
+      <y>10</y>
       <width>51</width>
       <height>29</height>
      </rect>
@@ -49,8 +49,8 @@
    <widget class="QSpinBox" name="datasetSize_y">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>90</y>
+      <x>810</x>
+      <y>50</y>
       <width>48</width>
       <height>29</height>
      </rect>
@@ -71,8 +71,8 @@
    <widget class="QSpinBox" name="datasetSize_z">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>130</y>
+      <x>810</x>
+      <y>90</y>
       <width>48</width>
       <height>29</height>
      </rect>
@@ -93,13 +93,79 @@
      <number>256</number>
     </property>
    </widget>
+   <widget class="QSlider" name="AABBScale_x">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>10</y>
+      <width>18</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="AABBScale_y">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>10</y>
+      <width>18</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="AABBScale_z">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>10</y>
+      <width>18</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="value">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>881</width>
      <height>22</height>
     </rect>
    </property>
