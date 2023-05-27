@@ -41,9 +41,10 @@ private:
     GLuint LocWindowSize = 0;
     boolean MouseFirstPressed = true;
     QOpenGLShaderProgram *m_program = nullptr;
-
+    //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
-    QMatrix4x4 viewMatrix = QMatrix4x4();
+    QMatrix4x4 ViewMatrix = QMatrix4x4();
+    QVector3D AABBScale = QVector3D();
     VolumeData *volume = nullptr;
    
     float xRot = 180;

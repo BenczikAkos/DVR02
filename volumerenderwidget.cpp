@@ -48,7 +48,7 @@ void VolumeRenderWidget::paintGL()
 
     m_program->bind();
 
-    m_program->setUniformValue(LocViewMatrix, viewMatrix);
+    m_program->setUniformValue(LocViewMatrix, ViewMatrix);
     m_program->setUniformValue(LocCameraPos, CameraPos);
     volume->bind();
     //TODO: ne kérjük már el minden frame-ben, legyen tagváltozó
@@ -70,13 +70,13 @@ void VolumeRenderWidget::keyPressEvent(QKeyEvent *ev)
     switch(ev->key())
     {
     case Qt::Key_W:
-        CameraPos += QVector3D(0.0f, 0.0f, 0.03f) * viewMatrix; break;
+        CameraPos += QVector3D(0.0f, 0.0f, 0.03f) * ViewMatrix; break;
     case Qt::Key_S:
-        CameraPos += QVector3D(0.0f, 0.0f, -0.03f) * viewMatrix; break;
+        CameraPos += QVector3D(0.0f, 0.0f, -0.03f) * ViewMatrix; break;
     case Qt::Key_A:
-        CameraPos += QVector3D(-0.03f, 0.0f, 0.0f) * viewMatrix; break;
+        CameraPos += QVector3D(-0.03f, 0.0f, 0.0f) * ViewMatrix; break;
     case Qt::Key_D:
-        CameraPos += QVector3D(0.03f, 0.0f, 0.0f) * viewMatrix; break;
+        CameraPos += QVector3D(0.03f, 0.0f, 0.0f) * ViewMatrix; break;
     case Qt::Key_Q:
         CameraPos += QVector3D(0.0f, 0.03f, 0.0f); break;
     case Qt::Key_E:
@@ -108,24 +108,24 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        //setRotation(xRot - dy, xRot);
-        setRotation(zRot - dy, zRot);
-        //setRotation(yRot + dx, yRot);
+        setRotation(xRot - dy, xRot);
+        //setRotation(zRot - dy, zRot);
+        setRotation(yRot + dx, yRot);
     }
     else if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 40;
         elevation += (float)dy / 40;
         rotateScene(phi, elevation);
     }
-    viewMatrix.setToIdentity();
-    viewMatrix.rotate(xRot, 1, 0, 0);
-    viewMatrix.rotate(yRot, 0, 1, 0);
-    viewMatrix.rotate(zRot, 0, 0, 1);
+    ViewMatrix.setToIdentity();
+    ViewMatrix.rotate(xRot, 1, 0, 0);
+    ViewMatrix.rotate(yRot, 0, 1, 0);
+    ViewMatrix.rotate(zRot, 0, 0, 1);
     mouse_lastPos = event->pos();
 }
 
 void VolumeRenderWidget::wheelEvent(QWheelEvent* event) {
-    CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.0033f) * viewMatrix;
+    CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.0033f) * ViewMatrix;
 }
 
 void VolumeRenderWidget::rotateScene(float phi, float theta){
