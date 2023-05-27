@@ -41,7 +41,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(881, 602);
+        MainWindow->resize(864, 710);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new VolumeRenderWidget(centralwidget);
@@ -92,11 +92,11 @@ public:
         AABBScale_z->setOrientation(Qt::Vertical);
         barGraph = new QChartView(centralwidget);
         barGraph->setObjectName(QString::fromUtf8("barGraph"));
-        barGraph->setGeometry(QRect(650, 180, 221, 91));
+        barGraph->setGeometry(QRect(10, 550, 631, 101));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 881, 22));
+        menubar->setGeometry(QRect(0, 0, 864, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

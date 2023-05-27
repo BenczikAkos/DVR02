@@ -40,6 +40,11 @@ QVector3D MainWindow::getDataSizes() const
     return QVector3D(x, y, z);
 }
 
+void MainWindow::setBarGraph(QChart* chart)
+{
+    ui->barGraph->setChart(chart);
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;

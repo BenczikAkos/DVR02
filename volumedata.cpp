@@ -1,6 +1,8 @@
 #include "volumedata.h"
 #include <QVector3D>
+#include <QChart>
 #include <qfile.h>
+#include <QLineSeries>
 
 VolumeData::VolumeData()
 {
@@ -9,7 +11,7 @@ VolumeData::VolumeData()
     initializeOpenGLFunctions();
 }
 
-VolumeData::VolumeData(GLuint loc, const MainWindow* _mainWindow)
+VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
     : location { loc },
     mainWindow { _mainWindow }
 {
@@ -45,7 +47,29 @@ void VolumeData::uploadTexture() {
 }
 
 void VolumeData::createBarChart() const {
+    QMap<char, qreal> valueCounts;
+    for (char byte : data) {
+        if (byte != 0)
+        {
+            if (valueCounts.contains(byte)) {
+                valueCounts[byte] += 1.0;
+            }
+            else {
+                valueCounts[byte] = 1.0;
+            }
+        }
+    }
 
+    QLineSeries* series = new QLineSeries();
+    for (int i = 0; i < valueCounts.values().size(); ++i) {
+        series->append(i, valueCounts.values()[i]);
+    }
+    QChart* chart = new QChart();
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    chart->legend()->hide();
+
+    mainWindow->setBarGraph(chart);
 }
 
 const void VolumeData::bind(){

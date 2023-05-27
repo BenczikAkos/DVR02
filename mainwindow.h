@@ -3,6 +3,7 @@
 #include "qmainwindow.h"
 #include "QtCore/qdeadlinetimer.h"
 #include <QtDebug>
+#include <QChart>
 
 
 namespace Ui {
@@ -17,6 +18,7 @@ public:
 	explicit MainWindow(QWidget* parent = nullptr);
 	void paintEvent(QPaintEvent* event) override;
 	QVector3D getDataSizes() const;
+	void setBarGraph(QChart* chart);
 	~MainWindow();
 
 signals:

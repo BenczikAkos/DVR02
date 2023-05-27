@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>881</width>
-    <height>602</height>
+    <width>864</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -162,10 +162,10 @@
    <widget class="QChartView" name="barGraph">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>180</y>
-      <width>221</width>
-      <height>91</height>
+      <x>10</x>
+      <y>550</y>
+      <width>631</width>
+      <height>101</height>
      </rect>
     </property>
    </widget>
@@ -175,7 +175,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>881</width>
+     <width>864</width>
      <height>22</height>
     </rect>
    </property>
