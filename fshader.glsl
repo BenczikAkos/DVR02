@@ -46,7 +46,7 @@ void main()
    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
 
    Ray eye = Ray(CameraPos, normalize(rayDirection));
-   AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f));
+   AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
 
    float tnear, tfar;
     if(IntersectBox(eye, aabb, tnear, tfar)){

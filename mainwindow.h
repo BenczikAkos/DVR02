@@ -4,6 +4,7 @@
 #include "QtCore/qdeadlinetimer.h"
 #include <QtDebug>
 
+
 namespace Ui {
 	class MainWindow;
 }
@@ -31,7 +32,6 @@ private slots:
 private:
 	int lastPaint = 0;
 	QDeadlineTimer updateFrameRateTimer = QDeadlineTimer();
-    //VolumeRenderWidget *canvas;
 	Ui::MainWindow* ui;
 };
 

@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "volumerenderwidget.h"
 #include "qstatusbar.h"
 #include "QtCore/QTime"
 
