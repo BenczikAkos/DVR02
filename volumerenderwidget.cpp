@@ -26,15 +26,6 @@ void VolumeRenderWidget::initializeGL()
     }
     m_posAttr = m_program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
-    LocViewMatrix = m_program->uniformLocation("ViewMatrix");
-    Q_ASSERT(LocViewMatrix != -1);
-    LocCameraPos = m_program->uniformLocation("CameraPos");
-    Q_ASSERT(LocCameraPos != -1);
-    LocWindowSize = m_program->uniformLocation("WindowSize");
-    Q_ASSERT(LocWindowSize != -1);
-    LocAABBScale = m_program->uniformLocation("AABBScale");
-    Q_ASSERT(LocAABBScale != -1);
-
 
     GLuint VolumeLocation = m_program->uniformLocation("Volume");
     Q_ASSERT(VolumeLocation != -1);
@@ -51,13 +42,13 @@ void VolumeRenderWidget::paintGL()
 
     m_program->bind();
 
-    m_program->setUniformValue(LocViewMatrix, ViewMatrix);
-    m_program->setUniformValue(LocCameraPos, CameraPos);
-    m_program->setUniformValue(LocAABBScale, AABBScale);
+    m_program->setUniformValue("ViewMatrix", ViewMatrix);
+    m_program->setUniformValue("CameraPos", CameraPos);
+    m_program->setUniformValue("AABBScale", AABBScale);
     volume->bind();
     //TODO: ne kerjuk már el minden frame-ben, legyen tagvaltozo
     QVector2D windowSize = QVector2D(this->width(), this->height());
-    m_program->setUniformValue(LocWindowSize, windowSize);
+    m_program->setUniformValue("WindowSize", windowSize);
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);

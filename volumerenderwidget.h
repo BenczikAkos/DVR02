@@ -47,10 +47,6 @@ private:
     boolean MouseFirstPressed = true;
     //uniform locations
     GLuint m_posAttr = 0;
-    GLuint LocViewMatrix = 0;
-    GLuint LocCameraPos = 0;
-    GLuint LocWindowSize = 0;
-    GLuint LocAABBScale = 0;
     //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();

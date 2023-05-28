@@ -9,8 +9,6 @@ ChartDialog::ChartDialog(MainWindow* parent)
 	ui->setupUi(this);
 	QChart* chart = parent->generateChart();
 	ui->chart->setChart(chart);
-	//setWindowFlags(Qt::Tool | Qt::WindowStaysOnBottomHint);
-	setFocusPolicy(Qt::TabFocus);
 }
 
 void ChartDialog::focusOutEvent(QFocusEvent* event)
