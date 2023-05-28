@@ -10,7 +10,7 @@ public:
 	explicit VolumeData();
 	VolumeData(GLuint loc, MainWindow* _mainWindow);
 	void loadVolume(QString path);
-	void createBarChart() const;
+	QChart* createChart() const;
 	const void bind();
 private:
 	void uploadTexture();

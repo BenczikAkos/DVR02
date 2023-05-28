@@ -18,6 +18,7 @@ public:
     void initializeGL() override;
     void paintGL() override;
     void openFile();
+    QChart* generateChart() const;
 
 protected:
     void keyPressEvent(QKeyEvent *ev) override;

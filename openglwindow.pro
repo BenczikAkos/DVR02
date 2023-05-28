@@ -3,7 +3,7 @@ SOURCES += \
     volumerenderwidget.cpp \
     mainwindow.cpp \
     volumedata.cpp \
-    graphdialog.cpp
+    chartdialog.cpp
 
 
 RESOURCES += shaders.qrc
@@ -11,15 +11,14 @@ RESOURCES += shaders.qrc
 target.path = ./build_qt
 INSTALLS += target
 
-FORMS += mainwindow.ui \
-        graphdialog.ui
+FORMS = mainwindow.ui chartdialog.ui
 
 HEADERS += \
     volumerenderwidget.h \
     ui_mainwindow.h \
     mainwindow.h \
     volumedata.h \
-    graphdialog.h
+    chartdialog.h
 
 QT += widgets
 QT += openglwidgets

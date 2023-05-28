@@ -3,6 +3,7 @@
 
 #include "qstatusbar.h"
 #include "QtCore/QTime"
+#include "chartdialog.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent },
@@ -40,9 +41,9 @@ QVector3D MainWindow::getDataSizes() const
     return QVector3D(x, y, z);
 }
 
-void MainWindow::setBarGraph(QChart* chart)
+QChart* MainWindow::generateChart() const
 {
-    ui->barGraph->setChart(chart);
+    return ui->openGLWidget->generateChart();
 }
 
 MainWindow::~MainWindow()
@@ -53,4 +54,12 @@ MainWindow::~MainWindow()
 void MainWindow::on_loadVolumeButton_clicked(bool checked)
 {
     ui->openGLWidget->openFile();
+}
+
+void MainWindow::on_chartButton_clicked(bool checked)
+{
+    auto graphDialog = new ChartDialog(this);
+    graphDialog->show();
+    graphDialog->raise();
+    graphDialog->activateWindow();
 }

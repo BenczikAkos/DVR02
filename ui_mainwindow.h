@@ -36,6 +36,7 @@ public:
     QSlider *AABBScale_z;
     QChartView *barGraph;
     QPushButton *loadVolumeButton;
+    QPushButton *chartButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -98,6 +99,9 @@ public:
         loadVolumeButton = new QPushButton(centralwidget);
         loadVolumeButton->setObjectName(QString::fromUtf8("loadVolumeButton"));
         loadVolumeButton->setGeometry(QRect(750, 130, 101, 24));
+        chartButton = new QPushButton(centralwidget);
+        chartButton->setObjectName(QString::fromUtf8("chartButton"));
+        chartButton->setGeometry(QRect(750, 160, 101, 24));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -116,6 +120,7 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         loadVolumeButton->setText(QCoreApplication::translate("MainWindow", "Load volume", nullptr));
+        chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
     } // retranslateUi
 
 };

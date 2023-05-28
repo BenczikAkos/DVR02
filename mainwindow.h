@@ -18,7 +18,7 @@ public:
 	explicit MainWindow(QWidget* parent = nullptr);
 	void paintEvent(QPaintEvent* event) override;
 	QVector3D getDataSizes() const;
-	void setBarGraph(QChart* chart);
+	QChart* generateChart() const;
 	~MainWindow();
 
 signals:
@@ -31,6 +31,7 @@ private slots:
 	void on_AABBScale_y_valueChanged(int value) { emit AABBChangedY(value); }
 	void on_AABBScale_z_valueChanged(int value) { emit AABBChangedZ(value); }
 	void on_loadVolumeButton_clicked(bool checked);
+	void on_chartButton_clicked(bool checked);
 
 private:
 	int lastPaint = 0;

@@ -182,6 +182,19 @@
      <string>Load volume</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="chartButton">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>160</y>
+      <width>101</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show chart</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

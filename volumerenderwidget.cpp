@@ -55,7 +55,7 @@ void VolumeRenderWidget::paintGL()
     m_program->setUniformValue(LocCameraPos, CameraPos);
     m_program->setUniformValue(LocAABBScale, AABBScale);
     volume->bind();
-    //TODO: ne kérjük már el minden frame-ben, legyen tagváltozó
+    //TODO: ne kerjuk már el minden frame-ben, legyen tagvaltozo
     QVector2D windowSize = QVector2D(this->width(), this->height());
     m_program->setUniformValue(LocWindowSize, windowSize);
 
@@ -95,6 +95,11 @@ void VolumeRenderWidget::openFile() {
     if (!path.isNull()) {
         volume->loadVolume(path);
     }
+}
+
+QChart* VolumeRenderWidget::generateChart() const
+{
+    return volume->createChart();
 }
 
 void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)

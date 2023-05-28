@@ -28,25 +28,9 @@ void VolumeData::loadVolume(QString path) {
     data = file.readAll();
     qWarning() << "Nb of datapoints: " << data.size();
     uploadTexture();
-    createBarChart();
 }
 
-void VolumeData::uploadTexture() {
-    auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
-    glDeleteTextures(1, &location);
-    glGenTextures(1, &location);
-    glBindTexture(GL_TEXTURE_3D, location);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, GL_UNSIGNED_BYTE, data.data());
-    glBindTexture(GL_TEXTURE_3D, 0);
-}
-
-void VolumeData::createBarChart() const {
+QChart* VolumeData::createChart() const {
     QMap<char, qreal> valueCounts;
     for (char byte : data) {
         if (byte != 0)
@@ -68,9 +52,24 @@ void VolumeData::createBarChart() const {
     chart->addSeries(series);
     chart->createDefaultAxes();
     chart->legend()->hide();
-
-    mainWindow->setBarGraph(chart);
+    return chart;
 }
+
+void VolumeData::uploadTexture() {
+    auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
+    glDeleteTextures(1, &location);
+    glGenTextures(1, &location);
+    glBindTexture(GL_TEXTURE_3D, location);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, GL_UNSIGNED_BYTE, data.data());
+    glBindTexture(GL_TEXTURE_3D, 0);
+}
+
 
 const void VolumeData::bind(){
     glActiveTexture(GL_TEXTURE0);
