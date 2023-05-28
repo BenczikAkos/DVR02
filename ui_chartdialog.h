@@ -12,7 +12,6 @@
 #include <QtCharts/QChartView>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QDialog>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -25,7 +24,7 @@ public:
     QVBoxLayout *verticalLayout;
     QChartView *chart;
 
-    void setupUi(QDialog *ChartDialog)
+    void setupUi(QWidget *ChartDialog)
     {
         if (ChartDialog->objectName().isEmpty())
             ChartDialog->setObjectName(QString::fromUtf8("ChartDialog"));
@@ -47,7 +46,7 @@ public:
         QMetaObject::connectSlotsByName(ChartDialog);
     } // setupUi
 
-    void retranslateUi(QDialog *ChartDialog)
+    void retranslateUi(QWidget *ChartDialog)
     {
         ChartDialog->setWindowTitle(QCoreApplication::translate("ChartDialog", "Dialog", nullptr));
     } // retranslateUi

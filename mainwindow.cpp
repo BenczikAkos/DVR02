@@ -61,5 +61,4 @@ void MainWindow::on_chartButton_clicked(bool checked)
     auto graphDialog = new ChartDialog(this);
     graphDialog->show();
     graphDialog->raise();
-    graphDialog->activateWindow();
 }

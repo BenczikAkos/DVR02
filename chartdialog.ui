@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>ChartDialog</class>
- <widget class="QDialog" name="ChartDialog">
+ <widget class="QWidget" name="ChartDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
