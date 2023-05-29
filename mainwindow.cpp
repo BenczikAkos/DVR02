@@ -13,9 +13,10 @@ MainWindow::MainWindow(QWidget* parent)
     qWarning() << this;
     updateFrameRateTimer.setRemainingTime(100);
     resize(880, 580);
-    QObject::connect(this, SIGNAL(AABBChangedX(int )), ui->openGLWidget, SLOT(setAABBScaleX(int )));
-    QObject::connect(this, SIGNAL(AABBChangedY(int )), ui->openGLWidget, SLOT(setAABBScaleY(int )));
-    QObject::connect(this, SIGNAL(AABBChangedZ(int )), ui->openGLWidget, SLOT(setAABBScaleZ(int )));
+    QObject::connect(this, SIGNAL(AABBChangedX(int)), ui->openGLWidget, SLOT(setAABBScaleX(int)));
+    QObject::connect(this, SIGNAL(AABBChangedY(int)), ui->openGLWidget, SLOT(setAABBScaleY(int)));
+    QObject::connect(this, SIGNAL(AABBChangedZ(int)), ui->openGLWidget, SLOT(setAABBScaleZ(int)));
+    QObject::connect(this, SIGNAL(intensityCapChanged(int)), ui->openGLWidget, SLOT(setIntensityCap(int)));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

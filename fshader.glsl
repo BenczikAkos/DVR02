@@ -6,6 +6,7 @@ uniform vec2 WindowSize;
 uniform vec3 CameraPos;
 uniform vec3 AABBScale;
 uniform sampler3D Volume;
+uniform float intensityCap;
 
 struct Ray {
     vec3 Origin;
@@ -28,6 +29,14 @@ bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
     t0 = max(0, t0);
     t1 = min(t_exit.x, min(t_exit.y, t_exit.z));
     return t1 > t0;
+}
+
+float cap(float value, float capValue) {
+    if (value > capValue) {
+        return 0.0;
+    } else {
+        return value;
+    }
 }
 
 vec4 colour_transfer(float intensity)
@@ -61,11 +70,12 @@ void main()
         vec4 colour = vec4(0.0f);
         for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
         {
-             float intensity = texture(Volume, pos).r;
-
-             if (intensity > maximum_intensity) {
-                 maximum_intensity = intensity;
-             }
+            float intensity = texture(Volume, pos).r;
+            intensity = cap(intensity, intensityCap);
+            intensity /= intensityCap;
+            if (intensity > maximum_intensity) {
+                maximum_intensity = intensity;
+            }
             // float intensity = texture(Volume, pos).r;
             // vec4 act_tex = colour_transfer(intensity);
             // colour.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * colour.a * colour.rgb;

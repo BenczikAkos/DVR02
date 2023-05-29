@@ -31,8 +31,8 @@ void VolumeData::loadVolume(QString path) {
 }
 
 QChart* VolumeData::createChart() const {
-    QMap<char, qreal> valueCounts;
-    for (char byte : data) {
+    QMap<unsigned char, qreal> valueCounts;
+    for (auto byte : data) {
         if (byte != 0)
         {
             if (valueCounts.contains(byte)) {
