@@ -33,7 +33,8 @@ public slots:
     void setAABBScaleX(int value);
     void setAABBScaleY(int value);
     void setAABBScaleZ(int value);
-    void setIntensityCap(int value);
+    void setIntensityMax(int value);
+    void setIntensityMin(int value);
 
 private:
     inline static const GLfloat vertices[] = {
@@ -52,7 +53,8 @@ private:
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();
     QVector3D AABBScale = QVector3D(1.0f, 1.0f, 1.0f);
-    float intensityCap = 1.0;
+    float intensityMin = 0.0;
+    float intensityMax = 1.0;
 
     VolumeData *volume = nullptr;
    

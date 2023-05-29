@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(this, SIGNAL(AABBChangedX(int)), ui->openGLWidget, SLOT(setAABBScaleX(int)));
     QObject::connect(this, SIGNAL(AABBChangedY(int)), ui->openGLWidget, SLOT(setAABBScaleY(int)));
     QObject::connect(this, SIGNAL(AABBChangedZ(int)), ui->openGLWidget, SLOT(setAABBScaleZ(int)));
-    QObject::connect(this, SIGNAL(intensityCapChanged(int)), ui->openGLWidget, SLOT(setIntensityCap(int)));
+    QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->openGLWidget, SLOT(setIntensityMax(int)));
+    QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->openGLWidget, SLOT(setIntensityMin(int)));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

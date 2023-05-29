@@ -6,7 +6,9 @@ uniform vec2 WindowSize;
 uniform vec3 CameraPos;
 uniform vec3 AABBScale;
 uniform sampler3D Volume;
-uniform float intensityCap;
+uniform float intensityMin;
+uniform float intensityMax;
+
 
 struct Ray {
     vec3 Origin;
@@ -31,8 +33,8 @@ bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
     return t1 > t0;
 }
 
-float cap(float value, float capValue) {
-    if (value > capValue) {
+float cap(float value, float min, float max) {
+    if (value > max || value < min) {
         return 0.0;
     } else {
         return value;
@@ -71,7 +73,7 @@ void main()
         for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
         {
             float intensity = texture(Volume, pos).r;
-            intensity = cap(intensity, intensityCap);
+            intensity = cap(intensity, intensityMin, intensityMax);
             //intensity /= intensityCap;
             if (intensity > maximum_intensity) {
                 maximum_intensity = intensity;

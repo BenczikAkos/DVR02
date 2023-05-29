@@ -25,7 +25,8 @@ signals:
 	void AABBChangedX(int value);
 	void AABBChangedY(int value);
 	void AABBChangedZ(int value);
-	void intensityCapChanged(int value);
+	void intensityMaxChanged(int value);
+	void intensityMinChanged(int value);
 
 private slots:
 	void on_AABBScale_x_valueChanged(int value) { emit AABBChangedX(value); }
@@ -33,7 +34,8 @@ private slots:
 	void on_AABBScale_z_valueChanged(int value) { emit AABBChangedZ(value); }
 	void on_loadVolumeButton_clicked(bool checked);
 	void on_chartButton_clicked(bool checked);
-	void on_intensityCapSlider_valueChanged(int value) { emit intensityCapChanged(value); }
+	void on_intensityMaxSlider_valueChanged(int value) { emit intensityMaxChanged(value); }
+	void on_intensityMinSlider_valueChanged(int value) { emit intensityMinChanged(value); }
 
 private:
 	int lastPaint = 0;

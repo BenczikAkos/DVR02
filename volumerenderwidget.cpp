@@ -49,7 +49,8 @@ void VolumeRenderWidget::paintGL()
     //TODO: ne kerjuk már el minden frame-ben, legyen tagvaltozo
     QVector2D windowSize = QVector2D(this->width(), this->height());
     m_program->setUniformValue("WindowSize", windowSize);
-    m_program->setUniformValue("intensityCap", intensityCap);
+    m_program->setUniformValue("intensityMin", intensityMin);
+    m_program->setUniformValue("intensityMax", intensityMax);
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);
@@ -160,9 +161,15 @@ void VolumeRenderWidget::setAABBScaleZ(int value)
     AABBScale.setZ(value / 300.0);
 }
 
-void VolumeRenderWidget::setIntensityCap(int value)
+void VolumeRenderWidget::setIntensityMax(int value)
 {
-    intensityCap = value / 255.0;
+    intensityMax = value / 255.0;
+}
+
+void VolumeRenderWidget::setIntensityMin(int value)
+{
+    qWarning() << intensityMin;
+    intensityMin = value / 255.0;
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {

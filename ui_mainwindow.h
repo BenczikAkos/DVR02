@@ -37,7 +37,8 @@ public:
     QChartView *barGraph;
     QPushButton *loadVolumeButton;
     QPushButton *chartButton;
-    QSlider *intensityCapSlider;
+    QSlider *intensityMaxSlider;
+    QSlider *intensityMinSlider;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -103,13 +104,19 @@ public:
         chartButton = new QPushButton(centralwidget);
         chartButton->setObjectName(QString::fromUtf8("chartButton"));
         chartButton->setGeometry(QRect(750, 160, 101, 24));
-        intensityCapSlider = new QSlider(centralwidget);
-        intensityCapSlider->setObjectName(QString::fromUtf8("intensityCapSlider"));
-        intensityCapSlider->setGeometry(QRect(660, 220, 191, 18));
-        intensityCapSlider->setMinimum(1);
-        intensityCapSlider->setMaximum(255);
-        intensityCapSlider->setValue(255);
-        intensityCapSlider->setOrientation(Qt::Horizontal);
+        intensityMaxSlider = new QSlider(centralwidget);
+        intensityMaxSlider->setObjectName(QString::fromUtf8("intensityMaxSlider"));
+        intensityMaxSlider->setGeometry(QRect(660, 220, 191, 18));
+        intensityMaxSlider->setMinimum(1);
+        intensityMaxSlider->setMaximum(255);
+        intensityMaxSlider->setValue(255);
+        intensityMaxSlider->setOrientation(Qt::Horizontal);
+        intensityMinSlider = new QSlider(centralwidget);
+        intensityMinSlider->setObjectName(QString::fromUtf8("intensityMinSlider"));
+        intensityMinSlider->setGeometry(QRect(660, 260, 191, 18));
+        intensityMinSlider->setMinimum(1);
+        intensityMinSlider->setMaximum(255);
+        intensityMinSlider->setOrientation(Qt::Horizontal);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
