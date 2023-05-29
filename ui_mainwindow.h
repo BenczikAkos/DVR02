@@ -107,8 +107,8 @@ public:
         intensityCapSlider->setObjectName(QString::fromUtf8("intensityCapSlider"));
         intensityCapSlider->setGeometry(QRect(660, 220, 191, 18));
         intensityCapSlider->setMinimum(1);
-        intensityCapSlider->setMaximum(100);
-        intensityCapSlider->setValue(100);
+        intensityCapSlider->setMaximum(255);
+        intensityCapSlider->setValue(255);
         intensityCapSlider->setOrientation(Qt::Horizontal);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);

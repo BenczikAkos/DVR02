@@ -162,7 +162,7 @@ void VolumeRenderWidget::setAABBScaleZ(int value)
 
 void VolumeRenderWidget::setIntensityCap(int value)
 {
-    intensityCap = value / 100.0;
+    intensityCap = value / 255.0;
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {
