@@ -168,7 +168,6 @@ void VolumeRenderWidget::setIntensityMax(int value)
 
 void VolumeRenderWidget::setIntensityMin(int value)
 {
-    qWarning() << intensityMin;
     intensityMin = value / 255.0;
 }
 

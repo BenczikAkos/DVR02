@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(this, SIGNAL(AABBChangedZ(int)), ui->openGLWidget, SLOT(setAABBScaleZ(int)));
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->openGLWidget, SLOT(setIntensityMax(int)));
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->openGLWidget, SLOT(setIntensityMin(int)));
+    QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->minValueSpinbox, SLOT(setValue(int)));
+    QObject::connect(ui->minValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMinSlider, SLOT(setValue(int)));
+
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

@@ -74,7 +74,6 @@ void main()
         {
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);
-            //intensity /= intensityCap;
             if (intensity > maximum_intensity) {
                 maximum_intensity = intensity;
             }

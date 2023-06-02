@@ -12,6 +12,7 @@
 #include <QtCharts/QChartView>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -39,6 +40,12 @@ public:
     QPushButton *chartButton;
     QSlider *intensityMaxSlider;
     QSlider *intensityMinSlider;
+    QLabel *TextureXSizeLabel;
+    QLabel *TextureYSizeLabel;
+    QLabel *TextureZSizeLabel;
+    QLabel *MinimumValueLabel;
+    QLabel *MaximumValueLabel;
+    QSpinBox *minValueSpinbox;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -46,7 +53,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(864, 710);
+        MainWindow->resize(913, 710);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new VolumeRenderWidget(centralwidget);
@@ -54,21 +61,21 @@ public:
         openGLWidget->setGeometry(QRect(10, 20, 631, 521));
         datasetSize_x = new QSpinBox(centralwidget);
         datasetSize_x->setObjectName(QString::fromUtf8("datasetSize_x"));
-        datasetSize_x->setGeometry(QRect(810, 10, 51, 29));
+        datasetSize_x->setGeometry(QRect(850, 10, 51, 29));
         datasetSize_x->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         datasetSize_x->setButtonSymbols(QAbstractSpinBox::NoButtons);
         datasetSize_x->setMaximum(1024);
         datasetSize_x->setValue(256);
         datasetSize_y = new QSpinBox(centralwidget);
         datasetSize_y->setObjectName(QString::fromUtf8("datasetSize_y"));
-        datasetSize_y->setGeometry(QRect(810, 50, 48, 29));
+        datasetSize_y->setGeometry(QRect(850, 50, 48, 29));
         datasetSize_y->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         datasetSize_y->setButtonSymbols(QAbstractSpinBox::NoButtons);
         datasetSize_y->setMaximum(1024);
         datasetSize_y->setValue(256);
         datasetSize_z = new QSpinBox(centralwidget);
         datasetSize_z->setObjectName(QString::fromUtf8("datasetSize_z"));
-        datasetSize_z->setGeometry(QRect(810, 90, 48, 29));
+        datasetSize_z->setGeometry(QRect(850, 90, 48, 29));
         datasetSize_z->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         datasetSize_z->setButtonSymbols(QAbstractSpinBox::NoButtons);
         datasetSize_z->setMinimum(1);
@@ -100,27 +107,47 @@ public:
         barGraph->setGeometry(QRect(10, 550, 631, 101));
         loadVolumeButton = new QPushButton(centralwidget);
         loadVolumeButton->setObjectName(QString::fromUtf8("loadVolumeButton"));
-        loadVolumeButton->setGeometry(QRect(750, 130, 101, 24));
+        loadVolumeButton->setGeometry(QRect(800, 130, 101, 24));
         chartButton = new QPushButton(centralwidget);
         chartButton->setObjectName(QString::fromUtf8("chartButton"));
-        chartButton->setGeometry(QRect(750, 160, 101, 24));
+        chartButton->setGeometry(QRect(800, 160, 101, 24));
         intensityMaxSlider = new QSlider(centralwidget);
         intensityMaxSlider->setObjectName(QString::fromUtf8("intensityMaxSlider"));
-        intensityMaxSlider->setGeometry(QRect(660, 220, 191, 18));
+        intensityMaxSlider->setGeometry(QRect(660, 290, 191, 18));
         intensityMaxSlider->setMinimum(1);
         intensityMaxSlider->setMaximum(255);
         intensityMaxSlider->setValue(255);
         intensityMaxSlider->setOrientation(Qt::Horizontal);
         intensityMinSlider = new QSlider(centralwidget);
         intensityMinSlider->setObjectName(QString::fromUtf8("intensityMinSlider"));
-        intensityMinSlider->setGeometry(QRect(660, 260, 191, 18));
+        intensityMinSlider->setGeometry(QRect(660, 240, 191, 18));
         intensityMinSlider->setMinimum(1);
         intensityMinSlider->setMaximum(255);
         intensityMinSlider->setOrientation(Qt::Horizontal);
+        TextureXSizeLabel = new QLabel(centralwidget);
+        TextureXSizeLabel->setObjectName(QString::fromUtf8("TextureXSizeLabel"));
+        TextureXSizeLabel->setGeometry(QRect(770, 20, 91, 16));
+        TextureYSizeLabel = new QLabel(centralwidget);
+        TextureYSizeLabel->setObjectName(QString::fromUtf8("TextureYSizeLabel"));
+        TextureYSizeLabel->setGeometry(QRect(770, 60, 91, 16));
+        TextureZSizeLabel = new QLabel(centralwidget);
+        TextureZSizeLabel->setObjectName(QString::fromUtf8("TextureZSizeLabel"));
+        TextureZSizeLabel->setGeometry(QRect(770, 100, 91, 16));
+        MinimumValueLabel = new QLabel(centralwidget);
+        MinimumValueLabel->setObjectName(QString::fromUtf8("MinimumValueLabel"));
+        MinimumValueLabel->setGeometry(QRect(650, 210, 91, 21));
+        MaximumValueLabel = new QLabel(centralwidget);
+        MaximumValueLabel->setObjectName(QString::fromUtf8("MaximumValueLabel"));
+        MaximumValueLabel->setGeometry(QRect(650, 270, 101, 16));
+        minValueSpinbox = new QSpinBox(centralwidget);
+        minValueSpinbox->setObjectName(QString::fromUtf8("minValueSpinbox"));
+        minValueSpinbox->setGeometry(QRect(860, 240, 42, 22));
+        minValueSpinbox->setMinimum(1);
+        minValueSpinbox->setMaximum(255);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 864, 22));
+        menubar->setGeometry(QRect(0, 0, 913, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -136,6 +163,11 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         loadVolumeButton->setText(QCoreApplication::translate("MainWindow", "Load volume", nullptr));
         chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
+        TextureXSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture X size", nullptr));
+        TextureYSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Y size", nullptr));
+        TextureZSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Z size", nullptr));
+        MinimumValueLabel->setText(QCoreApplication::translate("MainWindow", "Minimum value", nullptr));
+        MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
     } // retranslateUi
 
 };

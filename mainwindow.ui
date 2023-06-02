@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>864</width>
+    <width>913</width>
     <height>710</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
    <widget class="QSpinBox" name="datasetSize_x">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>850</x>
       <y>10</y>
       <width>51</width>
       <height>29</height>
@@ -49,7 +49,7 @@
    <widget class="QSpinBox" name="datasetSize_y">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>850</x>
       <y>50</y>
       <width>48</width>
       <height>29</height>
@@ -71,7 +71,7 @@
    <widget class="QSpinBox" name="datasetSize_z">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>850</x>
       <y>90</y>
       <width>48</width>
       <height>29</height>
@@ -172,7 +172,7 @@
    <widget class="QPushButton" name="loadVolumeButton">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>800</x>
       <y>130</y>
       <width>101</width>
       <height>24</height>
@@ -185,7 +185,7 @@
    <widget class="QPushButton" name="chartButton">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>800</x>
       <y>160</y>
       <width>101</width>
       <height>24</height>
@@ -199,7 +199,7 @@
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>220</y>
+      <y>290</y>
       <width>191</width>
       <height>18</height>
      </rect>
@@ -221,7 +221,7 @@
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>260</y>
+      <y>240</y>
       <width>191</width>
       <height>18</height>
      </rect>
@@ -236,13 +236,94 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="TextureXSizeLabel">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>20</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Texture X size</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TextureYSizeLabel">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>60</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Texture Y size</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TextureZSizeLabel">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>100</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Texture Z size</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MinimumValueLabel">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>210</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Minimum value</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MaximumValueLabel">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>270</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Maximum value</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="minValueSpinbox">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>240</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>255</number>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>864</width>
+     <width>913</width>
      <height>22</height>
     </rect>
    </property>
