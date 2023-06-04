@@ -12,11 +12,15 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
     qWarning() << this;
     updateFrameRateTimer.setRemainingTime(100);
-    resize(880, 580);
+    //resize(880, 580);
     QObject::connect(this, SIGNAL(AABBChangedX(int)), ui->openGLWidget, SLOT(setAABBScaleX(int)));
     QObject::connect(this, SIGNAL(AABBChangedY(int)), ui->openGLWidget, SLOT(setAABBScaleY(int)));
     QObject::connect(this, SIGNAL(AABBChangedZ(int)), ui->openGLWidget, SLOT(setAABBScaleZ(int)));
+    
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->openGLWidget, SLOT(setIntensityMax(int)));
+    QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->maxValueSpinbox, SLOT(setValue(int)));
+    QObject::connect(ui->maxValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMaxSlider, SLOT(setValue(int)));
+
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->openGLWidget, SLOT(setIntensityMin(int)));
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->minValueSpinbox, SLOT(setValue(int)));
     QObject::connect(ui->minValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMinSlider, SLOT(setValue(int)));

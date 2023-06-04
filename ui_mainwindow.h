@@ -9,7 +9,6 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
-#include <QtCharts/QChartView>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
@@ -35,7 +34,6 @@ public:
     QSlider *AABBScale_x;
     QSlider *AABBScale_y;
     QSlider *AABBScale_z;
-    QChartView *barGraph;
     QPushButton *loadVolumeButton;
     QPushButton *chartButton;
     QSlider *intensityMaxSlider;
@@ -46,6 +44,7 @@ public:
     QLabel *MinimumValueLabel;
     QLabel *MaximumValueLabel;
     QSpinBox *minValueSpinbox;
+    QSpinBox *maxValueSpinbox;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -53,7 +52,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(913, 710);
+        MainWindow->resize(917, 602);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         openGLWidget = new VolumeRenderWidget(centralwidget);
@@ -102,9 +101,6 @@ public:
         AABBScale_z->setMaximum(300);
         AABBScale_z->setValue(300);
         AABBScale_z->setOrientation(Qt::Vertical);
-        barGraph = new QChartView(centralwidget);
-        barGraph->setObjectName(QString::fromUtf8("barGraph"));
-        barGraph->setGeometry(QRect(10, 550, 631, 101));
         loadVolumeButton = new QPushButton(centralwidget);
         loadVolumeButton->setObjectName(QString::fromUtf8("loadVolumeButton"));
         loadVolumeButton->setGeometry(QRect(800, 130, 101, 24));
@@ -144,10 +140,16 @@ public:
         minValueSpinbox->setGeometry(QRect(860, 240, 42, 22));
         minValueSpinbox->setMinimum(1);
         minValueSpinbox->setMaximum(255);
+        maxValueSpinbox = new QSpinBox(centralwidget);
+        maxValueSpinbox->setObjectName(QString::fromUtf8("maxValueSpinbox"));
+        maxValueSpinbox->setGeometry(QRect(860, 290, 42, 22));
+        maxValueSpinbox->setMinimum(1);
+        maxValueSpinbox->setMaximum(255);
+        maxValueSpinbox->setValue(255);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 913, 22));
+        menubar->setGeometry(QRect(0, 0, 917, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
