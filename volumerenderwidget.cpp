@@ -145,20 +145,19 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
     setRotation(fromRadian(M_PI / 2 - phi), yRot);
 }
 
-void VolumeRenderWidget::setAABBScaleX(int value)
+void VolumeRenderWidget::setAABBScaleX(float value)
 {
-    qWarning() << value;
-    AABBScale.setX(value / 300.0);
+    AABBScale.setX(value);
 }
 
-void VolumeRenderWidget::setAABBScaleY(int value)
+void VolumeRenderWidget::setAABBScaleY(float value)
 {
-    AABBScale.setY(value / 300.0);
+    AABBScale.setY(value);
 }
 
-void VolumeRenderWidget::setAABBScaleZ(int value)
+void VolumeRenderWidget::setAABBScaleZ(float value)
 {
-    AABBScale.setZ(value / 300.0);
+    AABBScale.setZ(value);
 }
 
 void VolumeRenderWidget::setIntensityMax(int value)

@@ -8,6 +8,7 @@ uniform vec3 AABBScale;
 uniform sampler3D Volume;
 uniform float intensityMin;
 uniform float intensityMax;
+uniform float stepLength;
 
 
 struct Ray {
@@ -41,7 +42,7 @@ float cap(float value, float min, float max) {
     }
 }
 
-vec4 colour_transfer(float intensity)
+vec4 color_transfer(float intensity)
 {
     vec3 high = vec3(1.0, 1.0, 1.0);
     vec3 low = vec3(0.0, 0.0, 0.0);
@@ -65,12 +66,12 @@ void main()
         vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
         // Perform the ray marching:
         vec3 pos = rayStart;
-        float stepSize = 0.001f;
-        vec3 step = normalize(rayStop-rayStart) * stepSize;
-        float travel = distance(rayStop, rayStart);
+        float stepLength = 0.001f;
+        vec3 step = normalize(rayStop-rayStart) * stepLength;
+        float travel = distance(rayStart, rayStop);
         float maximum_intensity = 0.0f;
-        vec4 colour = vec4(0.0f);
-        for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepSize)
+        vec4 color = vec4(0.0f);
+        for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepLength)
         {
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);
@@ -78,12 +79,12 @@ void main()
                 maximum_intensity = intensity;
             }
             // float intensity = texture(Volume, pos).r;
-            // vec4 act_tex = colour_transfer(intensity);
-            // colour.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * colour.a * colour.rgb;
-            // colour.a = act_tex.a + (1 - act_tex.a) * colour.a;
+            // vec4 act_tex = color_transfer(intensity);
+            // color.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * color.a * color.rgb;
+            // color.a = act_tex.a + (1 - act_tex.a) * color.a;
         }
         fragColor = vec4(maximum_intensity, maximum_intensity, maximum_intensity, 1.0f);
-        // fragColor = colour;
+        // fragColor = color;
     }
    else{
        fragColor = vec4(0.0f);

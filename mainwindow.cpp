@@ -13,9 +13,9 @@ MainWindow::MainWindow(QWidget* parent)
     qWarning() << this;
     updateFrameRateTimer.setRemainingTime(100);
     //resize(880, 580);
-    QObject::connect(this, SIGNAL(AABBChangedX(int)), ui->openGLWidget, SLOT(setAABBScaleX(int)));
-    QObject::connect(this, SIGNAL(AABBChangedY(int)), ui->openGLWidget, SLOT(setAABBScaleY(int)));
-    QObject::connect(this, SIGNAL(AABBChangedZ(int)), ui->openGLWidget, SLOT(setAABBScaleZ(int)));
+    QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));
+    QObject::connect(this, SIGNAL(AABBChangedY(float)), ui->openGLWidget, SLOT(setAABBScaleY(float)));
+    QObject::connect(this, SIGNAL(AABBChangedZ(float)), ui->openGLWidget, SLOT(setAABBScaleZ(float)));
     
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->openGLWidget, SLOT(setIntensityMax(int)));
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->maxValueSpinbox, SLOT(setValue(int)));
@@ -70,4 +70,30 @@ void MainWindow::on_chartButton_clicked(bool checked)
     auto graphDialog = new ChartDialog(this);
     graphDialog->show();
     graphDialog->raise();
+}
+
+void MainWindow::on_AABBScale_x_valueChanged(int value)
+{
+    float normValue = normalizeSliderValue(*ui->AABBScale_x, value); 
+    emit AABBChangedX(normValue); 
+}
+
+void MainWindow::on_AABBScale_y_valueChanged(int value) 
+{ 
+    float normValue = normalizeSliderValue(*ui->AABBScale_y, value); 
+    emit AABBChangedY(normValue); 
+}
+
+void MainWindow::on_AABBScale_z_valueChanged(int value) 
+{ 
+    float normValue = normalizeSliderValue(*ui->AABBScale_z, value); 
+    emit AABBChangedZ(normValue); 
+}
+
+float MainWindow::normalizeSliderValue(const QSlider& slider, int value) const
+{
+    int minValue = slider.minimum();
+    int maxValue = slider.maximum();
+    return (static_cast<float>(value)) / (maxValue - minValue);
+
 }

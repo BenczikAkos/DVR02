@@ -30,9 +30,9 @@ protected:
     void rotateScene(float phi, float theta);
 
 public slots:
-    void setAABBScaleX(int value);
-    void setAABBScaleY(int value);
-    void setAABBScaleZ(int value);
+    void setAABBScaleX(float value);
+    void setAABBScaleY(float value);
+    void setAABBScaleZ(float value);
     void setIntensityMax(int value);
     void setIntensityMin(int value);
 
