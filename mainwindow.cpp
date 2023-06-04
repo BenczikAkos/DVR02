@@ -10,9 +10,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui {new Ui::MainWindow}
 {
     ui->setupUi(this);
-    qWarning() << this;
     updateFrameRateTimer.setRemainingTime(100);
-    //resize(880, 580);
     QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));
     QObject::connect(this, SIGNAL(AABBChangedY(float)), ui->openGLWidget, SLOT(setAABBScaleY(float)));
     QObject::connect(this, SIGNAL(AABBChangedZ(float)), ui->openGLWidget, SLOT(setAABBScaleZ(float)));

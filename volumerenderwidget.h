@@ -7,6 +7,11 @@
 #include "openglwindow.h"
 #include "volumedata.h"
 
+enum class Mode {
+    MIP,
+    Accumulate,
+    Average,
+};
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
@@ -47,7 +52,8 @@ private:
         1.0f, 1.0f
     };
     QOpenGLShaderProgram *m_program = nullptr;
-    boolean MouseFirstPressed = true;
+    Mode activeMode = Mode::MIP;  
+    QMap<Mode, QOpenGLShaderProgram*> modes;
     //uniform locations
     GLuint m_posAttr = 0;
     //uniforms
@@ -59,7 +65,8 @@ private:
     float stepLength = 0.001;
 
     VolumeData *volume = nullptr;
-   
+    //for display purposes
+    boolean MouseFirstPressed = true;
     float xRot = 180;
     float yRot = 180;
     float zRot = 180;

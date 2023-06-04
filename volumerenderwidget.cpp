@@ -21,9 +21,11 @@ void VolumeRenderWidget::initializeGL()
     m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl");
+    modes.insert(Mode::MIP, m_program);
     if(!m_program->link()){
         qWarning() << m_program->log();
     }
+
     m_posAttr = m_program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
 
@@ -39,7 +41,7 @@ void VolumeRenderWidget::paintGL()
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
 
     glClear(GL_COLOR_BUFFER_BIT);
-
+    m_program = modes.value(activeMode);
     m_program->bind();
 
     m_program->setUniformValue("ViewMatrix", ViewMatrix);
