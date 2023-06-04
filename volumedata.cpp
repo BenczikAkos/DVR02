@@ -57,6 +57,11 @@ QChart* VolumeData::createChart() const {
 
 void VolumeData::uploadTexture() {
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
+    if(x*y*z != data.size())
+    {
+        qWarning() << "Wrong texture sizes!";
+        return;
+    }
     glDeleteTextures(1, &location);
     glGenTextures(1, &location);
     glBindTexture(GL_TEXTURE_3D, location);
