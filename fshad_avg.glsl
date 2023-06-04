@@ -80,7 +80,7 @@ void main()
             intensity_sum += intensity;
         }
         float avg_intensity = intensity_sum / i * 5.0f;
-        fragColor = vec4(avg_intensity, avg_intensity, avg_intensity, 1.0f);
+        fragColor = vec4(color_transfer(avg_intensity));
     }
    else{
        fragColor = vec4(0.0f);

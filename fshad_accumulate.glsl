@@ -75,9 +75,10 @@ void main()
         while (travel > 0.0f && color.a < 1.0f)
         {
             float intensity = texture(Volume, pos).r;
+            intensity = cap(intensity, intensityMin, intensityMax);
             vec4 act_tex = color_transfer(intensity);
             color.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * color.a * color.rgb;
-            color.a = act_tex.a + (1 - act_tex.a) * color.a;
+            color.a = color.a + (1 - color.a) * act_tex.a;
             travel -= stepLength;
             pos += step;
         }
