@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -45,6 +46,8 @@ public:
     QLabel *MaximumValueLabel;
     QSpinBox *minValueSpinbox;
     QSpinBox *maxValueSpinbox;
+    QLabel *stepLengthLabel;
+    QDoubleSpinBox *stepLengthSpinBox;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -92,6 +95,7 @@ public:
         AABBScale_y->setGeometry(QRect(690, 10, 18, 160));
         AABBScale_y->setMinimum(1);
         AABBScale_y->setMaximum(300);
+        AABBScale_y->setSingleStep(1);
         AABBScale_y->setValue(300);
         AABBScale_y->setOrientation(Qt::Vertical);
         AABBScale_z = new QSlider(centralwidget);
@@ -146,6 +150,16 @@ public:
         maxValueSpinbox->setMinimum(1);
         maxValueSpinbox->setMaximum(255);
         maxValueSpinbox->setValue(255);
+        stepLengthLabel = new QLabel(centralwidget);
+        stepLengthLabel->setObjectName(QString::fromUtf8("stepLengthLabel"));
+        stepLengthLabel->setGeometry(QRect(670, 320, 71, 16));
+        stepLengthSpinBox = new QDoubleSpinBox(centralwidget);
+        stepLengthSpinBox->setObjectName(QString::fromUtf8("stepLengthSpinBox"));
+        stepLengthSpinBox->setGeometry(QRect(740, 320, 62, 22));
+        stepLengthSpinBox->setDecimals(3);
+        stepLengthSpinBox->setMaximum(1.000000000000000);
+        stepLengthSpinBox->setStepType(QAbstractSpinBox::AdaptiveDecimalStepType);
+        stepLengthSpinBox->setValue(0.001000000000000);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -170,6 +184,7 @@ public:
         TextureZSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Z size", nullptr));
         MinimumValueLabel->setText(QCoreApplication::translate("MainWindow", "Minimum value", nullptr));
         MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
+        stepLengthLabel->setText(QCoreApplication::translate("MainWindow", "Step length", nullptr));
     } // retranslateUi
 
 };

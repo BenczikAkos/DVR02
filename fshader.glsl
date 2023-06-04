@@ -66,12 +66,11 @@ void main()
         vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
         // Perform the ray marching:
         vec3 pos = rayStart;
-        float stepLength = 0.001f;
         vec3 step = normalize(rayStop-rayStart) * stepLength;
         float travel = distance(rayStart, rayStop);
         float maximum_intensity = 0.0f;
         vec4 color = vec4(0.0f);
-        for (int i=0; i < 1000 && travel > 0.0; ++i, pos += step, travel -= stepLength)
+        for (int i=0; i < 1.0/stepLength && travel > 0.0; ++i, pos += step, travel -= stepLength)
         {
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);

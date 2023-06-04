@@ -35,6 +35,7 @@ public slots:
     void setAABBScaleZ(float value);
     void setIntensityMax(int value);
     void setIntensityMin(int value);
+    void setStepLength(double value);
 
 private:
     inline static const GLfloat vertices[] = {
@@ -55,6 +56,7 @@ private:
     QVector3D AABBScale = QVector3D(1.0f, 1.0f, 1.0f);
     float intensityMin = 0.0;
     float intensityMax = 1.0;
+    float stepLength = 0.001;
 
     VolumeData *volume = nullptr;
    

@@ -51,6 +51,7 @@ void VolumeRenderWidget::paintGL()
     m_program->setUniformValue("WindowSize", windowSize);
     m_program->setUniformValue("intensityMin", intensityMin);
     m_program->setUniformValue("intensityMax", intensityMax);
+    m_program->setUniformValue("stepLength", stepLength);
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);
@@ -168,6 +169,11 @@ void VolumeRenderWidget::setIntensityMax(int value)
 void VolumeRenderWidget::setIntensityMin(int value)
 {
     intensityMin = value / 255.0;
+}
+
+void VolumeRenderWidget::setStepLength(double value)
+{
+    stepLength = value;
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {

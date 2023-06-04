@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->minValueSpinbox, SLOT(setValue(int)));
     QObject::connect(ui->minValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMinSlider, SLOT(setValue(int)));
 
+    QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(setStepLength(double)));
+
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {
