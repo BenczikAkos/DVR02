@@ -42,6 +42,8 @@ float cap(float value, float min, float max) {
     }
 }
 
+
+
 vec4 color_transfer(float intensity)
 {
     vec3 high = vec3(1.0, 1.0, 1.0);
@@ -68,21 +70,17 @@ void main()
         vec3 pos = rayStart;
         vec3 step = normalize(rayStop-rayStart) * stepLength;
         float travel = distance(rayStart, rayStop);
-        float maximum_intensity = 0.0f;
+        float intensity_sum = 0.0f;
         vec4 color = vec4(0.0f);
-        while (travel > 0.0f && color.a < 1.0f)
+        int i=0;
+        for (; i < 1.0/stepLength && travel > 0.0; ++i, pos += step, travel -= stepLength)
         {
             float intensity = texture(Volume, pos).r;
-            vec4 act_tex = color_transfer(intensity);
-            color.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * color.a * color.rgb;
-            color.a = act_tex.a + (1 - act_tex.a) * color.a;
-            travel -= stepLength;
-            pos += step;
+            intensity = cap(intensity, intensityMin, intensityMax);
+            intensity_sum += intensity;
         }
-        color.rgb = color.a * color.rgb;
-        color.a = 1.0;
-        // fragColor = vec4(maximum_intensity, maximum_intensity, maximum_intensity, 1.0f);
-        fragColor = color;
+        float avg_intensity = intensity_sum / i * 5.0f;
+        fragColor = vec4(avg_intensity, avg_intensity, avg_intensity, 1.0f);
     }
    else{
        fragColor = vec4(0.0f);

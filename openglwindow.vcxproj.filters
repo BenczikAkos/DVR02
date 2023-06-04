@@ -105,7 +105,10 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fshad_cube.glsl">
+    <None Include="fshad_accumulate.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fshad_avg.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="fshad_mip.glsl">

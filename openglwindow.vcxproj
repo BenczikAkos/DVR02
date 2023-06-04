@@ -224,7 +224,8 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fshad_cube.glsl" />
+    <None Include="fshad_accumulate.glsl" />
+    <None Include="fshad_avg.glsl" />
     <None Include="fshad_mip.glsl" />
     <QtRcc Include="shaders.qrc">
       

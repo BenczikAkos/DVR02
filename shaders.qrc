@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>vshader.glsl</file>
-        <file>fshad_cube.glsl</file>
         <file>fshad_mip.glsl</file>
+        <file>fshad_accumulate.glsl</file>
+        <file>fshad_avg.glsl</file>
     </qresource>
 </RCC>

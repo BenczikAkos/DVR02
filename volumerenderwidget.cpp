@@ -27,7 +27,8 @@ void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
     createShaderProgram(Mode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
-    createShaderProgram(Mode::Average, ":/vshader.glsl", ":/fshad_cube.glsl");
+    createShaderProgram(Mode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
+    createShaderProgram(Mode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");
     QOpenGLShaderProgram* m_program = modes.value(activeMode);
     if(!m_program->link()){
         qWarning() << m_program->log();
