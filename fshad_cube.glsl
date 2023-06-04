@@ -70,18 +70,17 @@ void main()
         float travel = distance(rayStart, rayStop);
         float maximum_intensity = 0.0f;
         vec4 color = vec4(0.0f);
-        for (int i=0; i < 1.0/stepLength && travel > 0.0; ++i, pos += step, travel -= stepLength)
+        while (travel > 0.0f && color.a < 1.0f)
         {
-        //     float intensity = texture(Volume, pos).r;
-        //     intensity = cap(intensity, intensityMin, intensityMax);
-        //     if (intensity > maximum_intensity) {
-        //         maximum_intensity = intensity;
-        //     }
             float intensity = texture(Volume, pos).r;
             vec4 act_tex = color_transfer(intensity);
             color.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * color.a * color.rgb;
             color.a = act_tex.a + (1 - act_tex.a) * color.a;
+            travel -= stepLength;
+            pos += step;
         }
+        color.rgb = color.a * color.rgb;
+        color.a = 1.0;
         // fragColor = vec4(maximum_intensity, maximum_intensity, maximum_intensity, 1.0f);
         fragColor = color;
     }
