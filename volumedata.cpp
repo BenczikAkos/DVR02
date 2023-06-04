@@ -15,7 +15,6 @@ VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
     : location { loc },
     mainWindow { _mainWindow }
 {
-    qWarning() << _mainWindow;
     initializeOpenGLFunctions();
 }
 
