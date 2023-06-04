@@ -42,8 +42,6 @@ float cap(float value, float min, float max) {
     }
 }
 
-
-
 vec4 color_transfer(float intensity)
 {
     vec3 high = vec3(1.0, 1.0, 1.0);
@@ -77,8 +75,8 @@ void main()
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);
             vec4 act_tex = color_transfer(intensity);
-            color.rgb = act_tex.a * act_tex.rgb + (1 - act_tex.a) * color.a * color.rgb;
-            color.a = color.a + (1 - color.a) * act_tex.a;
+            color.rgb += act_tex.rgb * (1 - color.a) * act_tex.a;
+            color.a += (1 - color.a) * act_tex.a;
             travel -= stepLength;
             pos += step;
         }

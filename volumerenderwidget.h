@@ -52,7 +52,6 @@ private:
         -1.0f, 1.0f,
         1.0f, 1.0f
     };
-    //QOpenGLShaderProgram *m_program = nullptr;
     void createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath);
     Mode activeMode = Mode::MIP;  
     QMap<Mode, QOpenGLShaderProgram*> modes;

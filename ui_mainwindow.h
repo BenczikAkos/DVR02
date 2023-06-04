@@ -159,7 +159,8 @@ public:
         stepLengthSpinBox = new QDoubleSpinBox(centralwidget);
         stepLengthSpinBox->setObjectName(QString::fromUtf8("stepLengthSpinBox"));
         stepLengthSpinBox->setGeometry(QRect(840, 330, 62, 22));
-        stepLengthSpinBox->setDecimals(3);
+        stepLengthSpinBox->setDecimals(4);
+        stepLengthSpinBox->setMinimum(0.000000000000000);
         stepLengthSpinBox->setMaximum(1.000000000000000);
         stepLengthSpinBox->setStepType(QAbstractSpinBox::AdaptiveDecimalStepType);
         stepLengthSpinBox->setValue(0.001000000000000);
