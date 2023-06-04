@@ -105,7 +105,10 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fshader.glsl">
+    <None Include="fshad_cube.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fshad_mip.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <QtRcc Include="shaders.qrc">

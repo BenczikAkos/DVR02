@@ -15,13 +15,20 @@ VolumeRenderWidget::~VolumeRenderWidget()
 
 }
 
+void VolumeRenderWidget::createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath)
+{
+    QOpenGLShaderProgram* m_program = new QOpenGLShaderProgram(this);
+    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexPath);
+    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentPath);
+    modes.insert(mode, m_program);
+}
+
 void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    QOpenGLShaderProgram* m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl");
-    modes.insert(Mode::MIP, m_program);
+    createShaderProgram(Mode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
+    createShaderProgram(Mode::Average, ":/vshader.glsl", ":/fshad_cube.glsl");
+    QOpenGLShaderProgram* m_program = modes.value(activeMode);
     if(!m_program->link()){
         qWarning() << m_program->log();
     }
@@ -42,7 +49,6 @@ void VolumeRenderWidget::paintGL()
 
     glClear(GL_COLOR_BUFFER_BIT);
     QOpenGLShaderProgram* m_program = modes.value(activeMode);
-    qWarning() << static_cast<int>(activeMode);
     m_program->bind();
 
     m_program->setUniformValue("ViewMatrix", ViewMatrix);
