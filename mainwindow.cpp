@@ -72,6 +72,14 @@ void MainWindow::on_chartButton_clicked(bool checked)
     graphDialog->raise();
 }
 
+float MainWindow::normalizeSliderValue(const QSlider& slider, int value) const
+{
+    int minValue = slider.minimum();
+    int maxValue = slider.maximum();
+    return (static_cast<float>(value)) / (maxValue - minValue);
+
+}
+
 void MainWindow::on_AABBScale_x_valueChanged(int value)
 {
     float normValue = normalizeSliderValue(*ui->AABBScale_x, value); 
@@ -90,10 +98,12 @@ void MainWindow::on_AABBScale_z_valueChanged(int value)
     emit AABBChangedZ(normValue); 
 }
 
-float MainWindow::normalizeSliderValue(const QSlider& slider, int value) const
+void MainWindow::on_intensityMinSlider_valueChanged(int value)
 {
-    int minValue = slider.minimum();
-    int maxValue = slider.maximum();
-    return (static_cast<float>(value)) / (maxValue - minValue);
+    emit intensityMinChanged(value);
+}
 
+void MainWindow::on_intensityMaxSlider_valueChanged(int value)
+{
+    emit intensityMaxChanged(value);
 }

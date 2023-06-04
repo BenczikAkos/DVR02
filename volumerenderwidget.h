@@ -26,7 +26,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
-    void setRotation(float angle, float& changeable);
+    void setRotation(float& changeable, float angle);
     void rotateScene(float phi, float theta);
 
 public slots:

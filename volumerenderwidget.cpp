@@ -114,9 +114,9 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     int dy = event->y() - mouse_lastPos.y();
 
     if (event->buttons() & Qt::LeftButton) {
-        setRotation(xRot - dy, xRot);
+        setRotation(xRot, xRot - dy);
         //setRotation(zRot - dy, zRot);
-        setRotation(yRot + dx, yRot);
+        setRotation(yRot, yRot + dx);
     }
     else if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 40;
@@ -141,8 +141,8 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
     CameraPos.setX(radius * cos(phi) * cos(theta));
     CameraPos.setY(radius * sin(theta));
     CameraPos.setZ(radius * sin(phi) * cos(theta));
-    setRotation(fromRadian(M_PI - theta), xRot);
-    setRotation(fromRadian(M_PI / 2 - phi), yRot);
+    setRotation(xRot, fromRadian(M_PI - theta));
+    setRotation(yRot, fromRadian(M_PI / 2 - phi));
 }
 
 void VolumeRenderWidget::setAABBScaleX(float value)
@@ -182,7 +182,7 @@ void VolumeRenderWidget::normalizeAngle(float &angle)
         angle -= 360.0;
 }
 
-void VolumeRenderWidget::setRotation(float angle, float& changeable) {
+void VolumeRenderWidget::setRotation(float& changeable, float angle) {
     normalizeAngle(angle);
     changeable = angle;
 }

@@ -34,8 +34,8 @@ private slots:
 	void on_AABBScale_z_valueChanged(int value);
 	void on_loadVolumeButton_clicked(bool checked);
 	void on_chartButton_clicked(bool checked);
-	void on_intensityMaxSlider_valueChanged(int value) { emit intensityMaxChanged(value); }
-	void on_intensityMinSlider_valueChanged(int value) { emit intensityMinChanged(value); }
+	void on_intensityMaxSlider_valueChanged(int value);
+	void on_intensityMinSlider_valueChanged(int value);
 
 private:
 	float normalizeSliderValue(const QSlider& slider, int value) const;
