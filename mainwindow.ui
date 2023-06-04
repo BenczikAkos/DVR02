@@ -332,8 +332,8 @@
    <widget class="QLabel" name="stepLengthLabel">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>320</y>
+      <x>760</x>
+      <y>330</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -345,8 +345,8 @@
    <widget class="QDoubleSpinBox" name="stepLengthSpinBox">
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>320</y>
+      <x>840</x>
+      <y>330</y>
       <width>62</width>
       <height>22</height>
      </rect>
@@ -362,6 +362,29 @@
     </property>
     <property name="value">
      <double>0.001000000000000</double>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="modeComboBox">
+    <property name="geometry">
+     <rect>
+      <x>777</x>
+      <y>360</y>
+      <width>121</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="modeLabel">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>360</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Mode:</string>
     </property>
    </widget>
   </widget>

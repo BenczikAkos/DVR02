@@ -18,7 +18,7 @@ VolumeRenderWidget::~VolumeRenderWidget()
 void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    m_program = new QOpenGLShaderProgram(this);
+    QOpenGLShaderProgram* m_program = new QOpenGLShaderProgram(this);
     m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl");
     m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl");
     modes.insert(Mode::MIP, m_program);
@@ -41,7 +41,8 @@ void VolumeRenderWidget::paintGL()
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
 
     glClear(GL_COLOR_BUFFER_BIT);
-    m_program = modes.value(activeMode);
+    QOpenGLShaderProgram* m_program = modes.value(activeMode);
+    qWarning() << static_cast<int>(activeMode);
     m_program->bind();
 
     m_program->setUniformValue("ViewMatrix", ViewMatrix);
@@ -176,6 +177,12 @@ void VolumeRenderWidget::setIntensityMin(int value)
 void VolumeRenderWidget::setStepLength(double value)
 {
     stepLength = value;
+}
+
+void VolumeRenderWidget::setMode(int mode)
+{
+    Mode _mode = static_cast<Mode>(mode);
+    activeMode = _mode;
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {

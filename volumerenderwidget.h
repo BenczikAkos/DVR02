@@ -8,9 +8,9 @@
 #include "volumedata.h"
 
 enum class Mode {
-    MIP,
-    Accumulate,
-    Average,
+    MIP = 0,
+    Accumulate = 1,
+    Average = 2,
 };
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
@@ -41,6 +41,7 @@ public slots:
     void setIntensityMax(int value);
     void setIntensityMin(int value);
     void setStepLength(double value);
+    void setMode(int mode);
 
 private:
     inline static const GLfloat vertices[] = {
@@ -51,7 +52,7 @@ private:
         -1.0f, 1.0f,
         1.0f, 1.0f
     };
-    QOpenGLShaderProgram *m_program = nullptr;
+    //QOpenGLShaderProgram *m_program = nullptr;
     Mode activeMode = Mode::MIP;  
     QMap<Mode, QOpenGLShaderProgram*> modes;
     //uniform locations

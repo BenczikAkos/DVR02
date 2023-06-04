@@ -11,6 +11,11 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     updateFrameRateTimer.setRemainingTime(100);
+    ui->modeComboBox->addItem("MIP");
+    ui->modeComboBox->addItem("Accumulate");
+    ui->modeComboBox->addItem("Average");
+
+
     QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));
     QObject::connect(this, SIGNAL(AABBChangedY(float)), ui->openGLWidget, SLOT(setAABBScaleY(float)));
     QObject::connect(this, SIGNAL(AABBChangedZ(float)), ui->openGLWidget, SLOT(setAABBScaleZ(float)));
@@ -25,6 +30,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(setStepLength(double)));
 
+    QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setMode(int)));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

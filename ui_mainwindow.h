@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -48,6 +49,8 @@ public:
     QSpinBox *maxValueSpinbox;
     QLabel *stepLengthLabel;
     QDoubleSpinBox *stepLengthSpinBox;
+    QComboBox *modeComboBox;
+    QLabel *modeLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -152,14 +155,20 @@ public:
         maxValueSpinbox->setValue(255);
         stepLengthLabel = new QLabel(centralwidget);
         stepLengthLabel->setObjectName(QString::fromUtf8("stepLengthLabel"));
-        stepLengthLabel->setGeometry(QRect(670, 320, 71, 16));
+        stepLengthLabel->setGeometry(QRect(760, 330, 71, 16));
         stepLengthSpinBox = new QDoubleSpinBox(centralwidget);
         stepLengthSpinBox->setObjectName(QString::fromUtf8("stepLengthSpinBox"));
-        stepLengthSpinBox->setGeometry(QRect(740, 320, 62, 22));
+        stepLengthSpinBox->setGeometry(QRect(840, 330, 62, 22));
         stepLengthSpinBox->setDecimals(3);
         stepLengthSpinBox->setMaximum(1.000000000000000);
         stepLengthSpinBox->setStepType(QAbstractSpinBox::AdaptiveDecimalStepType);
         stepLengthSpinBox->setValue(0.001000000000000);
+        modeComboBox = new QComboBox(centralwidget);
+        modeComboBox->setObjectName(QString::fromUtf8("modeComboBox"));
+        modeComboBox->setGeometry(QRect(777, 360, 121, 22));
+        modeLabel = new QLabel(centralwidget);
+        modeLabel->setObjectName(QString::fromUtf8("modeLabel"));
+        modeLabel->setGeometry(QRect(730, 360, 49, 16));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -185,6 +194,7 @@ public:
         MinimumValueLabel->setText(QCoreApplication::translate("MainWindow", "Minimum value", nullptr));
         MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
         stepLengthLabel->setText(QCoreApplication::translate("MainWindow", "Step length", nullptr));
+        modeLabel->setText(QCoreApplication::translate("MainWindow", "Mode:", nullptr));
     } // retranslateUi
 
 };
