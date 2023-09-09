@@ -21,10 +21,21 @@ VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
 void VolumeData::loadVolume(QString path) {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Not successful";
+        qWarning() << "File opening not successful";
         return;
     };
-    data = file.readAll();
+    QByteArray values = file.readAll();
+    for (int i = 0; i < values.size(); ++i) {
+        data.append(values.at(i));
+        char grad_x = values.at(i);
+        char grad_y = values.at(i);
+        char grad_z = values.at(i);
+        data.append(grad_x);
+        data.append(grad_y);
+        data.append(grad_z);
+    }
+    //data = file.readAll();
+
     qWarning() << "Nb of datapoints: " << data.size();
     uploadTexture();
 }
@@ -56,9 +67,9 @@ QChart* VolumeData::createChart() const {
 
 void VolumeData::uploadTexture() {
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
-    if(x*y*z != data.size())
+    if(x*y*z*4 != data.size())
     {
-        qWarning() << "Wrong texture sizes!";
+        qWarning() << "Wrong texture sizes!" << x*y*z*4 << " vs. " << data.size();
         return;
     }
     glDeleteTextures(1, &location);
@@ -70,7 +81,7 @@ void VolumeData::uploadTexture() {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, GL_UNSIGNED_BYTE, data.data());
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, x, y, z, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
     glBindTexture(GL_TEXTURE_3D, 0);
 }
 
