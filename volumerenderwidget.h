@@ -63,17 +63,17 @@ private:
     QVector3D AABBScale = QVector3D(1.0f, 1.0f, 1.0f);
     float intensityMin = 0.0;
     float intensityMax = 1.0;
-    float stepLength = 0.001;
+    float stepLength = 0.001f;
 
     VolumeData *volume = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
-    float xRot = 180;
-    float yRot = 180;
-    float zRot = 180;
+    float xRot = 180.0f;
+    float yRot = 180.0f;
+    float zRot = 180.0f;
     float phi = -M_PI_2;
-    float elevation = 0.0;
-    QPoint mouse_lastPos = QPoint(0.0, 0.0);
+    float elevation = 0.0f;
+    QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
     void normalizeAngle(float& angle);
     float fromRadian(float angle);
 };

@@ -14,6 +14,7 @@ public:
 	const void bind();
 private:
 	void uploadTexture();
+	char computeGrad(const int position, const QByteArray& values, const int stepsize);
 	MainWindow* mainWindow;
 	GLuint location = 0;
 	QByteArray data = QByteArray();

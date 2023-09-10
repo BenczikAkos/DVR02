@@ -19,17 +19,19 @@ VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
 }
 
 void VolumeData::loadVolume(QString path) {
+    data = nullptr;
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "File opening not successful";
         return;
     };
     QByteArray values = file.readAll();
+    auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y();
     for (int i = 0; i < values.size(); ++i) {
         data.append(values.at(i));
-        char grad_x = values.at(i);
-        char grad_y = values.at(i);
-        char grad_z = values.at(i);
+        char grad_x = computeGrad(i, values, 1);
+        char grad_y = computeGrad(i, values, x);
+        char grad_z = computeGrad(i, values, x*y);
         data.append(grad_x);
         data.append(grad_y);
         data.append(grad_z);
@@ -38,6 +40,23 @@ void VolumeData::loadVolume(QString path) {
 
     qWarning() << "Nb of datapoints: " << data.size();
     uploadTexture();
+}
+
+char VolumeData::computeGrad(const int position, const QByteArray& values, const int stepsize) {
+    char minus1, plus1;
+    if (stepsize > position) {
+        minus1 = values.at(position);
+        plus1 = values.at(position + stepsize);
+    }
+    else if (position + stepsize >= values.size()) {
+        minus1 = values.at(position - stepsize);
+        plus1 = values.at(position);
+    }
+    else {
+        minus1 = values.at(position - stepsize);
+        plus1 = values.at(position + stepsize);
+    }
+    return (plus1 - minus1) / (char)2;
 }
 
 QChart* VolumeData::createChart() const {
