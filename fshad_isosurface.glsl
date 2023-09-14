@@ -74,20 +74,17 @@ void main()
         {
             vec4 data = texture(Volume, pos);
             float intensity = data.r;
-            //intensity = cap(intensity, intensityMin, intensityMax);
             if(intensity >= intensityMax){
                 vec3 gradient = data.gba;
                 gradient = normalize(gradient);
-                vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0)); // Adjust light direction
+                vec3 lightDirection = normalize(-CameraPos);
                 float diff = max(dot(gradient, lightDirection), 0.0);
-                color = vec4(diff * vec3(1.0), 1.0);
+                color = vec4(diff * vec3(0.8667, 0.6314, 0.298), 1.0);
                 stop = true;
             }
             travel -= stepLength;
             pos += step;
         }
-        //color.rgb = color.a * color.rgb;
-        //color.a = 1.0;
         fragColor = color;
     }
    else{
