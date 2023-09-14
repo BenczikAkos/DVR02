@@ -4,5 +4,6 @@
         <file>fshad_mip.glsl</file>
         <file>fshad_accumulate.glsl</file>
         <file>fshad_avg.glsl</file>
+        <file>fshad_isosurface.glsl</file>
     </qresource>
 </RCC>

@@ -51,7 +51,9 @@ void VolumeRenderWidget::paintGL()
 
     glClear(GL_COLOR_BUFFER_BIT);
     QOpenGLShaderProgram* m_program = modes.value(activeMode);
-    m_program->bind();
+    if (!m_program->bind()) {
+        qWarning() << "Program not bound!";
+    };
 
     m_program->setUniformValue("ViewMatrix", ViewMatrix);
     m_program->setUniformValue("CameraPos", CameraPos);
