@@ -68,21 +68,26 @@ void main()
         vec3 pos = rayStart;
         vec3 step = normalize(rayStop-rayStart) * stepLength;
         float travel = distance(rayStart, rayStop);
-        float maximum_intensity = 0.0f;
         vec4 color = vec4(0.0f);
-        while (travel > 0.0f && color.a < 1.0f)
+        bool stop = false;
+        while (travel > 0.0f && color.a < 1.0f && !stop)
         {
-            float intensity = texture(Volume, pos).r;
-            intensity = cap(intensity, intensityMin, intensityMax);
-            vec4 act_tex = color_transfer(intensity);
-            color.rgb += act_tex.rgb * (1 - color.a) * act_tex.a;
-            color.a += (1 - color.a) * act_tex.a;
+            vec4 data = texture(Volume, pos);
+            float intensity = data.r;
+            //intensity = cap(intensity, intensityMin, intensityMax);
+            if(intensity >= intensityMax){
+                vec3 gradient = data.gba;
+                gradient = normalize(gradient);
+                vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0)); // Adjust light direction
+                float diff = max(dot(gradient, lightDirection), 0.0);
+                color = vec4(diff * vec3(1.0), 1.0);
+                stop = true;
+            }
             travel -= stepLength;
             pos += step;
         }
-        color.rgb = color.a * color.rgb;
-        color.a = 1.0;
-        // fragColor = vec4(maximum_intensity, maximum_intensity, maximum_intensity, 1.0f);
+        //color.rgb = color.a * color.rgb;
+        //color.a = 1.0;
         fragColor = color;
     }
    else{
