@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->modeComboBox->addItem("MIP");
     ui->modeComboBox->addItem("Accumulate");
     ui->modeComboBox->addItem("Average");
+    ui->modeComboBox->addItem("Isosurface");
 
 
     QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));

@@ -11,6 +11,7 @@ enum class Mode {
     MIP = 0,
     Accumulate = 1,
     Average = 2,
+    Isosurface = 3,
 };
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
