@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QLabel>
@@ -51,6 +52,7 @@ public:
     QDoubleSpinBox *stepLengthSpinBox;
     QComboBox *modeComboBox;
     QLabel *modeLabel;
+    QCheckBox *precomputeGradientsCheckBox;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -113,7 +115,7 @@ public:
         loadVolumeButton->setGeometry(QRect(800, 130, 101, 24));
         chartButton = new QPushButton(centralwidget);
         chartButton->setObjectName(QString::fromUtf8("chartButton"));
-        chartButton->setGeometry(QRect(800, 160, 101, 24));
+        chartButton->setGeometry(QRect(800, 180, 101, 24));
         intensityMaxSlider = new QSlider(centralwidget);
         intensityMaxSlider->setObjectName(QString::fromUtf8("intensityMaxSlider"));
         intensityMaxSlider->setGeometry(QRect(660, 290, 191, 18));
@@ -170,6 +172,10 @@ public:
         modeLabel = new QLabel(centralwidget);
         modeLabel->setObjectName(QString::fromUtf8("modeLabel"));
         modeLabel->setGeometry(QRect(730, 360, 49, 16));
+        precomputeGradientsCheckBox = new QCheckBox(centralwidget);
+        precomputeGradientsCheckBox->setObjectName(QString::fromUtf8("precomputeGradientsCheckBox"));
+        precomputeGradientsCheckBox->setGeometry(QRect(750, 155, 151, 20));
+        precomputeGradientsCheckBox->setTristate(false);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -196,6 +202,7 @@ public:
         MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
         stepLengthLabel->setText(QCoreApplication::translate("MainWindow", "Step length", nullptr));
         modeLabel->setText(QCoreApplication::translate("MainWindow", "Mode:", nullptr));
+        precomputeGradientsCheckBox->setText(QCoreApplication::translate("MainWindow", "Precompute gradients", nullptr));
     } // retranslateUi
 
 };

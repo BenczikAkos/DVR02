@@ -100,9 +100,8 @@ void VolumeRenderWidget::keyPressEvent(QKeyEvent *ev)
 void VolumeRenderWidget::openFile() {
     QString path = QFileDialog::getOpenFileName(this, tr("Open volume"), "..\\datasets\\raw", tr("RAW images(*.raw);;DAT files(*.dat)"));
     if (!path.isNull()) {
-        //MainWindow* mainWindow = qobject_cast<MainWindow*>(parent());
-        //boolean precomputeGrads = mainWindow->getPrecomputeGradients();
-        volume->loadVolume(path, true);
+        boolean precomputeGrads = ((MainWindow*)(parentWidget()->parentWidget()))->getPrecomputeGradientsChecked();
+        volume->loadVolume(path, precomputeGrads);
     }
 }
 

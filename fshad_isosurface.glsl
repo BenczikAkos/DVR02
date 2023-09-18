@@ -78,7 +78,7 @@ void main()
                 vec3 gradient = data.gba;
                 gradient = normalize(gradient);
                 vec3 lightDirection = normalize(-CameraPos);
-                float diff = max(dot(gradient, lightDirection), 0.0);
+                float diff = max(dot(gradient, vec3(1.0)), 0.0);
                 color = vec4(diff * vec3(0.8667, 0.6314, 0.298), 1.0);
                 stop = true;
             }

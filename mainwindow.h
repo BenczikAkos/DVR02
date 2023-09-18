@@ -28,6 +28,9 @@ signals:
 	void intensityMaxChanged(int value);
 	void intensityMinChanged(int value);
 
+public slots:
+	bool getPrecomputeGradientsChecked() const;
+
 private slots:
 	void on_AABBScale_x_valueChanged(int value);
 	void on_AABBScale_y_valueChanged(int value);

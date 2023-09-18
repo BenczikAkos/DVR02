@@ -54,7 +54,14 @@ QVector3D MainWindow::getDataSizes() const
     auto x = ui->datasetSize_x->value();
     auto y = ui->datasetSize_y->value();
     auto z = ui->datasetSize_z->value();
+    auto check = ui->precomputeGradientsCheckBox->isChecked();
+
     return QVector3D(x, y, z);
+}
+
+bool MainWindow::getPrecomputeGradientsChecked() const
+{
+    return ui->precomputeGradientsCheckBox->isChecked();
 }
 
 QChart* MainWindow::generateChart() const
