@@ -36,7 +36,7 @@ bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
 
 float cap(float value, float min, float max) {
     if (value > max || value < min) {
-        return 0.0;
+        return 0.0f;
     } else {
         return value;
     }
@@ -44,8 +44,8 @@ float cap(float value, float min, float max) {
 
 vec4 color_transfer(float intensity)
 {
-    vec3 high = vec3(1.0, 1.0, 1.0);
-    vec3 low = vec3(0.0, 0.0, 0.0);
+    vec3 high = vec3(1.0f);
+    vec3 low = vec3(0.0f);
     float alpha = (exp(intensity) - 1.0) / (exp(1.0) - 1.0);
     return vec4(intensity * high + (1.0 - intensity) * low, alpha);
 }
@@ -80,9 +80,8 @@ void main()
             travel -= stepLength;
             pos += step;
         }
-        color.rgb = color.a * color.rgb;
-        color.a = 1.0;
-        // fragColor = vec4(maximum_intensity, maximum_intensity, maximum_intensity, 1.0f);
+        //color.rgb = color.a * color.rgb;
+        // color.a = 1.0;
         fragColor = color;
     }
    else{
