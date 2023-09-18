@@ -18,7 +18,7 @@ VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
     initializeOpenGLFunctions();
 }
 
-void VolumeData::loadVolume(QString path) {
+void VolumeData::loadVolume(QString path, boolean precompute_grads) {
     data = nullptr;
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -29,17 +29,19 @@ void VolumeData::loadVolume(QString path) {
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y();
     for (int i = 0; i < values.size(); ++i) {
         data.append(values.at(i));
-        char grad_x = computeGrad(i, values, 1);
-        char grad_y = computeGrad(i, values, x);
-        char grad_z = computeGrad(i, values, x*y);
-        data.append(grad_x);
-        data.append(grad_y);
-        data.append(grad_z);
+        if (precompute_grads)
+        {
+            char grad_x = computeGrad(i, values, 1);
+            char grad_y = computeGrad(i, values, x);
+            char grad_z = computeGrad(i, values, x * y);
+            data.append(grad_x);
+            data.append(grad_y);
+            data.append(grad_z);
+        }
     }
-    //data = file.readAll();
 
     qWarning() << "Nb of datapoints: " << data.size();
-    uploadTexture();
+    uploadTexture(precompute_grads);
 }
 
 char VolumeData::computeGrad(const int position, const QByteArray& values, const int stepsize) {
@@ -84,11 +86,12 @@ QChart* VolumeData::createChart() const {
     return chart;
 }
 
-void VolumeData::uploadTexture() {
+void VolumeData::uploadTexture(boolean precompute_grads) {
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
-    if(x*y*z*4 != data.size())
+    if( (precompute_grads && x*y*z*4 != data.size()) || (!precompute_grads && x*y*z != data.size()) )
     {
-        qWarning() << "Wrong texture sizes!" << x*y*z*4 << " vs. " << data.size();
+        int coef = precompute_grads ? 4 : 1;
+        qWarning() << "Wrong texture sizes!" << x*y*z*coef << " vs. " << data.size();
         return;
     }
     glDeleteTextures(1, &location);
@@ -100,7 +103,12 @@ void VolumeData::uploadTexture() {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, x, y, z, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+    if (precompute_grads) {
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, x, y, z, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+    }
+    else {
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, GL_UNSIGNED_BYTE, data.data());
+    }
     glBindTexture(GL_TEXTURE_3D, 0);
 }
 
