@@ -94,7 +94,7 @@ void main()
                 // vec3 gradient = data.gba;
                 // gradient = normalize(gradient);
                 vec3 gradient = computeGradient(pos, sample0, sample1);
-                vec3 lightDir = normalize(CameraPos - pos);
+                vec3 lightDir = normalize(CameraPos - pos) * -1.0f;
                 vec3 viewDir = normalize(CameraPos - pos);
                 vec3 halfwayDir = normalize(lightDir + viewDir);  
                 float diff = max(dot(gradient, lightDir), 0.0);
@@ -102,8 +102,8 @@ void main()
                 
                 float spec = pow(max(dot(gradient, halfwayDir), 0.0), 20.0f);
                 vec3 spec_color = spec * vec3(0.3137, 0.2275, 0.6588);
-                // color = 0.1f * vec3(1.0) + 0.5f * diffuse + 0.4f * spec_color;
-                color = gradient;
+                color = 0.1f * vec3(1.0) + 0.5f * diffuse + 0.4f * spec_color;
+                // color = gradient;
                 stop = true;
             }
             travel -= stepLength;
