@@ -42,9 +42,8 @@ float cap(float value, float min, float max) {
     }
 }
 
-vec3 computeGradient(vec3 pos) {
+vec3 computeGradient(vec3 pos, out vec3 sample0, out vec3 sample1) {
     vec3 step = vec3(1.0 / 256.0);
-    vec3 sample0, sample1;
     sample0.x = texture(Volume, vec3(pos.x - step.x, pos.y, pos.z)).r;
     sample0.y = texture(Volume, vec3(pos.x, pos.y - step.y, pos.z)).r;
     sample0.z = texture(Volume, vec3(pos.x, pos.y, pos.z - step.z)).r;
@@ -52,7 +51,6 @@ vec3 computeGradient(vec3 pos) {
     sample1.y = texture(Volume, vec3(pos.x, pos.y + step.y, pos.z)).r;
     sample1.z = texture(Volume, vec3(pos.x, pos.y, pos.z + step.z)).r;
     return normalize(sample1 - sample0);
-
 }
 
 vec4 color_transfer(float intensity)
@@ -87,10 +85,15 @@ void main()
         {
             vec4 data = texture(Volume, pos);
             float intensity = data.r;
+            vec3 sample0, sample1;
+            // vec3 scaledPosition = pos * 256.0f - vec3(0.5f);
+            // vec3 fraction = scaledPosition - floor(scaledPosition);
+            // vec3 correctionPolynomial = (fraction * (fraction - vec3(1.0f)) / 2.0f);
+            // intensity += dot((sample0 - 2.0f * vec3(intensity) + sample1), correctionPolynomial);
             if(intensity >= intensityMax){
-                vec3 gradient = computeGradient(pos);
                 // vec3 gradient = data.gba;
                 // gradient = normalize(gradient);
+                vec3 gradient = computeGradient(pos, sample0, sample1);
                 vec3 lightDir = normalize(CameraPos - pos);
                 vec3 viewDir = normalize(CameraPos - pos);
                 vec3 halfwayDir = normalize(lightDir + viewDir);  
