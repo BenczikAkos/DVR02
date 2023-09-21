@@ -26,6 +26,7 @@ void VolumeData::loadVolume(QString path, boolean precompute_grads) {
         return;
     };
     QByteArray values = file.readAll();
+    file.close();
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y();
     for (int i = 0; i < values.size(); ++i) {
         data.append(values.at(i));
