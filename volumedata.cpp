@@ -18,7 +18,7 @@ VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
     initializeOpenGLFunctions();
 }
 
-void VolumeData::loadVolume(QString path, boolean precompute_grads) {
+void VolumeData::loadVolume(QString path, boolean precompute_grads, GLenum dataType) {
     data = nullptr;
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -42,7 +42,7 @@ void VolumeData::loadVolume(QString path, boolean precompute_grads) {
     }
 
     qWarning() << "Nb of datapoints: " << data.size();
-    uploadTexture(precompute_grads);
+    uploadTexture(precompute_grads, dataType);
 }
 
 char VolumeData::computeGrad(const int position, const QByteArray& values, const int stepsize) {
@@ -87,7 +87,7 @@ QChart* VolumeData::createChart() const {
     return chart;
 }
 
-void VolumeData::uploadTexture(boolean precompute_grads) {
+void VolumeData::uploadTexture(boolean precompute_grads, GLenum dataType) {
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
     if( (precompute_grads && x*y*z*4 != data.size()) || (!precompute_grads && x*y*z != data.size()) )
     {
@@ -105,10 +105,10 @@ void VolumeData::uploadTexture(boolean precompute_grads) {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     if (precompute_grads) {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, x, y, z, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, x, y, z, 0, GL_RGBA, dataType, data.data());
     }
     else {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, GL_UNSIGNED_BYTE, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, dataType, data.data());
     }
     glBindTexture(GL_TEXTURE_3D, 0);
 }

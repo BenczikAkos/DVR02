@@ -43,6 +43,7 @@ public slots:
     void setIntensityMin(int value);
     void setStepLength(double value);
     void setMode(int mode);
+    void setDataType(int type);
 
 private:
     inline static const GLfloat vertices[] = {
@@ -54,7 +55,8 @@ private:
         1.0f, 1.0f
     };
     void createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath);
-    Mode activeMode = Mode::MIP;  
+    GLenum dataType = GL_UNSIGNED_BYTE;
+    Mode activeMode = Mode::MIP;
     QMap<Mode, QOpenGLShaderProgram*> modes;
     //uniform locations
     GLuint m_posAttr = 0;

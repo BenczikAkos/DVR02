@@ -16,15 +16,23 @@ MainWindow::MainWindow(QWidget* parent)
     ui->modeComboBox->addItem("Average");
     ui->modeComboBox->addItem("Isosurface");
 
+    ui->dataTypeComboBox->addItem("uint8");
+    ui->dataTypeComboBox->addItem("uint16");
+    ui->dataTypeComboBox->addItem("uint32");
+    ui->dataTypeComboBox->addItem("int8");
+    ui->dataTypeComboBox->addItem("int16");
+    ui->dataTypeComboBox->addItem("int32");
+    ui->dataTypeComboBox->addItem("float");
+
 
     QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));
     QObject::connect(this, SIGNAL(AABBChangedY(float)), ui->openGLWidget, SLOT(setAABBScaleY(float)));
     QObject::connect(this, SIGNAL(AABBChangedZ(float)), ui->openGLWidget, SLOT(setAABBScaleZ(float)));
-    
+    //max value slider and its combobox
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->openGLWidget, SLOT(setIntensityMax(int)));
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->maxValueSpinbox, SLOT(setValue(int)));
     QObject::connect(ui->maxValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMaxSlider, SLOT(setValue(int)));
-
+    //min value slider and its combobox
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->openGLWidget, SLOT(setIntensityMin(int)));
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->minValueSpinbox, SLOT(setValue(int)));
     QObject::connect(ui->minValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMinSlider, SLOT(setValue(int)));
@@ -32,6 +40,8 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(setStepLength(double)));
 
     QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setMode(int)));
+
+    QObject::connect(ui->dataTypeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setDataType(int)));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

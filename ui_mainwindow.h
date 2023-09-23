@@ -15,7 +15,6 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -38,15 +37,16 @@ public:
     VolumeRenderWidget *openGLWidget;
     QTabWidget *tabWidget;
     QWidget *tab_input;
-    QFormLayout *formLayout;
     QSpinBox *datasetSize_x;
-    QLabel *TextureXSizeLabel;
-    QSpinBox *datasetSize_y;
     QSpinBox *datasetSize_z;
-    QLabel *TextureYSizeLabel;
     QLabel *TextureZSizeLabel;
     QPushButton *loadVolumeButton;
     QCheckBox *precomputeGradientsCheckBox;
+    QLabel *TextureYSizeLabel;
+    QSpinBox *datasetSize_y;
+    QLabel *TextureXSizeLabel;
+    QComboBox *dataTypeComboBox;
+    QLabel *label;
     QWidget *tab_vis;
     QSlider *AABBScale_z;
     QSlider *AABBScale_y;
@@ -98,19 +98,16 @@ public:
 
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy1);
         tab_input = new QWidget();
         tab_input->setObjectName(QString::fromUtf8("tab_input"));
-        formLayout = new QFormLayout(tab_input);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setLabelAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        formLayout->setFormAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         datasetSize_x = new QSpinBox(tab_input);
         datasetSize_x->setObjectName(QString::fromUtf8("datasetSize_x"));
+        datasetSize_x->setGeometry(QRect(90, 30, 31, 21));
         QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
@@ -120,54 +117,43 @@ public:
         datasetSize_x->setButtonSymbols(QAbstractSpinBox::NoButtons);
         datasetSize_x->setMaximum(1024);
         datasetSize_x->setValue(256);
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, datasetSize_x);
-
-        TextureXSizeLabel = new QLabel(tab_input);
-        TextureXSizeLabel->setObjectName(QString::fromUtf8("TextureXSizeLabel"));
-
-        formLayout->setWidget(0, QFormLayout::LabelRole, TextureXSizeLabel);
-
-        datasetSize_y = new QSpinBox(tab_input);
-        datasetSize_y->setObjectName(QString::fromUtf8("datasetSize_y"));
-        datasetSize_y->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        datasetSize_y->setButtonSymbols(QAbstractSpinBox::NoButtons);
-        datasetSize_y->setMaximum(1024);
-        datasetSize_y->setValue(256);
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, datasetSize_y);
-
         datasetSize_z = new QSpinBox(tab_input);
         datasetSize_z->setObjectName(QString::fromUtf8("datasetSize_z"));
+        datasetSize_z->setGeometry(QRect(90, 90, 31, 21));
         datasetSize_z->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         datasetSize_z->setButtonSymbols(QAbstractSpinBox::NoButtons);
         datasetSize_z->setMinimum(1);
         datasetSize_z->setMaximum(1024);
         datasetSize_z->setValue(256);
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, datasetSize_z);
-
-        TextureYSizeLabel = new QLabel(tab_input);
-        TextureYSizeLabel->setObjectName(QString::fromUtf8("TextureYSizeLabel"));
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, TextureYSizeLabel);
-
         TextureZSizeLabel = new QLabel(tab_input);
         TextureZSizeLabel->setObjectName(QString::fromUtf8("TextureZSizeLabel"));
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, TextureZSizeLabel);
-
+        TextureZSizeLabel->setGeometry(QRect(10, 90, 72, 16));
         loadVolumeButton = new QPushButton(tab_input);
         loadVolumeButton->setObjectName(QString::fromUtf8("loadVolumeButton"));
-
-        formLayout->setWidget(3, QFormLayout::LabelRole, loadVolumeButton);
-
+        loadVolumeButton->setGeometry(QRect(10, 120, 171, 24));
         precomputeGradientsCheckBox = new QCheckBox(tab_input);
         precomputeGradientsCheckBox->setObjectName(QString::fromUtf8("precomputeGradientsCheckBox"));
+        precomputeGradientsCheckBox->setGeometry(QRect(9, 520, 140, 20));
         precomputeGradientsCheckBox->setTristate(false);
-
-        formLayout->setWidget(4, QFormLayout::LabelRole, precomputeGradientsCheckBox);
-
+        TextureYSizeLabel = new QLabel(tab_input);
+        TextureYSizeLabel->setObjectName(QString::fromUtf8("TextureYSizeLabel"));
+        TextureYSizeLabel->setGeometry(QRect(10, 60, 72, 16));
+        datasetSize_y = new QSpinBox(tab_input);
+        datasetSize_y->setObjectName(QString::fromUtf8("datasetSize_y"));
+        datasetSize_y->setGeometry(QRect(90, 60, 31, 21));
+        datasetSize_y->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        datasetSize_y->setButtonSymbols(QAbstractSpinBox::NoButtons);
+        datasetSize_y->setMaximum(1024);
+        datasetSize_y->setValue(256);
+        TextureXSizeLabel = new QLabel(tab_input);
+        TextureXSizeLabel->setObjectName(QString::fromUtf8("TextureXSizeLabel"));
+        TextureXSizeLabel->setGeometry(QRect(10, 30, 72, 16));
+        dataTypeComboBox = new QComboBox(tab_input);
+        dataTypeComboBox->setObjectName(QString::fromUtf8("dataTypeComboBox"));
+        dataTypeComboBox->setGeometry(QRect(90, 160, 91, 22));
+        label = new QLabel(tab_input);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(10, 160, 71, 21));
         tabWidget->addTab(tab_input, QString());
         tab_vis = new QWidget();
         tab_vis->setObjectName(QString::fromUtf8("tab_vis"));
@@ -195,7 +181,7 @@ public:
         AABBScale_x->setOrientation(Qt::Vertical);
         modeLabel = new QLabel(tab_vis);
         modeLabel->setObjectName(QString::fromUtf8("modeLabel"));
-        modeLabel->setGeometry(QRect(10, 360, 49, 16));
+        modeLabel->setGeometry(QRect(30, 340, 49, 16));
         maxValueSpinbox = new QSpinBox(tab_vis);
         maxValueSpinbox->setObjectName(QString::fromUtf8("maxValueSpinbox"));
         maxValueSpinbox->setGeometry(QRect(140, 290, 42, 22));
@@ -207,7 +193,7 @@ public:
         MinimumValueLabel->setGeometry(QRect(0, 210, 91, 21));
         modeComboBox = new QComboBox(tab_vis);
         modeComboBox->setObjectName(QString::fromUtf8("modeComboBox"));
-        modeComboBox->setGeometry(QRect(50, 360, 121, 22));
+        modeComboBox->setGeometry(QRect(70, 340, 111, 22));
         intensityMaxSlider = new QSlider(tab_vis);
         intensityMaxSlider->setObjectName(QString::fromUtf8("intensityMaxSlider"));
         intensityMaxSlider->setGeometry(QRect(10, 290, 120, 20));
@@ -217,7 +203,7 @@ public:
         intensityMaxSlider->setOrientation(Qt::Horizontal);
         stepLengthLabel = new QLabel(tab_vis);
         stepLengthLabel->setObjectName(QString::fromUtf8("stepLengthLabel"));
-        stepLengthLabel->setGeometry(QRect(10, 330, 71, 16));
+        stepLengthLabel->setGeometry(QRect(110, 40, 71, 16));
         intensityMinSlider = new QSlider(tab_vis);
         intensityMinSlider->setObjectName(QString::fromUtf8("intensityMinSlider"));
         intensityMinSlider->setGeometry(QRect(10, 240, 120, 18));
@@ -234,7 +220,7 @@ public:
         minValueSpinbox->setMaximum(255);
         stepLengthSpinBox = new QDoubleSpinBox(tab_vis);
         stepLengthSpinBox->setObjectName(QString::fromUtf8("stepLengthSpinBox"));
-        stepLengthSpinBox->setGeometry(QRect(80, 330, 61, 22));
+        stepLengthSpinBox->setGeometry(QRect(110, 60, 61, 22));
         stepLengthSpinBox->setDecimals(4);
         stepLengthSpinBox->setMinimum(0.000000000000000);
         stepLengthSpinBox->setMaximum(1.000000000000000);
@@ -242,7 +228,7 @@ public:
         stepLengthSpinBox->setValue(0.001000000000000);
         chartButton = new QPushButton(tab_vis);
         chartButton->setObjectName(QString::fromUtf8("chartButton"));
-        chartButton->setGeometry(QRect(90, 420, 75, 24));
+        chartButton->setGeometry(QRect(20, 400, 75, 24));
         tabWidget->addTab(tab_vis, QString());
 
         gridLayout->addWidget(tabWidget, 0, 1, 1, 1);
@@ -267,11 +253,12 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Volume render", nullptr));
-        TextureXSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture X size", nullptr));
-        TextureYSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Y size", nullptr));
         TextureZSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Z size", nullptr));
         loadVolumeButton->setText(QCoreApplication::translate("MainWindow", "Load volume", nullptr));
         precomputeGradientsCheckBox->setText(QCoreApplication::translate("MainWindow", "Precompute gradients", nullptr));
+        TextureYSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Y size", nullptr));
+        TextureXSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture X size", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Data type", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_input), QCoreApplication::translate("MainWindow", "Read settings", nullptr));
         modeLabel->setText(QCoreApplication::translate("MainWindow", "Mode:", nullptr));
         MinimumValueLabel->setText(QCoreApplication::translate("MainWindow", "Minimum value", nullptr));
