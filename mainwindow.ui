@@ -10,8 +10,18 @@
     <height>604</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Volume render</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="Default">
+    <normaloff>C:/Users/Ákos/Downloads/cube-3d.png</normaloff>C:/Users/Ákos/Downloads/cube-3d.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -28,6 +38,12 @@
       <width>631</width>
       <height>521</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
    </widget>
    <widget class="QPushButton" name="chartButton">
@@ -51,6 +67,12 @@
       <width>261</width>
       <height>531</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="currentIndex">
      <number>1</number>

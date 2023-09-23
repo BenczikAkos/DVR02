@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
@@ -65,22 +66,39 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(919, 604);
-        centralwidget = new QWidget(MainWindow);
-        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
+        QIcon icon;
+        QString iconThemeName = QString::fromUtf8("Default");
+        if (QIcon::hasThemeIcon(iconThemeName)) {
+            icon = QIcon::fromTheme(iconThemeName);
+        } else {
+            icon.addFile(QString::fromUtf8("C:/Users/\303\201kos/Downloads/cube-3d.png"), QSize(), QIcon::Normal, QIcon::Off);
+        }
+        MainWindow->setWindowIcon(icon);
+        centralwidget = new QWidget(MainWindow);
+        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
         centralwidget->setSizePolicy(sizePolicy);
         openGLWidget = new VolumeRenderWidget(centralwidget);
         openGLWidget->setObjectName(QString::fromUtf8("openGLWidget"));
         openGLWidget->setGeometry(QRect(10, 20, 631, 521));
+        sizePolicy.setHeightForWidth(openGLWidget->sizePolicy().hasHeightForWidth());
+        openGLWidget->setSizePolicy(sizePolicy);
         chartButton = new QPushButton(centralwidget);
         chartButton->setObjectName(QString::fromUtf8("chartButton"));
         chartButton->setGeometry(QRect(670, 530, 101, 24));
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(660, 0, 261, 531));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy1);
         tab_input = new QWidget();
         tab_input->setObjectName(QString::fromUtf8("tab_input"));
         precomputeGradientsCheckBox = new QCheckBox(tab_input);
@@ -213,7 +231,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Volume render", nullptr));
         chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
         precomputeGradientsCheckBox->setText(QCoreApplication::translate("MainWindow", "Precompute gradients", nullptr));
         TextureZSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Z size", nullptr));
