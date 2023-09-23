@@ -89,12 +89,12 @@ QChart* VolumeData::createChart() const {
 
 void VolumeData::uploadTexture(boolean precompute_grads, GLenum dataType) {
     auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
-    if( (precompute_grads && x*y*z*4 != data.size()) || (!precompute_grads && x*y*z != data.size()) )
-    {
-        int coef = precompute_grads ? 4 : 1;
-        qWarning() << "Wrong texture sizes!" << x*y*z*coef << " vs. " << data.size();
-        return;
-    }
+    //if( (precompute_grads && x*y*z*4 != data.size()) || (!precompute_grads && x*y*z != data.size()) )
+    //{
+    //    int coef = precompute_grads ? 4 : 1;
+    //    qWarning() << "Wrong texture sizes!" << x*y*z*coef << " vs. " << data.size();
+    //    return;
+    //}
     glDeleteTextures(1, &location);
     glGenTextures(1, &location);
     glBindTexture(GL_TEXTURE_3D, location);
@@ -105,10 +105,10 @@ void VolumeData::uploadTexture(boolean precompute_grads, GLenum dataType) {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     if (precompute_grads) {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, x, y, z, 0, GL_RGBA, dataType, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, x, y, z, 0, GL_RGBA, dataType, data.data());
     }
     else {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, x, y, z, 0, GL_RED, dataType, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, x, y, z, 0, GL_RED, dataType, data.data());
     }
     glBindTexture(GL_TEXTURE_3D, 0);
 }

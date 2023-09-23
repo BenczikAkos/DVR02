@@ -177,12 +177,12 @@ void VolumeRenderWidget::setAABBScaleZ(float value)
 
 void VolumeRenderWidget::setIntensityMax(int value)
 {
-    intensityMax = value / 255.0;
+    intensityMax = value / 255.0f;
 }
 
 void VolumeRenderWidget::setIntensityMin(int value)
 {
-    intensityMin = value / 255.0;
+    intensityMin = value / 255.0f;
 }
 
 void VolumeRenderWidget::setStepLength(double value)
