@@ -15,6 +15,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -32,8 +33,8 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
+    QHBoxLayout *horizontalLayout;
     VolumeRenderWidget *openGLWidget;
-    QPushButton *chartButton;
     QTabWidget *tabWidget;
     QWidget *tab_input;
     QCheckBox *precomputeGradientsCheckBox;
@@ -58,6 +59,7 @@ public:
     QLabel *MaximumValueLabel;
     QSpinBox *minValueSpinbox;
     QDoubleSpinBox *stepLengthSpinBox;
+    QPushButton *chartButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -65,7 +67,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(919, 604);
+        MainWindow->resize(910, 639);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -83,18 +85,18 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
         centralwidget->setSizePolicy(sizePolicy);
+        horizontalLayout = new QHBoxLayout(centralwidget);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         openGLWidget = new VolumeRenderWidget(centralwidget);
         openGLWidget->setObjectName(QString::fromUtf8("openGLWidget"));
-        openGLWidget->setGeometry(QRect(10, 20, 631, 521));
         sizePolicy.setHeightForWidth(openGLWidget->sizePolicy().hasHeightForWidth());
         openGLWidget->setSizePolicy(sizePolicy);
-        chartButton = new QPushButton(centralwidget);
-        chartButton->setObjectName(QString::fromUtf8("chartButton"));
-        chartButton->setGeometry(QRect(670, 530, 101, 24));
+
+        horizontalLayout->addWidget(openGLWidget);
+
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(660, 0, 261, 531));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
@@ -212,10 +214,18 @@ public:
         stepLengthSpinBox->setStepType(QAbstractSpinBox::AdaptiveDecimalStepType);
         stepLengthSpinBox->setValue(0.001000000000000);
         tabWidget->addTab(tab_vis, QString());
+
+        horizontalLayout->addWidget(tabWidget);
+
+        chartButton = new QPushButton(centralwidget);
+        chartButton->setObjectName(QString::fromUtf8("chartButton"));
+
+        horizontalLayout->addWidget(chartButton);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 919, 22));
+        menubar->setGeometry(QRect(0, 0, 910, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -232,7 +242,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Volume render", nullptr));
-        chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
         precomputeGradientsCheckBox->setText(QCoreApplication::translate("MainWindow", "Precompute gradients", nullptr));
         TextureZSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Z size", nullptr));
         TextureXSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture X size", nullptr));
@@ -244,6 +253,7 @@ public:
         stepLengthLabel->setText(QCoreApplication::translate("MainWindow", "Step length", nullptr));
         MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_vis), QCoreApplication::translate("MainWindow", "Visualization", nullptr));
+        chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
     } // retranslateUi
 
 };
