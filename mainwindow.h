@@ -1,6 +1,7 @@
 #pragma once
 
 #include "qmainwindow.h"
+#include "volumedatareader.h"
 #include "QtCore/qdeadlinetimer.h"
 #include <QChart>
 #include <QSlider>
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget* parent = nullptr);
 	void paintEvent(QPaintEvent* event) override;
-	QVector3D getDataSizes() const;
+	VolumeDataReader* getReader() const;
 	QChart* generateChart() const;
 	~MainWindow();
 
@@ -27,9 +28,6 @@ signals:
 	void AABBChangedZ(float value);
 	void intensityMaxChanged(int value);
 	void intensityMinChanged(int value);
-
-public slots:
-	bool getPrecomputeGradientsChecked() const;
 
 private slots:
 	void on_AABBScale_x_valueChanged(int value);
@@ -41,9 +39,13 @@ private slots:
 	void on_intensityMinSlider_valueChanged(int value);
 
 private:
+	void setVolumeDataReaderSlots();
+	void populateModesComboBox();
+	void populateDataTypesComboBox();
 	float normalizeSliderValue(const QSlider& slider, int value) const;
 	int lastPaint = 0;
 	QDeadlineTimer updateFrameRateTimer = QDeadlineTimer();
 	Ui::MainWindow* ui;
+	VolumeDataReader* reader;
 };
 

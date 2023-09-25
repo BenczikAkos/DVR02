@@ -7,22 +7,14 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent },
-    ui {new Ui::MainWindow}
+    ui {new Ui::MainWindow},
+    reader {new VolumeDataReader()}
 {
+
     ui->setupUi(this);
     updateFrameRateTimer.setRemainingTime(100);
-    ui->modeComboBox->addItem("MIP");
-    ui->modeComboBox->addItem("Accumulate");
-    ui->modeComboBox->addItem("Average");
-    ui->modeComboBox->addItem("Isosurface");
-
-    ui->dataTypeComboBox->addItem("uint8");
-    ui->dataTypeComboBox->addItem("uint16");
-    ui->dataTypeComboBox->addItem("uint32");
-    ui->dataTypeComboBox->addItem("int8");
-    ui->dataTypeComboBox->addItem("int16");
-    ui->dataTypeComboBox->addItem("int32");
-    ui->dataTypeComboBox->addItem("float");
+    populateModesComboBox();
+    populateDataTypesComboBox();
 
 
     QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));
@@ -40,8 +32,33 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(setStepLength(double)));
 
     QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setMode(int)));
+    setVolumeDataReaderSlots();
+}
 
-    QObject::connect(ui->dataTypeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setDataType(int)));
+void MainWindow::populateModesComboBox() {
+    ui->modeComboBox->addItem("MIP");
+    ui->modeComboBox->addItem("Accumulate");
+    ui->modeComboBox->addItem("Average");
+    ui->modeComboBox->addItem("Isosurface");
+}
+
+void MainWindow::populateDataTypesComboBox() {
+    ui->dataTypeComboBox->addItem("uint8");
+    ui->dataTypeComboBox->addItem("uint16");
+    ui->dataTypeComboBox->addItem("uint32");
+    ui->dataTypeComboBox->addItem("int8");
+    ui->dataTypeComboBox->addItem("int16");
+    ui->dataTypeComboBox->addItem("int32");
+    ui->dataTypeComboBox->addItem("float");
+}
+
+void MainWindow::setVolumeDataReaderSlots() {
+    QObject::connect(ui->dataTypeComboBox, SIGNAL(currentIndexChanged(int)), reader, SLOT(setDataType(int)));
+    QObject::connect(ui->datasetSize_x, SIGNAL(valueChanged(int)), reader, SLOT(setXTextureSize(int)));
+    QObject::connect(ui->datasetSize_y, SIGNAL(valueChanged(int)), reader, SLOT(setYTextureSize(int)));
+    QObject::connect(ui->datasetSize_z, SIGNAL(valueChanged(int)), reader, SLOT(setZTextureSize(int)));
+    QObject::connect(ui->precomputeGradientsCheckBox, SIGNAL(stateChanged(int)), reader, SLOT(setPrecomputeGradients(int)));
+
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {
@@ -59,19 +76,9 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     update();
 }
 
-QVector3D MainWindow::getDataSizes() const
+VolumeDataReader* MainWindow::getReader() const
 {
-    auto x = ui->datasetSize_x->value();
-    auto y = ui->datasetSize_y->value();
-    auto z = ui->datasetSize_z->value();
-    auto check = ui->precomputeGradientsCheckBox->isChecked();
-
-    return QVector3D(x, y, z);
-}
-
-bool MainWindow::getPrecomputeGradientsChecked() const
-{
-    return ui->precomputeGradientsCheckBox->isChecked();
+    return reader;
 }
 
 QChart* MainWindow::generateChart() const
@@ -82,6 +89,7 @@ QChart* MainWindow::generateChart() const
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete reader;
 }
 
 void MainWindow::on_loadVolumeButton_clicked(bool checked)

@@ -62,6 +62,9 @@
     <ClCompile Include="volumerenderwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="volumedatareader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="chartdialog.h">
@@ -70,31 +73,23 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    
     <ClInclude Include="volumedata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <QtMoc Include="volumerenderwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="volumedatareader.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    
-    
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
-    
-    
-    
-    
-    
-    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="chartdialog.ui">

@@ -7,6 +7,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
     setFocusPolicy(Qt::StrongFocus);
+    mainWindow = (MainWindow*)parentWidget()->parentWidget();
     update();
 }
 
@@ -40,7 +41,7 @@ void VolumeRenderWidget::initializeGL()
 
     GLuint VolumeLocation = m_program->uniformLocation("Volume");
     Q_ASSERT(VolumeLocation != -1);
-    volume = new VolumeData(VolumeLocation, (MainWindow*)parentWidget()->parentWidget());
+    volume = new VolumeData(VolumeLocation, mainWindow->getReader());
 
 }
 
@@ -100,8 +101,7 @@ void VolumeRenderWidget::keyPressEvent(QKeyEvent *ev)
 void VolumeRenderWidget::openFile() {
     QString path = QFileDialog::getOpenFileName(this, tr("Open volume"), "..\\datasets\\raw", tr("RAW images(*.raw);;DAT files(*.dat)"));
     if (!path.isNull()) {
-        boolean precomputeGrads = ((MainWindow*)(parentWidget()->parentWidget()))->getPrecomputeGradientsChecked();
-        volume->loadVolume(path, precomputeGrads, dataType);
+        volume->loadVolume(path);
     }
 }
 
@@ -194,35 +194,6 @@ void VolumeRenderWidget::setMode(int mode)
 {
     Mode _mode = static_cast<Mode>(mode);
     activeMode = _mode;
-}
-
-void VolumeRenderWidget::setDataType(int type)
-{
-    switch (type){
-    case 0:
-        dataType = GL_UNSIGNED_BYTE;
-        break;
-    case 1:
-        dataType = GL_UNSIGNED_SHORT;
-        break;
-    case 2:
-        dataType = GL_UNSIGNED_INT;
-        break;
-    case 3:
-        dataType = GL_BYTE;
-        break;
-    case 4:
-        dataType = GL_SHORT;
-        break;
-    case 5:
-        dataType = GL_INT;
-        break;
-    case 6:
-        dataType = GL_FLOAT;
-        break;
-    default:
-        qWarning() << "Datatype index is out of range";
-    }
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {

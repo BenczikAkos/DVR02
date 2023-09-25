@@ -7,13 +7,6 @@
 #include "openglwindow.h"
 #include "volumedata.h"
 
-enum class Mode {
-    MIP = 0,
-    Accumulate = 1,
-    Average = 2,
-    Isosurface = 3
-};
-
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
     Q_OBJECT
@@ -43,7 +36,6 @@ public slots:
     void setIntensityMin(int value);
     void setStepLength(double value);
     void setMode(int mode);
-    void setDataType(int type);
 
 private:
     inline static const GLfloat vertices[] = {
@@ -55,7 +47,6 @@ private:
         1.0f, 1.0f
     };
     void createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath);
-    GLenum dataType = GL_UNSIGNED_BYTE;
     Mode activeMode = Mode::MIP;
     QMap<Mode, QOpenGLShaderProgram*> modes;
     //uniform locations
@@ -68,7 +59,8 @@ private:
     float intensityMax = 1.0;
     float stepLength = 0.001f;
 
-    VolumeData *volume = nullptr;
+    VolumeData* volume = nullptr;
+    MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
     float xRot = 180.0f;

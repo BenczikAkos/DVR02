@@ -7,18 +7,18 @@
 VolumeData::VolumeData()
 {
     location = 0;
-    mainWindow = nullptr;
+    reader = nullptr;
     initializeOpenGLFunctions();
 }
 
-VolumeData::VolumeData(GLuint loc, MainWindow* _mainWindow)
+VolumeData::VolumeData(GLuint loc, VolumeDataReader* _reader)
     : location { loc },
-    mainWindow { _mainWindow }
+    reader { _reader }
 {
     initializeOpenGLFunctions();
 }
 
-void VolumeData::loadVolume(QString path, boolean precompute_grads, GLenum dataType) {
+void VolumeData::loadVolume(QString path) {
     data = nullptr;
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -27,10 +27,11 @@ void VolumeData::loadVolume(QString path, boolean precompute_grads, GLenum dataT
     };
     QByteArray values = file.readAll();
     file.close();
-    auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y();
+    int x, y, z;
+    reader->getTextureSizes(x, y, z);
     for (int i = 0; i < values.size(); ++i) {
         data.append(values.at(i));
-        if (precompute_grads)
+        if (reader->getPrecomputeGradients())
         {
             char grad_x = computeGrad(i, values, 1);
             char grad_y = computeGrad(i, values, x);
@@ -42,7 +43,7 @@ void VolumeData::loadVolume(QString path, boolean precompute_grads, GLenum dataT
     }
 
     qWarning() << "Nb of datapoints: " << data.size();
-    uploadTexture(precompute_grads, dataType);
+    uploadTexture();
 }
 
 char VolumeData::computeGrad(const int position, const QByteArray& values, const int stepsize) {
@@ -87,8 +88,10 @@ QChart* VolumeData::createChart() const {
     return chart;
 }
 
-void VolumeData::uploadTexture(boolean precompute_grads, GLenum dataType) {
-    auto sizes = mainWindow->getDataSizes(); int x = (int)sizes.x(); int y = (int)sizes.y(); int z = (int)sizes.z();
+void VolumeData::uploadTexture() {
+    int x, y, z;
+    reader->getTextureSizes(x, y, z);
+    GLenum dataType = reader->getDataType();
     //if( (precompute_grads && x*y*z*4 != data.size()) || (!precompute_grads && x*y*z != data.size()) )
     //{
     //    int coef = precompute_grads ? 4 : 1;
@@ -105,7 +108,7 @@ void VolumeData::uploadTexture(boolean precompute_grads, GLenum dataType) {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_UNPACK_LSB_FIRST, 1);
-    if (precompute_grads) {
+    if (reader->getPrecomputeGradients()) {
         glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, x, y, z, 0, GL_RGBA, dataType, data.data());
     }
     else {
