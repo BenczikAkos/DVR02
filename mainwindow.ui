@@ -138,8 +138,8 @@
        <widget class="QCheckBox" name="precomputeGradientsCheckBox">
         <property name="geometry">
          <rect>
-          <x>9</x>
-          <y>520</y>
+          <x>10</x>
+          <y>200</y>
           <width>140</width>
           <height>20</height>
          </rect>
@@ -220,6 +220,19 @@
         </property>
         <property name="text">
          <string>Data type</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="littleEndianCheckBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>220</y>
+          <width>91</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Little endian</string>
         </property>
        </widget>
       </widget>

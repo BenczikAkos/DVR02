@@ -58,7 +58,7 @@ void MainWindow::setVolumeDataReaderSlots() {
     QObject::connect(ui->datasetSize_y, SIGNAL(valueChanged(int)), reader, SLOT(setYTextureSize(int)));
     QObject::connect(ui->datasetSize_z, SIGNAL(valueChanged(int)), reader, SLOT(setZTextureSize(int)));
     QObject::connect(ui->precomputeGradientsCheckBox, SIGNAL(stateChanged(int)), reader, SLOT(setPrecomputeGradients(int)));
-
+    QObject::connect(ui->littleEndianCheckBox, SIGNAL(stateChanged(int)), reader, SLOT(setLittleEndian(int)));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {

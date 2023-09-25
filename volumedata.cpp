@@ -106,8 +106,13 @@ void VolumeData::uploadTexture() {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_UNPACK_LSB_FIRST, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //tightly packed
+    if (reader->getLittleEndian()) {
+        glPixelStorei(GL_UNPACK_LSB_FIRST, 1);
+    }
+    else {
+        glPixelStorei(GL_UNPACK_LSB_FIRST, 0);
+    }
     if (reader->getPrecomputeGradients()) {
         glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, x, y, z, 0, GL_RGBA, dataType, data.data());
     }

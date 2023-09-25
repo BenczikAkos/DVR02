@@ -39,9 +39,9 @@ void VolumeDataReader::setPrecomputeGradients(int _precomputeGradients)
     precomputeGradients = _precomputeGradients == 2; //0: unchecked, 1: partially checked, 2: checked based on QtCheckState
 }
 
-void VolumeDataReader::setLittleEndian(bool _isLittleEndian)
+void VolumeDataReader::setLittleEndian(int _isLittleEndian)
 {
-    isLittleEndian = _isLittleEndian;
+    isLittleEndian = _isLittleEndian == 2;
 }
 
 void VolumeDataReader::setXTextureSize(int newValue) {
@@ -70,4 +70,9 @@ bool VolumeDataReader::getPrecomputeGradients() {
 GLenum VolumeDataReader::getDataType()
 {
     return dataType;
+}
+
+bool VolumeDataReader::getLittleEndian()
+{
+    return isLittleEndian;
 }

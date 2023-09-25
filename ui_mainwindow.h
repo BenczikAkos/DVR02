@@ -47,6 +47,7 @@ public:
     QLabel *TextureXSizeLabel;
     QComboBox *dataTypeComboBox;
     QLabel *label;
+    QCheckBox *littleEndianCheckBox;
     QWidget *tab_vis;
     QSlider *AABBScale_z;
     QSlider *AABBScale_y;
@@ -133,7 +134,7 @@ public:
         loadVolumeButton->setGeometry(QRect(10, 120, 171, 24));
         precomputeGradientsCheckBox = new QCheckBox(tab_input);
         precomputeGradientsCheckBox->setObjectName(QString::fromUtf8("precomputeGradientsCheckBox"));
-        precomputeGradientsCheckBox->setGeometry(QRect(9, 520, 140, 20));
+        precomputeGradientsCheckBox->setGeometry(QRect(10, 200, 140, 20));
         precomputeGradientsCheckBox->setTristate(false);
         TextureYSizeLabel = new QLabel(tab_input);
         TextureYSizeLabel->setObjectName(QString::fromUtf8("TextureYSizeLabel"));
@@ -154,6 +155,9 @@ public:
         label = new QLabel(tab_input);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 160, 71, 21));
+        littleEndianCheckBox = new QCheckBox(tab_input);
+        littleEndianCheckBox->setObjectName(QString::fromUtf8("littleEndianCheckBox"));
+        littleEndianCheckBox->setGeometry(QRect(10, 220, 91, 20));
         tabWidget->addTab(tab_input, QString());
         tab_vis = new QWidget();
         tab_vis->setObjectName(QString::fromUtf8("tab_vis"));
@@ -259,6 +263,7 @@ public:
         TextureYSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture Y size", nullptr));
         TextureXSizeLabel->setText(QCoreApplication::translate("MainWindow", "Texture X size", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Data type", nullptr));
+        littleEndianCheckBox->setText(QCoreApplication::translate("MainWindow", "Little endian", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_input), QCoreApplication::translate("MainWindow", "Read settings", nullptr));
         modeLabel->setText(QCoreApplication::translate("MainWindow", "Mode:", nullptr));
         MinimumValueLabel->setText(QCoreApplication::translate("MainWindow", "Minimum value", nullptr));

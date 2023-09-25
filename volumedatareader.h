@@ -17,13 +17,14 @@ public:
 	void getTextureSizes(int& x, int& y, int& z);
 	bool getPrecomputeGradients();
 	GLenum getDataType();
+	bool getLittleEndian();
 public slots:
 	void setXTextureSize(int newvalue);
 	void setYTextureSize(int newvalue);
 	void setZTextureSize(int newvalue);
 	void setDataType(int type);
 	void setPrecomputeGradients(int _precomputeGradients);
-	void setLittleEndian(bool _isLittleEndian);
+	void setLittleEndian(int _isLittleEndian);
 private:
 	int xTextureSize = 256;
 	int yTextureSize = 256;
