@@ -65,6 +65,9 @@
     <ClCompile Include="volumedatareader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="transferfunceditordialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="chartdialog.h">
@@ -115,5 +118,10 @@
     <None Include="vshader.glsl">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="transferfunceditordialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

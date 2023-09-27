@@ -63,6 +63,7 @@ public:
     QSpinBox *minValueSpinbox;
     QDoubleSpinBox *stepLengthSpinBox;
     QPushButton *chartButton;
+    QPushButton *transferFunctionButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -232,7 +233,10 @@ public:
         stepLengthSpinBox->setValue(0.001000000000000);
         chartButton = new QPushButton(tab_vis);
         chartButton->setObjectName(QString::fromUtf8("chartButton"));
-        chartButton->setGeometry(QRect(20, 400, 75, 24));
+        chartButton->setGeometry(QRect(60, 400, 75, 24));
+        transferFunctionButton = new QPushButton(tab_vis);
+        transferFunctionButton->setObjectName(QString::fromUtf8("transferFunctionButton"));
+        transferFunctionButton->setGeometry(QRect(20, 430, 141, 24));
         tabWidget->addTab(tab_vis, QString());
 
         gridLayout->addWidget(tabWidget, 0, 1, 1, 1);
@@ -248,7 +252,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -270,6 +274,7 @@ public:
         stepLengthLabel->setText(QCoreApplication::translate("MainWindow", "Step length", nullptr));
         MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
         chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
+        transferFunctionButton->setText(QCoreApplication::translate("MainWindow", "Edit Transfer Function", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_vis), QCoreApplication::translate("MainWindow", "Visualization", nullptr));
     } // retranslateUi
 

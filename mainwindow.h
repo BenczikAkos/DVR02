@@ -3,6 +3,7 @@
 #include "qmainwindow.h"
 #include "volumedatareader.h"
 #include "QtCore/qdeadlinetimer.h"
+#include "transferfunceditordialog.h"
 #include <QChart>
 #include <QSlider>
 
@@ -35,6 +36,7 @@ private slots:
 	void on_AABBScale_z_valueChanged(int value);
 	void on_loadVolumeButton_clicked(bool checked);
 	void on_chartButton_clicked(bool checked);
+	void on_transferFunctionButton_clicked(bool checked);
 	void on_intensityMaxSlider_valueChanged(int value);
 	void on_intensityMinSlider_valueChanged(int value);
 

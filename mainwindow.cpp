@@ -104,6 +104,12 @@ void MainWindow::on_chartButton_clicked(bool checked)
     graphDialog->raise();
 }
 
+void MainWindow::on_transferFunctionButton_clicked(bool checked)
+{
+    TransferFuncEditorDialog* transfunc = new TransferFuncEditorDialog(this);
+    transfunc->show();
+}
+
 float MainWindow::normalizeSliderValue(const QSlider& slider, int value) const
 {
     int minValue = slider.minimum();

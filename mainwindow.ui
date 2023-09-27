@@ -50,7 +50,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_input">
        <attribute name="title">
@@ -475,7 +475,7 @@
        <widget class="QPushButton" name="chartButton">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>60</x>
           <y>400</y>
           <width>75</width>
           <height>24</height>
@@ -483,6 +483,19 @@
         </property>
         <property name="text">
          <string>Show chart</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="transferFunctionButton">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>430</y>
+          <width>141</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Edit Transfer Function</string>
         </property>
        </widget>
       </widget>

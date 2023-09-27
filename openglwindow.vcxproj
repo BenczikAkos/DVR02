@@ -207,6 +207,7 @@
     <ClCompile Include="chartdialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="transferfunceditordialog.cpp" />
     <ClCompile Include="volumedata.cpp" />
     <ClCompile Include="volumedatareader.cpp" />
     <ClCompile Include="volumerenderwidget.cpp" />
@@ -217,6 +218,7 @@
     </QtMoc>
     <QtMoc Include="mainwindow.h">
     </QtMoc>
+    <ClInclude Include="transferfunceditordialog.h" />
     <ClInclude Include="volumedata.h" />
     <QtMoc Include="volumerenderwidget.h">
     </QtMoc>
