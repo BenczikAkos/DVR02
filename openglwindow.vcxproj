@@ -207,6 +207,7 @@
     <ClCompile Include="chartdialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="transferfunceditorcanvas.cpp" />
     <ClCompile Include="transferfunceditordialog.cpp" />
     <ClCompile Include="transferfuncproperty.cpp" />
     <ClCompile Include="volumedata.cpp" />
@@ -220,6 +221,7 @@
     <QtMoc Include="mainwindow.h">
     </QtMoc>
     <QtMoc Include="transferfunceditordialog.h" />
+    <QtMoc Include="transferfunceditorcanvas.h" />
     <ClInclude Include="transferfunckey.h" />
     <ClInclude Include="transferfuncproperty.h" />
     <ClInclude Include="volumedata.h" />

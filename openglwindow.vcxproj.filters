@@ -71,6 +71,9 @@
     <ClCompile Include="transferfuncproperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="transferfunceditorcanvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="chartdialog.h">
@@ -89,6 +92,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="transferfunceditordialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="transferfunceditorcanvas.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

@@ -5,7 +5,7 @@
 class TransferFuncEditorCanvas : public QWidget {
 	Q_OBJECT
 public:
-	explicit TransferFuncEditorCanvas();
+	explicit TransferFuncEditorCanvas(QWidget* parent = nullptr);
 protected:
 	void paintEvent(QPaintEvent* event) override;
 };

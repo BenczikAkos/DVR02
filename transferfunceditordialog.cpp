@@ -16,18 +16,17 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
 
     QPushButton* showColorDialogButton = new QPushButton(QString::fromUtf8("Show Color Dialog"), this);
     showColorDialogButton->setGeometry(QRect(10, 120, 171, 24));
-    colorDialogWidget = new QColorDialog(this);
+
+    transferFuncCanvas = std::make_unique<TransferFuncEditorCanvas>(this);
+
+    colorDialogWidget = std::make_unique<QColorDialog>(this);
     colorDialogWidget->setGeometry(QRect(1000, 120, 400, 300));
     colorDialogWidget->show();
 
-    verticalLayout->addWidget(showColorDialogButton, 0,0);
-    verticalLayout->addWidget(colorDialogWidget);
+    verticalLayout->addWidget(transferFuncCanvas.get());
+    verticalLayout->addWidget(showColorDialogButton);
+    verticalLayout->addWidget(colorDialogWidget.get());
     setLayout(verticalLayout);
-}
-
-TransferFuncEditorDialog::~TransferFuncEditorDialog()
-{
-    delete colorDialogWidget;
 }
 
 

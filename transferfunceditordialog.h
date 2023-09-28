@@ -2,6 +2,7 @@
 #include <QColorDialog>
 #include <QGridLayout>
 #include <QPushButton>
+#include "transferfunceditorcanvas.h"
 
 namespace Ui {
     class TransferFuncEditorDialog;
@@ -13,12 +14,11 @@ class TransferFuncEditorDialog : public QWidget
 
 public:
     TransferFuncEditorDialog(QWidget* parent = nullptr);
-    ~TransferFuncEditorDialog();
  
 protected:
-    void paintEvent(QPaintEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
 private:
-    QColorDialog* colorDialogWidget = nullptr;
+    std::unique_ptr <QColorDialog> colorDialogWidget;
+    std::unique_ptr<TransferFuncEditorCanvas> transferFuncCanvas;
 };
 
