@@ -25,14 +25,13 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
     setLayout(verticalLayout);
 }
 
+TransferFuncEditorDialog::~TransferFuncEditorDialog()
+{
+    delete colorDialogWidget;
+}
+
+
 void TransferFuncEditorDialog::closeEvent(QCloseEvent* event)
 {
     colorDialogWidget->close();
-}
-
-void TransferFuncEditorDialog::paintEvent(QPaintEvent* event) {
-    QWidget::paintEvent(event);
-    QPainter painter(this);
-    QLineF line(10.0, 80.0, 90.0, 20.0);
-    painter.drawLine(line);
 }

@@ -88,6 +88,9 @@
     <QtMoc Include="volumedatareader.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="transferfunceditordialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -123,9 +126,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="transferfunceditordialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="transferfunckey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
