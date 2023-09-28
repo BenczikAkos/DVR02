@@ -1,6 +1,6 @@
 #pragma once
 #include <QColorDialog>
-#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QPushButton>
 
 namespace Ui {
@@ -12,6 +12,8 @@ class TransferFuncEditorDialog : public QWidget
 public:
     TransferFuncEditorDialog(QWidget* parent = nullptr);
  
+protected:
+    void closeEvent(QCloseEvent* event) override;
 private:
     QColorDialog* colorDialogWidget;
 };
