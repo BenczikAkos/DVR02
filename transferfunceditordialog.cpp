@@ -1,7 +1,7 @@
 #include "transferfunceditordialog.h"
 
 TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
-    : QWidget(parent)
+    : QWidget(parent, Qt::Window)
 {
     this->resize(800, 600);
     QVBoxLayout* verticalLayout = new QVBoxLayout(this);
@@ -9,6 +9,7 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
     verticalLayout->setContentsMargins(0, 0, 0, 0);
 
     QPushButton* showColorDialogButton = new QPushButton("Show Color Dialog", this);
+    showColorDialogButton->setGeometry(QRect(10, 120, 171, 24));
     colorDialogWidget = new QColorDialog(this);
     colorDialogWidget->show();
 

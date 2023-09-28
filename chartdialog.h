@@ -11,6 +11,7 @@ class ChartDialog : public QWidget
 	Q_OBJECT
 public:
 	explicit ChartDialog(MainWindow* parent = nullptr);
+	~ChartDialog();
 	void focusOutEvent(QFocusEvent* event) override;
 private:
 	Ui::ChartDialog* ui;

@@ -11,6 +11,11 @@ ChartDialog::ChartDialog(MainWindow* parent)
 	ui->chart->setChart(chart);
 }
 
+ChartDialog::~ChartDialog()
+{
+	delete ui;
+}
+
 void ChartDialog::focusOutEvent(QFocusEvent* event)
 {
 	showMinimized();
