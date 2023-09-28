@@ -208,6 +208,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="transferfunceditordialog.cpp" />
+    <ClCompile Include="transferfuncproperty.cpp" />
     <ClCompile Include="volumedata.cpp" />
     <ClCompile Include="volumedatareader.cpp" />
     <ClCompile Include="volumerenderwidget.cpp" />
@@ -219,6 +220,8 @@
     <QtMoc Include="mainwindow.h">
     </QtMoc>
     <ClInclude Include="transferfunceditordialog.h" />
+    <ClInclude Include="transferfunckey.h" />
+    <ClInclude Include="transferfuncproperty.h" />
     <ClInclude Include="volumedata.h" />
     <QtMoc Include="volumerenderwidget.h">
     </QtMoc>
