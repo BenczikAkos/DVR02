@@ -1,15 +1,14 @@
 #pragma once
 #include <QColorDialog>
+#include <QVBoxLayout>
+#include <QPushButton>
 
-class TransferFuncEditorDialog : public QColorDialog
+class TransferFuncEditorDialog : public QWidget
 {
 public:
-    TransferFuncEditorDialog(QWidget* parent = nullptr) : QColorDialog(parent)
-    {
-    }
-    void show()
-    {
-        QColorDialog::show();
-    }
+    TransferFuncEditorDialog(QWidget* parent = nullptr);
+ 
+private:
+    QColorDialog* colorDialogWidget;
 };
 
