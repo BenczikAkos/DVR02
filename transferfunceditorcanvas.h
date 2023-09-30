@@ -17,7 +17,8 @@ protected:
 private:
 	QTransform t_device2func;
 	QTransform t_func2device;
-	float pointSize = 700.0f;
+	float pointSize = 1000.0f;
 	std::unique_ptr<TransferFuncProperty> funcProperty;
+	bool moving = false;
 	int activePointIndex = -1;
 };

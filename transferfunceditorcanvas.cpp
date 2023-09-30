@@ -19,6 +19,7 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
     auto radiusX = pointSize / width; auto radiusY = pointSize / height;
     auto prevPoint = QPointF();
     QPen linePen(Qt::black);
+    linePen.setWidth(3);
     linePen.setWidth(300.0 / qMin(width, height));
     for (int i = 0; i < opacities.size(); ++i) {
         auto currPoint = QPointF(intensities.at(i), opacities.at(i));
@@ -47,6 +48,7 @@ void TransferFuncEditorCanvas::mousePressEvent(QMouseEvent* event)
     auto funcPos = event->pos() * t_device2func;
     auto opacities = funcProperty->getAllOpacities();
     auto intensities = funcProperty->getAllIntensities();
+    activePointIndex = -1;
     qreal distance = -1;
     for (int i = 0; i < opacities.size(); ++i) {
         auto currPoint = QPointF(intensities.at(i), opacities.at(i));
@@ -56,12 +58,15 @@ void TransferFuncEditorCanvas::mousePressEvent(QMouseEvent* event)
             activePointIndex = i;
         }
     }
+    if (activePointIndex >= 0) {
+        moving = true;
+    }
 }
 
 void TransferFuncEditorCanvas::mouseMoveEvent(QMouseEvent* event)
 {
     QWidget::mouseMoveEvent(event);
-    if (activePointIndex >= 0)
+    if (activePointIndex >= 0 && moving)
     {
         auto funcPos = event->pos() * t_device2func;
         funcProperty->intensityOpacityChangedAt(activePointIndex, funcPos.x(), funcPos.y());
@@ -72,5 +77,5 @@ void TransferFuncEditorCanvas::mouseMoveEvent(QMouseEvent* event)
 void TransferFuncEditorCanvas::mouseReleaseEvent(QMouseEvent* event)
 {
     QWidget::mouseReleaseEvent(event);
-    activePointIndex = -1;
+    moving = false;
 }

@@ -78,12 +78,7 @@ public:
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         QIcon icon;
-        QString iconThemeName = QString::fromUtf8("Default");
-        if (QIcon::hasThemeIcon(iconThemeName)) {
-            icon = QIcon::fromTheme(iconThemeName);
-        } else {
-            icon.addFile(QString::fromUtf8("C:/Users/\303\201kos/Downloads/cube-3d.png"), QSize(), QIcon::Normal, QIcon::Off);
-        }
+        icon.addFile(QString::fromUtf8("C:/Users/\303\201kos/Downloads/cube.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));

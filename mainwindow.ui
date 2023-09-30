@@ -20,8 +20,8 @@
    <string>Volume render</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="Default">
-    <normaloff>C:/Users/Ákos/Downloads/cube-3d.png</normaloff>C:/Users/Ákos/Downloads/cube-3d.png</iconset>
+   <iconset>
+    <normaloff>C:/Users/Ákos/Downloads/cube.png</normaloff>C:/Users/Ákos/Downloads/cube.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
