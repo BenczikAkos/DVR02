@@ -10,5 +10,6 @@ public:
 protected:
 	void paintEvent(QPaintEvent* event) override;
 private:
+	float pointSize = 700.0f;
 	std::unique_ptr<TransferFuncProperty> funcProperty;
 };

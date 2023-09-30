@@ -11,15 +11,25 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     int width = this->width(); int height = this->height();
-    painter.translate(0.0, height);
-    painter.scale(width / 255.0, -height / 255.0);
+    painter.translate(width/50.0, height*0.98);
+    painter.scale(width / 300.0, -height / 300.0);
     auto opacities = funcProperty->getAllOpacities();
     auto intensities = funcProperty->getAllIntensities();
+    auto colors = funcProperty->getAllColors();
     painter.setPen(Qt::NoPen);
-    painter.setBrush(Qt::blue);
-    auto minSize = qMin(width, height);
-    auto radius = minSize / 300.0;
+    auto radiusX = pointSize / width; auto radiusY = pointSize / height;
+    auto prevPoint = QPointF();
+    QPen linePen(Qt::black);
+    linePen.setWidth(300.0 / qMin(width, height));
     for (int i = 0; i < opacities.size(); ++i) {
-        painter.drawEllipse(QPointF(intensities.at(i), opacities.at(i)), 500.0/width, 500.0/height);
+        auto currPoint = QPointF(intensities.at(i), opacities.at(i));
+        painter.setBrush(colors.at(i));
+        painter.setPen(Qt::NoPen);
+        painter.drawEllipse(currPoint, radiusX, radiusY);
+        if (i > 0) {
+            painter.setPen(linePen);
+            painter.drawLine(prevPoint, currPoint);
+        }
+        prevPoint = currPoint;
     }
 }

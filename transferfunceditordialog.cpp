@@ -5,6 +5,7 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
 {
     this->resize(800, 200);
     this->setWindowTitle("Transfer function editor");
+    this->setGeometry(700, 600, 800, 200);
 
     QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
     sizePolicy1.setHorizontalStretch(0);
