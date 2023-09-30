@@ -11,8 +11,7 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     int width = this->width(); int height = this->height();
-    painter.translate(width/50.0, height*0.98);
-    painter.scale(width / 300.0, -height / 300.0);
+    painter.setTransform(t_func2device, true);
     auto opacities = funcProperty->getAllOpacities();
     auto intensities = funcProperty->getAllIntensities();
     auto colors = funcProperty->getAllColors();
@@ -32,4 +31,18 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
         }
         prevPoint = currPoint;
     }
+}
+
+void TransferFuncEditorCanvas::resizeEvent(QResizeEvent* event)
+{
+    auto newSize = event->size();
+    auto width = newSize.width(); auto height = newSize.height();
+    t_func2device = QTransform().translate(width / 50.0, height * 0.98).scale(width / 300.0, -height / 300.0);
+    t_device2func = t_func2device.inverted();
+}
+
+void TransferFuncEditorCanvas::mousePressEvent(QMouseEvent* event)
+{
+    QWidget::mousePressEvent(event);
+
 }
