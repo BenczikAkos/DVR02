@@ -45,6 +45,12 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\TransferFunc">
+      <UniqueIdentifier>{916a80e5-6911-4e45-9f4b-e43a80db6cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TransferFunc">
+      <UniqueIdentifier>{9e8e14b5-6588-465b-ba36-331fa4224709}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="chartdialog.cpp">
@@ -65,14 +71,14 @@
     <ClCompile Include="volumedatareader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="transferfunceditorcanvas.cpp">
+      <Filter>Source Files\TransferFunc</Filter>
+    </ClCompile>
     <ClCompile Include="transferfunceditordialog.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TransferFunc</Filter>
     </ClCompile>
     <ClCompile Include="transferfuncproperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="transferfunceditorcanvas.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TransferFunc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,11 +97,11 @@
     <QtMoc Include="volumedatareader.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="transferfunceditordialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="transferfunceditorcanvas.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TransferFunc</Filter>
+    </QtMoc>
+    <QtMoc Include="transferfunceditordialog.h">
+      <Filter>Header Files\TransferFunc</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -133,10 +139,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="transferfunckey.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TransferFunc</Filter>
     </ClInclude>
     <ClInclude Include="transferfuncproperty.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TransferFunc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

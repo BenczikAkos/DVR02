@@ -1,9 +1,8 @@
 #include "transferfunceditorcanvas.h"
 
 TransferFuncEditorCanvas::TransferFuncEditorCanvas(QWidget* parent) :
-    QWidget(parent)
-{
-}
+    QWidget(parent),
+    funcProperty(std::make_unique<TransferFuncProperty>()){}
 
 void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
 {
@@ -11,11 +10,18 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    int side = qMin(width(), height());
-    painter.translate(width() / 2, height() / 2);
-    painter.scale(side / 200.0, side / 200.0);
-    QLineF line(10.0, 80.0, 90.0, 20.0);
-    painter.setPen(Qt::red);
+    int width = this->width(); int height = this->height();
+    //painter.translate(width / 2, height / 2);
+    //painter.translate(0.0, height);
+    painter.scale(width / 255.0, height / 255.0);
+    auto opacities = funcProperty->getAllOpacities();
+    auto intensities = funcProperty->getAllIntensities();
+    painter.setPen(Qt::blue);
     painter.setBrush(Qt::blue);
-    painter.drawLine(line);
+    painter.setBrush(Qt::ConicalGradientPattern);
+    auto minSize = qMin(width, height);
+    auto radius = qMin(minSize / 300.0, 2.0);
+    for (int i = 0; i < opacities.size(); ++i) {
+        painter.drawEllipse(QPointF(intensities.at(i), opacities.at(i)), radius/300.0, radius/300.0);
+    }
 }
