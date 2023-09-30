@@ -3,7 +3,7 @@
 TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
-    this->resize(200, 120);
+    this->resize(800, 200);
     this->setWindowTitle("Transfer function editor");
 
     QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
@@ -20,6 +20,7 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
     transferFuncCanvas = std::make_unique<TransferFuncEditorCanvas>(this);
 
     colorDialogWidget = std::make_unique<QColorDialog>(this);
+    colorDialogWidget->setOptions(QColorDialog::NoButtons);
     colorDialogWidget->setGeometry(QRect(1000, 120, 400, 300));
     colorDialogWidget->show();
 
