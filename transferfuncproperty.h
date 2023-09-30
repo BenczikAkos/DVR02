@@ -8,6 +8,7 @@ public:
 	const QVector<float> getAllIntensities() const;
 	const QVector<float> getAllOpacities() const;
 	const QVector<QColor> getAllColors() const;
+	void intensityOpacityChangedAt(int index, float newIntensity, float newOpacity);
 private:
 	void init_keys();
 	QVector<std::shared_ptr<TransferFuncKey>> keys;

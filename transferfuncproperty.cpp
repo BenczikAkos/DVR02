@@ -32,6 +32,13 @@ const QVector<QColor> TransferFuncProperty::getAllColors() const
 	return res;
 }
 
+void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
+{
+	auto changedKey = keys.at(index);
+	changedKey->intensity = newIntensity;
+	changedKey->color.setAlpha(newOpacity);
+}
+
 void TransferFuncProperty::init_keys()
 {
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
