@@ -120,6 +120,7 @@ void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)
 
 void VolumeRenderWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
     MouseFirstPressed = true;
 }
 

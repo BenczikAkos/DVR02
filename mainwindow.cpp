@@ -62,6 +62,7 @@ void MainWindow::setVolumeDataReaderSlots() {
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event)
     int thisPaint = QTime::currentTime().msecsSinceStartOfDay();
     if (updateFrameRateTimer.hasExpired()) {
         int diff = thisPaint - lastPaint;
@@ -94,11 +95,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_loadVolumeButton_clicked(bool checked)
 {
+    Q_UNUSED(checked)
     ui->openGLWidget->openFile();
 }
 
 void MainWindow::on_chartButton_clicked(bool checked)
 {
+    Q_UNUSED(checked)
     auto graphDialog = new ChartDialog(this);
     graphDialog->show();
     graphDialog->raise();
@@ -106,6 +109,7 @@ void MainWindow::on_chartButton_clicked(bool checked)
 
 void MainWindow::on_transferFunctionButton_clicked(bool checked)
 {
+    Q_UNUSED(checked)
     TransferFuncEditorDialog* transfunc = new TransferFuncEditorDialog(this);
     transfunc->show();
 }

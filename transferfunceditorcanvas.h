@@ -7,7 +7,10 @@
 class TransferFuncEditorCanvas : public QWidget {
 	Q_OBJECT
 public:
-	explicit TransferFuncEditorCanvas(QWidget* parent = nullptr);
+	explicit TransferFuncEditorCanvas(QWidget* parent = nullptr, std::shared_ptr<TransferFuncProperty> _funcProperty = nullptr);
+signals:
+	void intensityOpacityChangedAt(int index, float newIntensity, float newOpacity);
+	void colorChangedAt(int index, QColor newColor);
 protected:
 	void paintEvent(QPaintEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
@@ -18,7 +21,7 @@ private:
 	QTransform t_device2func;
 	QTransform t_func2device;
 	float pointSize = 1000.0f;
-	std::unique_ptr<TransferFuncProperty> funcProperty;
+	std::shared_ptr<TransferFuncProperty> funcProperty;
 	bool moving = false;
 	int activePointIndex = -1;
 };

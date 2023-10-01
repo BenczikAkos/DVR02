@@ -18,6 +18,7 @@ public:
 protected:
     void closeEvent(QCloseEvent* event) override;
 private:
+    std::shared_ptr<TransferFuncProperty> funcProperty;
     std::unique_ptr <QColorDialog> colorDialogWidget;
     std::unique_ptr<TransferFuncEditorCanvas> transferFuncCanvas;
 };

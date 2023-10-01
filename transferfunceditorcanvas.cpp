@@ -1,8 +1,9 @@
 #include "transferfunceditorcanvas.h"
 
-TransferFuncEditorCanvas::TransferFuncEditorCanvas(QWidget* parent) :
-    QWidget(parent),
-    funcProperty(std::make_unique<TransferFuncProperty>()){}
+TransferFuncEditorCanvas::TransferFuncEditorCanvas(QWidget* parent, std::shared_ptr<TransferFuncProperty> _funcProperty) :
+    QWidget(parent){
+    funcProperty = _funcProperty;
+}
 
 void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
 {
@@ -69,7 +70,7 @@ void TransferFuncEditorCanvas::mouseMoveEvent(QMouseEvent* event)
     if (activePointIndex >= 0 && moving)
     {
         auto funcPos = event->pos() * t_device2func;
-        funcProperty->intensityOpacityChangedAt(activePointIndex, funcPos.x(), funcPos.y());
+        emit intensityOpacityChangedAt(activePointIndex, funcPos.x(), funcPos.y());
     }
     update();
 }

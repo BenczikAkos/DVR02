@@ -66,7 +66,7 @@ private:
     float xRot = 180.0f;
     float yRot = 180.0f;
     float zRot = 180.0f;
-    float phi = -M_PI_2;
+    float phi = (float)- M_PI_2;
     float elevation = 0.0f;
     QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
     void normalizeAngle(float& angle);

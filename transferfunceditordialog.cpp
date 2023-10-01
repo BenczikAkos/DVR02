@@ -1,7 +1,8 @@
 #include "transferfunceditordialog.h"
 
 TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
-    : QWidget(parent, Qt::Window)
+    : QWidget(parent, Qt::Window),
+    funcProperty(std::make_shared<TransferFuncProperty>())
 {
     this->resize(800, 200);
     this->setWindowTitle("Transfer function editor");
@@ -18,7 +19,7 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
     QPushButton* showColorDialogButton = new QPushButton(QString::fromUtf8("Show Color Dialog"), this);
     showColorDialogButton->setGeometry(QRect(10, 120, 171, 24));
 
-    transferFuncCanvas = std::make_unique<TransferFuncEditorCanvas>(this);
+    transferFuncCanvas = std::make_unique<TransferFuncEditorCanvas>(this, funcProperty);
 
     colorDialogWidget = std::make_unique<QColorDialog>(this);
     colorDialogWidget->setOptions(QColorDialog::NoButtons);
