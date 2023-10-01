@@ -24,9 +24,11 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
     QPen linePen(Qt::black);
     linePen.setWidth(3);
     linePen.setWidth(300.0 / qMin(width, height));
-    for (int i = 0; i < opacities.size(); ++i) {
+    for (int i = 0; i < opacities.size(); ++i) 
+    {
         auto currPoint = QPointF(intensities.at(i), opacities.at(i));
-        if (i > 0) {
+        if (i > 0) 
+        {
             painter.setPen(linePen);
             painter.drawLine(prevPoint, currPoint);
         }
@@ -61,15 +63,18 @@ void TransferFuncEditorCanvas::mousePressEvent(QMouseEvent* event)
     auto intensities = funcProperty->getAllIntensities();
     activePointIndex = -1;
     qreal distance = -1;
-    for (int i = 0; i < opacities.size(); ++i) {
+    for (int i = 0; i < opacities.size(); ++i) 
+    {
         auto currPoint = QPointF(intensities.at(i), opacities.at(i));
         qreal d = QLineF(funcPos, currPoint).length();
-        if ((distance < 0 && d < 8 * pointSize/width()) || d < distance) {
+        if ((distance < 0 && d < 8 * pointSize/width()) || d < distance) 
+        {
             distance = d;
             activePointIndex = i;
         }
     }
-    if (activePointIndex >= 0) {
+    if (activePointIndex >= 0) 
+    {
         moving = true;
     }
 }

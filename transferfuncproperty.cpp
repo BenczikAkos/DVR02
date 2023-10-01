@@ -1,7 +1,8 @@
 #include "transferfuncproperty.h"
 
 
-TransferFuncProperty::TransferFuncProperty() {
+TransferFuncProperty::TransferFuncProperty() 
+{
 	init_keys();
 }
 
@@ -48,7 +49,8 @@ void TransferFuncProperty::colorChangedAt(int index, QColor newColor)
 void TransferFuncProperty::init_keys()
 {
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
-	for (auto i : randomIntensities) {
+	for (auto i : randomIntensities) 
+	{
 		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, 10, 200, i)));
 	}
 		
