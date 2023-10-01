@@ -11,6 +11,7 @@ public:
 	int getActivePointIndex() { return activePointIndex; };
 signals:
 	void intensityOpacityChangedAt(int index, float newIntensity, float newOpacity);
+	void selectedPointColor(const QColor& selected);
 protected:
 	void paintEvent(QPaintEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
@@ -22,6 +23,6 @@ private:
 	QTransform t_func2device;
 	float pointSize = 1500.0f;
 	std::shared_ptr<TransferFuncProperty> funcProperty;
-	bool moving = false;
+	bool mouseMoving = false;
 	int activePointIndex = -1;
 };

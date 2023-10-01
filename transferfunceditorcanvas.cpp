@@ -75,14 +75,15 @@ void TransferFuncEditorCanvas::mousePressEvent(QMouseEvent* event)
     }
     if (activePointIndex >= 0) 
     {
-        moving = true;
+        mouseMoving = true;
+        emit selectedPointColor(funcProperty->getAllColors().at(activePointIndex));
     }
 }
 
 void TransferFuncEditorCanvas::mouseMoveEvent(QMouseEvent* event)
 {
     QWidget::mouseMoveEvent(event);
-    if (activePointIndex >= 0 && moving)
+    if (activePointIndex >= 0 && mouseMoving)
     {
         auto funcPos = event->pos() * t_device2func;
         emit intensityOpacityChangedAt(activePointIndex, funcPos.x(), funcPos.y());
@@ -93,5 +94,5 @@ void TransferFuncEditorCanvas::mouseMoveEvent(QMouseEvent* event)
 void TransferFuncEditorCanvas::mouseReleaseEvent(QMouseEvent* event)
 {
     QWidget::mouseReleaseEvent(event);
-    moving = false;
+    mouseMoving = false;
 }
