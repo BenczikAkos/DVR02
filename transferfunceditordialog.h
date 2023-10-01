@@ -14,7 +14,10 @@ class TransferFuncEditorDialog : public QWidget
 
 public:
     TransferFuncEditorDialog(QWidget* parent = nullptr);
- 
+public slots:
+    void colorChanged(const QColor& newColor);
+signals:
+    void colorChangedAt(int index, QColor newColor);
 protected:
     void closeEvent(QCloseEvent* event) override;
 private:

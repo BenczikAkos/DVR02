@@ -30,10 +30,24 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
     verticalLayout->addWidget(showColorDialogButton);
     verticalLayout->addWidget(colorDialogWidget.get());
     setLayout(verticalLayout);
+
+    //signals
+    QObject::connect(colorDialogWidget.get(), SIGNAL(currentColorChanged(const QColor&)), this, SLOT(colorChanged(const QColor&)));
+    QObject::connect(this, SIGNAL(colorChangedAt(int, QColor)), funcProperty.get(), SLOT(colorChangedAt(int, QColor)));
+}
+
+void TransferFuncEditorDialog::colorChanged(const QColor& newColor)
+{
+    int activePointIndex = transferFuncCanvas->getActivePointIndex();
+    if(activePointIndex >= 0)
+    {
+        emit colorChangedAt(transferFuncCanvas->getActivePointIndex(), newColor);
+    }
 }
 
 
 void TransferFuncEditorDialog::closeEvent(QCloseEvent* event)
 {
+    Q_UNUSED(event)
     colorDialogWidget->close();
 }

@@ -18,5 +18,6 @@ ChartDialog::~ChartDialog()
 
 void ChartDialog::focusOutEvent(QFocusEvent* event)
 {
+	Q_UNUSED(event)
 	showMinimized();
 }

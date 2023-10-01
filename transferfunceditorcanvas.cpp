@@ -1,8 +1,10 @@
 #include "transferfunceditorcanvas.h"
 
 TransferFuncEditorCanvas::TransferFuncEditorCanvas(QWidget* parent, std::shared_ptr<TransferFuncProperty> _funcProperty) :
-    QWidget(parent){
+    QWidget(parent)
+{
     funcProperty = _funcProperty;
+    QObject::connect(this, SIGNAL(intensityOpacityChangedAt(int, float, float)), funcProperty.get(), SLOT(intensityOpacityChangedAt(int, float, float)));
 }
 
 void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
@@ -24,14 +26,22 @@ void TransferFuncEditorCanvas::paintEvent(QPaintEvent* event)
     linePen.setWidth(300.0 / qMin(width, height));
     for (int i = 0; i < opacities.size(); ++i) {
         auto currPoint = QPointF(intensities.at(i), opacities.at(i));
-        painter.setBrush(colors.at(i));
-        painter.setPen(Qt::NoPen);
-        painter.drawEllipse(currPoint, radiusX, radiusY);
         if (i > 0) {
             painter.setPen(linePen);
             painter.drawLine(prevPoint, currPoint);
         }
+        painter.setBrush(colors.at(i));
+        if (i == activePointIndex) 
+        {
+            painter.setPen(Qt::black);
+        }
+        else
+        {
+            painter.setPen(Qt::NoPen);
+        }
+        painter.drawEllipse(currPoint, radiusX, radiusY);
         prevPoint = currPoint;
+        update();
     }
 }
 

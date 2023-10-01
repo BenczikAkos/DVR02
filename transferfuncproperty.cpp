@@ -39,6 +39,12 @@ void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensi
 	changedKey->color.setAlpha(newOpacity);
 }
 
+void TransferFuncProperty::colorChangedAt(int index, QColor newColor)
+{
+	auto changedKey = keys.at(index);
+	changedKey->color = QColor(newColor.red(), newColor.green(), newColor.blue(), changedKey->color.alpha());
+}
+
 void TransferFuncProperty::init_keys()
 {
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };

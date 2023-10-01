@@ -223,7 +223,7 @@
     <QtMoc Include="transferfunceditordialog.h" />
     <QtMoc Include="transferfunceditorcanvas.h" />
     <ClInclude Include="transferfunckey.h" />
-    <ClInclude Include="transferfuncproperty.h" />
+    <QtMoc Include="transferfuncproperty.h" />
     <ClInclude Include="volumedata.h" />
     <QtMoc Include="volumerenderwidget.h">
     </QtMoc>

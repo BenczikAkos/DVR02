@@ -103,6 +103,9 @@
     <QtMoc Include="transferfunceditordialog.h">
       <Filter>Header Files\TransferFunc</Filter>
     </QtMoc>
+    <QtMoc Include="transferfuncproperty.h">
+      <Filter>Header Files\TransferFunc</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -139,9 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="transferfunckey.h">
-      <Filter>Header Files\TransferFunc</Filter>
-    </ClInclude>
-    <ClInclude Include="transferfuncproperty.h">
       <Filter>Header Files\TransferFunc</Filter>
     </ClInclude>
   </ItemGroup>
