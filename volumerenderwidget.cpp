@@ -11,10 +11,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     update();
 }
 
-VolumeRenderWidget::~VolumeRenderWidget()
-{
-
-}
+VolumeRenderWidget::~VolumeRenderWidget(){}
 
 void VolumeRenderWidget::createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath)
 {
@@ -41,7 +38,7 @@ void VolumeRenderWidget::initializeGL()
 
     GLuint VolumeLocation = m_program->uniformLocation("Volume");
     Q_ASSERT(VolumeLocation != -1);
-    volume = new VolumeData(VolumeLocation, mainWindow->getReader());
+    volume = std::make_shared<VolumeData>(VolumeLocation, mainWindow->getReader());
 
 }
 

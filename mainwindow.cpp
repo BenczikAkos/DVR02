@@ -8,7 +8,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent },
     ui {new Ui::MainWindow},
-    reader {new VolumeDataReader()}
+    reader{ std::make_unique<VolumeDataReader>() }
 {
 
     ui->setupUi(this);
@@ -53,12 +53,12 @@ void MainWindow::populateDataTypesComboBox() {
 }
 
 void MainWindow::setVolumeDataReaderSlots() {
-    QObject::connect(ui->dataTypeComboBox, SIGNAL(currentIndexChanged(int)), reader, SLOT(setDataType(int)));
-    QObject::connect(ui->datasetSize_x, SIGNAL(valueChanged(int)), reader, SLOT(setXTextureSize(int)));
-    QObject::connect(ui->datasetSize_y, SIGNAL(valueChanged(int)), reader, SLOT(setYTextureSize(int)));
-    QObject::connect(ui->datasetSize_z, SIGNAL(valueChanged(int)), reader, SLOT(setZTextureSize(int)));
-    QObject::connect(ui->precomputeGradientsCheckBox, SIGNAL(stateChanged(int)), reader, SLOT(setPrecomputeGradients(int)));
-    QObject::connect(ui->littleEndianCheckBox, SIGNAL(stateChanged(int)), reader, SLOT(setLittleEndian(int)));
+    QObject::connect(ui->dataTypeComboBox, SIGNAL(currentIndexChanged(int)), reader.get(), SLOT(setDataType(int)));
+    QObject::connect(ui->datasetSize_x, SIGNAL(valueChanged(int)), reader.get(), SLOT(setXTextureSize(int)));
+    QObject::connect(ui->datasetSize_y, SIGNAL(valueChanged(int)), reader.get(), SLOT(setYTextureSize(int)));
+    QObject::connect(ui->datasetSize_z, SIGNAL(valueChanged(int)), reader.get(), SLOT(setZTextureSize(int)));
+    QObject::connect(ui->precomputeGradientsCheckBox, SIGNAL(stateChanged(int)), reader.get(), SLOT(setPrecomputeGradients(int)));
+    QObject::connect(ui->littleEndianCheckBox, SIGNAL(stateChanged(int)), reader.get(), SLOT(setLittleEndian(int)));
 }
 
 void MainWindow::paintEvent(QPaintEvent* event) {
@@ -79,7 +79,7 @@ void MainWindow::paintEvent(QPaintEvent* event) {
 
 VolumeDataReader* MainWindow::getReader() const
 {
-    return reader;
+    return reader.get();
 }
 
 QChart* MainWindow::generateChart() const
@@ -90,7 +90,6 @@ QChart* MainWindow::generateChart() const
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete reader;
 }
 
 void MainWindow::on_loadVolumeButton_clicked(bool checked)

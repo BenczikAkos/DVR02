@@ -26,11 +26,11 @@ const QVector<float> TransferFuncProperty::getAllOpacities() const
 
 const QVector<QColor> TransferFuncProperty::getAllColors() const
 {
-	auto res = QVector<QColor>();
-	res.reserve(keys.size());
-	std::transform(keys.begin(), keys.end(), std::back_inserter(res),
+	auto result = QVector<QColor>();
+	result.reserve(keys.size());
+	std::transform(keys.begin(), keys.end(), std::back_inserter(result),
 		[](std::shared_ptr<TransferFuncKey> key) { auto res = key->color; res.setAlpha(255); return res; });
-	return res;
+	return result;
 }
 
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)

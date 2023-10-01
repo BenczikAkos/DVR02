@@ -59,7 +59,7 @@ private:
     float intensityMax = 1.0;
     float stepLength = 0.001f;
 
-    VolumeData* volume = nullptr;
+    std::shared_ptr<VolumeData> volume = nullptr;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;

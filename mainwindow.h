@@ -48,6 +48,6 @@ private:
 	int lastPaint = 0;
 	QDeadlineTimer updateFrameRateTimer = QDeadlineTimer();
 	Ui::MainWindow* ui;
-	VolumeDataReader* reader;
+	std::unique_ptr<VolumeDataReader> reader;
 };
 
