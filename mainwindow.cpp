@@ -4,34 +4,25 @@
 #include "qstatusbar.h"
 #include "QtCore/QTime"
 #include "chartdialog.h"
+#include <QtOpenGL/QOpenGLShaderProgram>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent },
     ui {new Ui::MainWindow},
     reader{ std::make_unique<VolumeDataReader>()}
 {
-
     ui->setupUi(this);
     updateFrameRateTimer.setRemainingTime(100);
     populateModesComboBox();
     populateDataTypesComboBox();
 
-
-    QObject::connect(this, SIGNAL(AABBChangedX(float)), ui->openGLWidget, SLOT(setAABBScaleX(float)));
-    QObject::connect(this, SIGNAL(AABBChangedY(float)), ui->openGLWidget, SLOT(setAABBScaleY(float)));
-    QObject::connect(this, SIGNAL(AABBChangedZ(float)), ui->openGLWidget, SLOT(setAABBScaleZ(float)));
     //max value slider and its combobox
-    QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->openGLWidget, SLOT(setIntensityMax(int)));
     QObject::connect(this, SIGNAL(intensityMaxChanged(int)), ui->maxValueSpinbox, SLOT(setValue(int)));
     QObject::connect(ui->maxValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMaxSlider, SLOT(setValue(int)));
     //min value slider and its combobox
-    QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->openGLWidget, SLOT(setIntensityMin(int)));
     QObject::connect(this, SIGNAL(intensityMinChanged(int)), ui->minValueSpinbox, SLOT(setValue(int)));
     QObject::connect(ui->minValueSpinbox, SIGNAL(valueChanged(int)), ui->intensityMinSlider, SLOT(setValue(int)));
 
-    QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(setStepLength(double)));
-
-    QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setMode(int)));
     connectVolumeDataReaderSlots();
 }
 
@@ -85,6 +76,24 @@ VolumeDataReader* MainWindow::getReader() const
 QChart* MainWindow::generateChart() const
 {
     return ui->openGLWidget->generateChart();
+}
+
+void MainWindow::initializeContext()
+{
+    visualizationSetting = std::make_shared<VisualizationSetting>();
+    ui->openGLWidget->setVisualizationSetting(visualizationSetting);
+
+    QObject::connect(this, SIGNAL(AABBChangedX(float)), visualizationSetting.get(), SLOT(setAABBScaleX(float)));
+    QObject::connect(this, SIGNAL(AABBChangedY(float)), visualizationSetting.get(), SLOT(setAABBScaleY(float)));
+    QObject::connect(this, SIGNAL(AABBChangedZ(float)), visualizationSetting.get(), SLOT(setAABBScaleZ(float)));
+
+    QObject::connect(this, SIGNAL(intensityMaxChanged(int)), visualizationSetting.get(), SLOT(setIntensityMax(int)));
+
+    QObject::connect(this, SIGNAL(intensityMinChanged(int)), visualizationSetting.get(), SLOT(setIntensityMin(int)));
+
+    QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), visualizationSetting.get(), SLOT(setStepLength(double)));
+
+    QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), visualizationSetting.get(), SLOT(setMode(int)));
 }
 
 MainWindow::~MainWindow()

@@ -13,27 +13,11 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
 
 VolumeRenderWidget::~VolumeRenderWidget() = default;
 
-void VolumeRenderWidget::createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath)
-{
-    auto program = std::make_shared<QOpenGLShaderProgram>(this);
-    program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexPath);
-    program->addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentPath);
-    modes.insert(mode, program);
-}
-
 void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    visualizationSetting = std::make_shared<VisualizationSetting>();
-    createShaderProgram(CompositionMode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
-    createShaderProgram(CompositionMode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
-    createShaderProgram(CompositionMode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");
-    createShaderProgram(CompositionMode::Isosurface, ":/vshader.glsl", ":/fshad_isosurface.glsl");
-    QOpenGLShaderProgram* program = modes.value(activeMode).get();
-    if(!program->link()){
-        qWarning() << program->log();
-    }
-
+    mainWindow->initializeContext();
+    auto program = visualizationSetting->getActiveProgram().get();
     m_posAttr = program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
 
@@ -49,22 +33,23 @@ void VolumeRenderWidget::paintGL()
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
 
     glClear(GL_COLOR_BUFFER_BIT);
-    QOpenGLShaderProgram* program = modes.value(activeMode).get();
+    auto program = visualizationSetting->getActiveProgram().get();
     if (!program->bind()) {
         qWarning() << "Program not bound!";
     };
 
     program->setUniformValue("ViewMatrix", ViewMatrix);
     program->setUniformValue("CameraPos", CameraPos);
-    program->setUniformValue("AABBScale", AABBScale);
+    visualizationSetting->setUniforms();
+    //program->setUniformValue("AABBScale", AABBScale);
+    //program->setUniformValue("intensityMin", intensityMin);
+    //program->setUniformValue("intensityMax", intensityMax);
+    //program->setUniformValue("stepLength", stepLength);
+
     volume->bind();
     //TODO: ne kerjuk már el minden frameben legyen tagvaltozo
     QVector2D windowSize = QVector2D(this->width(), this->height());
     program->setUniformValue("WindowSize", windowSize);
-    program->setUniformValue("intensityMin", intensityMin);
-    program->setUniformValue("intensityMax", intensityMax);
-    program->setUniformValue("stepLength", stepLength);
-
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
@@ -157,42 +142,6 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
     CameraPos.setZ(radius * sin(phi) * cos(theta));
     setRotation(xRot, fromRadian(M_PI - theta));
     setRotation(yRot, fromRadian(M_PI / 2 - phi));
-}
-
-void VolumeRenderWidget::setAABBScaleX(float value)
-{
-    AABBScale.setX(value);
-}
-
-void VolumeRenderWidget::setAABBScaleY(float value)
-{
-    AABBScale.setY(value);
-}
-
-void VolumeRenderWidget::setAABBScaleZ(float value)
-{
-    AABBScale.setZ(value);
-}
-
-void VolumeRenderWidget::setIntensityMax(int value)
-{
-    intensityMax = value / 255.0f;
-}
-
-void VolumeRenderWidget::setIntensityMin(int value)
-{
-    intensityMin = value / 255.0f;
-}
-
-void VolumeRenderWidget::setStepLength(double value)
-{
-    stepLength = value;
-}
-
-void VolumeRenderWidget::setMode(int mode)
-{
-    CompositionMode _mode = static_cast<CompositionMode>(mode);
-    activeMode = _mode;
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {

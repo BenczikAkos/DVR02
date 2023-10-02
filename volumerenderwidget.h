@@ -16,6 +16,7 @@ public:
     void initializeGL() override;
     void paintGL() override;
     void openFile();
+   void setVisualizationSetting(std::shared_ptr<VisualizationSetting> _visualizationSetting) { visualizationSetting = _visualizationSetting; }
     QChart* generateChart() const;
 
 protected:
@@ -27,14 +28,6 @@ protected:
     void setRotation(float& changeable, float angle);
     void rotateScene(float phi, float theta);
 
-public slots:
-    void setAABBScaleX(float value);
-    void setAABBScaleY(float value);
-    void setAABBScaleZ(float value);
-    void setIntensityMax(int value);
-    void setIntensityMin(int value);
-    void setStepLength(double value);
-    void setMode(int mode);
 
 private:
     inline static const GLfloat vertices[] = {
@@ -45,18 +38,11 @@ private:
         -1.0f, 1.0f,
         1.0f, 1.0f
     };
-    void createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath);
-    CompositionMode activeMode = CompositionMode::MIP;
-    QMap<CompositionMode, std::shared_ptr<QOpenGLShaderProgram>> modes;
     //uniform locations
     GLuint m_posAttr = 0;
     //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();
-    QVector3D AABBScale = QVector3D(1.0f, 1.0f, 1.0f);
-    float intensityMin = 0.0;
-    float intensityMax = 1.0;
-    float stepLength = 0.001f;
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;

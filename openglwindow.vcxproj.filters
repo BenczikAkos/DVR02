@@ -109,6 +109,9 @@
     <QtMoc Include="transferfuncproperty.h">
       <Filter>Header Files\TransferFunc</Filter>
     </QtMoc>
+    <QtMoc Include="visualizationsetting.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
@@ -148,9 +151,6 @@
       <Filter>Header Files\TransferFunc</Filter>
     </ClInclude>
     <ClInclude Include="compositionmode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="visualizationsetting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

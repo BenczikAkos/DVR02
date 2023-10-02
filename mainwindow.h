@@ -22,6 +22,7 @@ public:
 	void paintEvent(QPaintEvent* event) override;
 	VolumeDataReader* getReader() const;
 	QChart* generateChart() const;
+	void initializeContext();
 	~MainWindow();
 
 signals:
@@ -49,6 +50,7 @@ private:
 	int lastPaint = 0;
 	QDeadlineTimer updateFrameRateTimer = QDeadlineTimer();
 	Ui::MainWindow* ui;
-	std::unique_ptr<VolumeDataReader> reader;
+	std::unique_ptr<VolumeDataReader> reader = nullptr;
+	std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
 };
 
