@@ -13,7 +13,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
 
 VolumeRenderWidget::~VolumeRenderWidget() = default;
 
-void VolumeRenderWidget::createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath)
+void VolumeRenderWidget::createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath)
 {
     auto program = std::make_shared<QOpenGLShaderProgram>(this);
     program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexPath);
@@ -24,10 +24,10 @@ void VolumeRenderWidget::createShaderProgram(Mode mode, const QString& vertexPat
 void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    createShaderProgram(Mode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
-    createShaderProgram(Mode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
-    createShaderProgram(Mode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");
-    createShaderProgram(Mode::Isosurface, ":/vshader.glsl", ":/fshad_isosurface.glsl");
+    createShaderProgram(CompositionMode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
+    createShaderProgram(CompositionMode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
+    createShaderProgram(CompositionMode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");
+    createShaderProgram(CompositionMode::Isosurface, ":/vshader.glsl", ":/fshad_isosurface.glsl");
     QOpenGLShaderProgram* program = modes.value(activeMode).get();
     if(!program->link()){
         qWarning() << program->log();
@@ -57,7 +57,7 @@ void VolumeRenderWidget::paintGL()
     program->setUniformValue("CameraPos", CameraPos);
     program->setUniformValue("AABBScale", AABBScale);
     volume->bind();
-    //TODO: ne kerjuk már el minden frame-ben legyen tagvaltozo
+    //TODO: ne kerjuk már el minden frameben legyen tagvaltozo
     QVector2D windowSize = QVector2D(this->width(), this->height());
     program->setUniformValue("WindowSize", windowSize);
     program->setUniformValue("intensityMin", intensityMin);
@@ -190,7 +190,7 @@ void VolumeRenderWidget::setStepLength(double value)
 
 void VolumeRenderWidget::setMode(int mode)
 {
-    Mode _mode = static_cast<Mode>(mode);
+    CompositionMode _mode = static_cast<CompositionMode>(mode);
     activeMode = _mode;
 }
 

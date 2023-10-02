@@ -2,9 +2,9 @@
 
 #include "QtOpenGLWidgets/qopenglwidget.h"
 #include "QtWidgets/qfiledialog.h"
-#include <qopenglextrafunctions.h>
 #include <QtOpenGL/QOpenGLShaderProgram>
 #include "volumedata.h"
+#include "compositionmode.h"
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
@@ -45,9 +45,9 @@ private:
         -1.0f, 1.0f,
         1.0f, 1.0f
     };
-    void createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath);
-    Mode activeMode = Mode::MIP;
-    QMap<Mode, std::shared_ptr<QOpenGLShaderProgram>> modes;
+    void createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath);
+    CompositionMode activeMode = CompositionMode::MIP;
+    QMap<CompositionMode, std::shared_ptr<QOpenGLShaderProgram>> modes;
     //uniform locations
     GLuint m_posAttr = 0;
     //uniforms
@@ -65,7 +65,7 @@ private:
     float xRot = 180.0f;
     float yRot = 180.0f;
     float zRot = 180.0f;
-    float phi = (float)- M_PI_2;
+    float phi = (float)-M_PI_2;
     float elevation = 0.0f;
     QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
     void normalizeAngle(float& angle);

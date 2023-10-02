@@ -80,6 +80,9 @@
     <ClCompile Include="transferfuncproperty.cpp">
       <Filter>Source Files\TransferFunc</Filter>
     </ClCompile>
+    <ClCompile Include="visualizationsetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="chartdialog.h">
@@ -105,6 +108,9 @@
     </QtMoc>
     <QtMoc Include="transferfuncproperty.h">
       <Filter>Header Files\TransferFunc</Filter>
+    </QtMoc>
+    <QtMoc Include="visualizationsetting.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +149,9 @@
   <ItemGroup>
     <ClInclude Include="transferfunckey.h">
       <Filter>Header Files\TransferFunc</Filter>
+    </ClInclude>
+    <ClInclude Include="compositionmode.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
