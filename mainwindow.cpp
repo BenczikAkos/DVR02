@@ -109,7 +109,7 @@ void MainWindow::on_chartButton_clicked(bool checked)
 void MainWindow::on_transferFunctionButton_clicked(bool checked)
 {
     Q_UNUSED(checked)
-    TransferFuncEditorDialog* transfunc = new TransferFuncEditorDialog(this);
+    std::unique_ptr<TransferFuncEditorDialog> transfunc = std::make_unique<TransferFuncEditorDialog>(this);
     transfunc->show();
 }
 

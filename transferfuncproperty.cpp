@@ -66,11 +66,11 @@ void TransferFuncProperty::updateTFTexture()
 		int range = (int)nextKey->intensity - (int)currKey->intensity;
 		for (int x = currKey->intensity; x < nextKey->intensity; ++x)
 		{
-			float step = x - currKey->intensity;
+			float step = nextKey->intensity - x;
 			float coeff = step / range;
 			int final_red = 0.0; int final_green = 0.0; int final_blue = 0.0; int final_alpha = 0.0;
 			getBlendedColors(coeff, currKey->color, nextKey->color, final_red, final_green, final_blue, final_alpha);
-			qWarning() << x << "   " << final_alpha;
+			qWarning() << x << "   " << final_red;
 			TFTable[x * 4 + 0] = final_red;
 			TFTable[x * 4 + 1] = final_green;
 			TFTable[x * 4 + 2] = final_blue;

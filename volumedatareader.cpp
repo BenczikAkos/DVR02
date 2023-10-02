@@ -1,8 +1,6 @@
 #include "volumedatareader.h"
 
-VolumeDataReader::VolumeDataReader()
-{
-}
+VolumeDataReader::VolumeDataReader() = default;
 
 //Setters
 void VolumeDataReader::setDataType(int type)

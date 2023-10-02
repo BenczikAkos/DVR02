@@ -6,9 +6,9 @@ class TransferFuncProperty : public QObject {
 	Q_OBJECT
 public:
 	TransferFuncProperty();
-	const QVector<float> getAllIntensities() const;
-	const QVector<float> getAllOpacities() const;
-	const QVector<QColor> getAllColors() const;
+	QVector<float> getAllIntensities() const;
+	QVector<float> getAllOpacities() const;
+	QVector<QColor> getAllColors() const;
 public slots:
 	void intensityOpacityChangedAt(int index, float newIntensity, float newOpacity);
 	void colorChangedAt(int index, QColor newColor);

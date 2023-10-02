@@ -11,7 +11,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     update();
 }
 
-VolumeRenderWidget::~VolumeRenderWidget(){}
+VolumeRenderWidget::~VolumeRenderWidget() = default;
 
 void VolumeRenderWidget::createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath)
 {
