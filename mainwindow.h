@@ -41,7 +41,7 @@ private slots:
 	void on_intensityMinSlider_valueChanged(int value);
 
 private:
-	void setVolumeDataReaderSlots();
+	void connectVolumeDataReaderSlots();
 	void populateModesComboBox();
 	void populateDataTypesComboBox();
 	float normalizeSliderValue(const QSlider& slider, int value) const;

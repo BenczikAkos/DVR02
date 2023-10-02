@@ -15,10 +15,10 @@ VolumeRenderWidget::~VolumeRenderWidget() = default;
 
 void VolumeRenderWidget::createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath)
 {
-    QOpenGLShaderProgram* m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexPath);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentPath);
-    modes.insert(mode, m_program);
+    auto program = std::make_shared<QOpenGLShaderProgram>(this);
+    program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexPath);
+    program->addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentPath);
+    modes.insert(mode, program);
 }
 
 void VolumeRenderWidget::initializeGL()
@@ -28,15 +28,15 @@ void VolumeRenderWidget::initializeGL()
     createShaderProgram(Mode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
     createShaderProgram(Mode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");
     createShaderProgram(Mode::Isosurface, ":/vshader.glsl", ":/fshad_isosurface.glsl");
-    QOpenGLShaderProgram* m_program = modes.value(activeMode);
-    if(!m_program->link()){
-        qWarning() << m_program->log();
+    QOpenGLShaderProgram* program = modes.value(activeMode).get();
+    if(!program->link()){
+        qWarning() << program->log();
     }
 
-    m_posAttr = m_program->attributeLocation("posAttr");
+    m_posAttr = program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
 
-    GLuint VolumeLocation = m_program->uniformLocation("Volume");
+    GLuint VolumeLocation = program->uniformLocation("Volume");
     Q_ASSERT(VolumeLocation != -1);
     volume = std::make_shared<VolumeData>(VolumeLocation, mainWindow->getReader());
 
@@ -48,21 +48,21 @@ void VolumeRenderWidget::paintGL()
     glViewport(0, 0, width() * retinaScale, height() * retinaScale);
 
     glClear(GL_COLOR_BUFFER_BIT);
-    QOpenGLShaderProgram* m_program = modes.value(activeMode);
-    if (!m_program->bind()) {
+    QOpenGLShaderProgram* program = modes.value(activeMode).get();
+    if (!program->bind()) {
         qWarning() << "Program not bound!";
     };
 
-    m_program->setUniformValue("ViewMatrix", ViewMatrix);
-    m_program->setUniformValue("CameraPos", CameraPos);
-    m_program->setUniformValue("AABBScale", AABBScale);
+    program->setUniformValue("ViewMatrix", ViewMatrix);
+    program->setUniformValue("CameraPos", CameraPos);
+    program->setUniformValue("AABBScale", AABBScale);
     volume->bind();
-    //TODO: ne kerjuk már el minden frame-ben, legyen tagvaltozo
+    //TODO: ne kerjuk már el minden frame-ben legyen tagvaltozo
     QVector2D windowSize = QVector2D(this->width(), this->height());
-    m_program->setUniformValue("WindowSize", windowSize);
-    m_program->setUniformValue("intensityMin", intensityMin);
-    m_program->setUniformValue("intensityMax", intensityMax);
-    m_program->setUniformValue("stepLength", stepLength);
+    program->setUniformValue("WindowSize", windowSize);
+    program->setUniformValue("intensityMin", intensityMin);
+    program->setUniformValue("intensityMax", intensityMax);
+    program->setUniformValue("stepLength", stepLength);
 
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);
@@ -70,7 +70,7 @@ void VolumeRenderWidget::paintGL()
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glDisableVertexAttribArray(m_posAttr);
 
-    m_program->release();
+    program->release();
     update();
 }
 

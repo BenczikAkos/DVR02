@@ -1,9 +1,9 @@
 #include "transferfunceditorcanvas.h"
 
 TransferFuncEditorCanvas::TransferFuncEditorCanvas(QWidget* parent, std::shared_ptr<TransferFuncProperty> _funcProperty) :
-    QWidget(parent)
+    QWidget(parent),
+    funcProperty(_funcProperty)
 {
-    funcProperty = _funcProperty;
     QObject::connect(this, SIGNAL(intensityOpacityChangedAt(int, float, float)), funcProperty.get(), SLOT(intensityOpacityChangedAt(int, float, float)));
 }
 

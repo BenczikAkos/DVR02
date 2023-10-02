@@ -4,10 +4,6 @@
 #include "volumerenderwidget.h"
 #include "qmainwindow.h"
 #include "qapplication.h"
-/*
-#include <QOpenGLShaderProgram>
-#include <QScreen>
-#include <QtMath>*/
 
 int main(int argc, char **argv)
 {

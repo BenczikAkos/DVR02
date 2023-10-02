@@ -6,7 +6,7 @@ TransferFuncProperty::TransferFuncProperty()
 	init_keys();
 }
 
-const QVector<float> TransferFuncProperty::getAllIntensities() const
+QVector<float> TransferFuncProperty::getAllIntensities() const
 {
 	auto res = QVector<float>();
 	res.reserve(keys.size());
@@ -15,7 +15,7 @@ const QVector<float> TransferFuncProperty::getAllIntensities() const
 	return res;
 }
 
-const QVector<float> TransferFuncProperty::getAllOpacities() const
+QVector<float> TransferFuncProperty::getAllOpacities() const
 {
 	auto res = QVector<float>();
 	res.reserve(keys.size());
@@ -24,7 +24,7 @@ const QVector<float> TransferFuncProperty::getAllOpacities() const
 	return res;
 }
 
-const QVector<QColor> TransferFuncProperty::getAllColors() const
+QVector<QColor> TransferFuncProperty::getAllColors() const
 {
 	auto result = QVector<QColor>();
 	result.reserve(keys.size());
@@ -95,7 +95,7 @@ void TransferFuncProperty::init_keys()
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
 	for (auto i : randomIntensities) 
 	{
-		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, 10, 200, i)));
+		keys.append(std::make_shared<TransferFuncKey>(i, QColor(100, 100, 100, 255)));
 	}
 		
 

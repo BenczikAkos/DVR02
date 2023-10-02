@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->stepLengthSpinBox, SIGNAL(valueChanged(double)), ui->openGLWidget, SLOT(setStepLength(double)));
 
     QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), ui->openGLWidget, SLOT(setMode(int)));
-    setVolumeDataReaderSlots();
+    connectVolumeDataReaderSlots();
 }
 
 void MainWindow::populateModesComboBox() {
@@ -52,7 +52,7 @@ void MainWindow::populateDataTypesComboBox() {
     ui->dataTypeComboBox->addItem("float");
 }
 
-void MainWindow::setVolumeDataReaderSlots() {
+void MainWindow::connectVolumeDataReaderSlots() {
     QObject::connect(ui->dataTypeComboBox, SIGNAL(currentIndexChanged(int)), reader.get(), SLOT(setDataType(int)));
     QObject::connect(ui->datasetSize_x, SIGNAL(valueChanged(int)), reader.get(), SLOT(setXTextureSize(int)));
     QObject::connect(ui->datasetSize_y, SIGNAL(valueChanged(int)), reader.get(), SLOT(setYTextureSize(int)));
@@ -109,7 +109,7 @@ void MainWindow::on_chartButton_clicked(bool checked)
 void MainWindow::on_transferFunctionButton_clicked(bool checked)
 {
     Q_UNUSED(checked)
-    std::unique_ptr<TransferFuncEditorDialog> transfunc = std::make_unique<TransferFuncEditorDialog>(this);
+    auto transfunc = new TransferFuncEditorDialog(this);
     transfunc->show();
 }
 

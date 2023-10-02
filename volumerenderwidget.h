@@ -4,7 +4,6 @@
 #include "QtWidgets/qfiledialog.h"
 #include <qopenglextrafunctions.h>
 #include <QtOpenGL/QOpenGLShaderProgram>
-#include "openglwindow.h"
 #include "volumedata.h"
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
@@ -48,7 +47,7 @@ private:
     };
     void createShaderProgram(Mode mode, const QString& vertexPath, const QString& fragmentPath);
     Mode activeMode = Mode::MIP;
-    QMap<Mode, QOpenGLShaderProgram*> modes;
+    QMap<Mode, std::shared_ptr<QOpenGLShaderProgram>> modes;
     //uniform locations
     GLuint m_posAttr = 0;
     //uniforms
