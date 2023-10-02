@@ -4,7 +4,8 @@
 
 
 VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
-    : QOpenGLWidget {parent}
+    : QOpenGLWidget {parent},
+    visSetting(std::make_shared<VisualizationSetting>())
 {
     setFocusPolicy(Qt::StrongFocus);
     mainWindow = (MainWindow*)parentWidget()->parentWidget();

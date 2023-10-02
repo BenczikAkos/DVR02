@@ -194,6 +194,7 @@ public:
         modeComboBox = new QComboBox(tab_vis);
         modeComboBox->setObjectName(QString::fromUtf8("modeComboBox"));
         modeComboBox->setGeometry(QRect(70, 340, 111, 22));
+        modeComboBox->setEditable(false);
         intensityMaxSlider = new QSlider(tab_vis);
         intensityMaxSlider->setObjectName(QString::fromUtf8("intensityMaxSlider"));
         intensityMaxSlider->setGeometry(QRect(10, 290, 120, 20));

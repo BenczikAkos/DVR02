@@ -8,7 +8,8 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent },
     ui {new Ui::MainWindow},
-    reader{ std::make_unique<VolumeDataReader>() }
+    reader{ std::make_unique<VolumeDataReader>()},
+    visualizationSettings(initVisualizationSettings())
 {
 
     ui->setupUi(this);
@@ -50,6 +51,13 @@ void MainWindow::populateDataTypesComboBox() {
     ui->dataTypeComboBox->addItem("int16");
     ui->dataTypeComboBox->addItem("int32");
     ui->dataTypeComboBox->addItem("float");
+}
+
+QVector<std::shared_ptr<VisualizationSetting>> MainWindow::initVisualizationSettings()
+{
+    auto init_vector = QVector<std::shared_ptr<VisualizationSetting>>();
+    init_vector.append(std::make_shared<VisualizationSetting>());
+    return init_vector;
 }
 
 void MainWindow::connectVolumeDataReaderSlots() {

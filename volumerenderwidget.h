@@ -4,7 +4,7 @@
 #include "QtWidgets/qfiledialog.h"
 #include <QtOpenGL/QOpenGLShaderProgram>
 #include "volumedata.h"
-#include "compositionmode.h"
+#include "visualizationsetting.h"
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
@@ -46,6 +46,7 @@ private:
         1.0f, 1.0f
     };
     void createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath);
+    std::shared_ptr<VisualizationSetting> visSetting;
     CompositionMode activeMode = CompositionMode::MIP;
     QMap<CompositionMode, std::shared_ptr<QOpenGLShaderProgram>> modes;
     //uniform locations
