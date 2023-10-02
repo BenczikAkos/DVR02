@@ -42,7 +42,6 @@ private slots:
 	void on_intensityMinSlider_valueChanged(int value);
 
 private:
-	QVector<std::shared_ptr<VisualizationSetting>> initVisualizationSettings();
 	void connectVolumeDataReaderSlots();
 	void populateModesComboBox();
 	void populateDataTypesComboBox();
@@ -51,6 +50,5 @@ private:
 	QDeadlineTimer updateFrameRateTimer = QDeadlineTimer();
 	Ui::MainWindow* ui;
 	std::unique_ptr<VolumeDataReader> reader;
-	QVector<std::shared_ptr<VisualizationSetting>> visualizationSettings;
 };
 

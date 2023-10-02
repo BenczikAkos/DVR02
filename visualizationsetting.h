@@ -5,8 +5,8 @@
 #include "transferfuncproperty.h"
 #include <QtOpenGL/QOpenGLShaderProgram>
 
-class VisualizationSetting : public QObject {
-	Q_OBJECT
+class VisualizationSetting : protected QOpenGLExtraFunctions
+{
 public:
 	explicit VisualizationSetting();
 
@@ -24,7 +24,8 @@ public slots:
 private:
     CompositionMode activeMode = CompositionMode::MIP;
     QMap<CompositionMode, std::shared_ptr<QOpenGLShaderProgram>> modes;
-    TransferFuncProperty transferFunc;
+
+    void createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath);
 /* ezeket majd lehet kiszervezem egy vmi viewport osztalyba
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();

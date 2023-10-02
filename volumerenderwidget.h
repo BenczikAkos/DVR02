@@ -46,7 +46,6 @@ private:
         1.0f, 1.0f
     };
     void createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath);
-    std::shared_ptr<VisualizationSetting> visSetting;
     CompositionMode activeMode = CompositionMode::MIP;
     QMap<CompositionMode, std::shared_ptr<QOpenGLShaderProgram>> modes;
     //uniform locations
@@ -60,6 +59,7 @@ private:
     float stepLength = 0.001f;
 
     std::shared_ptr<VolumeData> volume = nullptr;
+    std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;

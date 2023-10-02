@@ -1,6 +1,25 @@
 #include "visualizationsetting.h"
 
-VisualizationSetting::VisualizationSetting() = default;
+VisualizationSetting::VisualizationSetting()
+{
+    initializeOpenGLFunctions();
+    createShaderProgram(CompositionMode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
+    createShaderProgram(CompositionMode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
+    createShaderProgram(CompositionMode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");
+    createShaderProgram(CompositionMode::Isosurface, ":/vshader.glsl", ":/fshad_isosurface.glsl");
+    QOpenGLShaderProgram* program = modes.value(activeMode).get();
+    if (!program->link()) {
+        qWarning() << program->log();
+    }
+}
+
+void VisualizationSetting::createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath)
+{
+    auto program = std::make_shared<QOpenGLShaderProgram>();
+    program->addShaderFromSourceFile(QOpenGLShader::Vertex, vertexPath);
+    program->addShaderFromSourceFile(QOpenGLShader::Fragment, fragmentPath);
+    modes.insert(mode, program);
+}
 
 //void VisualizationSetting::setAABBScaleX(float value)
 //{

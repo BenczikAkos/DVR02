@@ -4,8 +4,7 @@
 
 
 VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
-    : QOpenGLWidget {parent},
-    visSetting(std::make_shared<VisualizationSetting>())
+    : QOpenGLWidget {parent}
 {
     setFocusPolicy(Qt::StrongFocus);
     mainWindow = (MainWindow*)parentWidget()->parentWidget();
@@ -25,6 +24,7 @@ void VolumeRenderWidget::createShaderProgram(CompositionMode mode, const QString
 void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
+    visualizationSetting = std::make_shared<VisualizationSetting>();
     createShaderProgram(CompositionMode::MIP, ":/vshader.glsl", ":/fshad_mip.glsl");
     createShaderProgram(CompositionMode::Average, ":/vshader.glsl", ":/fshad_avg.glsl");
     createShaderProgram(CompositionMode::Accumulate, ":/vshader.glsl", ":/fshad_accumulate.glsl");

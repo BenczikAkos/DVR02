@@ -226,7 +226,7 @@
     <ClInclude Include="compositionmode.h" />
     <ClInclude Include="transferfunckey.h" />
     <QtMoc Include="transferfuncproperty.h" />
-    <QtMoc Include="visualizationsetting.h" />
+    <ClInclude Include="visualizationsetting.h" />
     <ClInclude Include="volumedata.h" />
     <QtMoc Include="volumerenderwidget.h">
     </QtMoc>
