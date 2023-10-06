@@ -13,5 +13,5 @@ int main(int argc, char **argv)
     window.setWindowState(Qt::WindowMaximized);
     window.show();
 
-    return app.exec();
+	return app.exec();
 }

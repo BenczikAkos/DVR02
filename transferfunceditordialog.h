@@ -13,7 +13,7 @@ class TransferFuncEditorDialog : public QWidget
     Q_OBJECT
 
 public:
-    TransferFuncEditorDialog(QWidget* parent = nullptr);
+    TransferFuncEditorDialog(QWidget* parent = nullptr, std::shared_ptr<TransferFuncProperty> _transferFunc = nullptr);
 public slots:
     void colorChanged(const QColor& newColor);
 signals:

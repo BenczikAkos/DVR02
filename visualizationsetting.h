@@ -12,6 +12,7 @@ public:
 	explicit VisualizationSetting();
     std::shared_ptr<QOpenGLShaderProgram> getActiveProgram();
     void setUniforms();
+    std::shared_ptr<TransferFuncProperty> getActiveTransferFunction();
 public slots:
     void setAABBScaleX(float value);
     void setAABBScaleY(float value);
@@ -24,6 +25,7 @@ public slots:
 private:
     CompositionMode activeMode = CompositionMode::MIP;
     QMap<CompositionMode, std::shared_ptr<QOpenGLShaderProgram>> modes;
+    QVector<std::shared_ptr<TransferFuncProperty>> transferFunctions;
 
     void createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath);
 /* ezeket majd lehet kiszervezem egy vmi viewport osztalyba

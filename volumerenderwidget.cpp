@@ -7,7 +7,7 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
     setFocusPolicy(Qt::StrongFocus);
-    mainWindow = std::static_pointer_cast<MainWindow>(std::shared_ptr<QWidget>(parentWidget()->parentWidget()));
+    mainWindow = (MainWindow*)(parentWidget()->parentWidget());
     update();
 }
 

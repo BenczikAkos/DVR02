@@ -15,7 +15,7 @@ public:
     void initializeGL() override;
     void paintGL() override;
     void openFile();
-   void setVisualizationSetting(std::shared_ptr<VisualizationSetting> _visualizationSetting) { visualizationSetting = _visualizationSetting; }
+    void setVisualizationSetting(std::shared_ptr<VisualizationSetting> _visualizationSetting) { visualizationSetting = _visualizationSetting; }
     QChart* generateChart() const;
 
 protected:
@@ -45,7 +45,7 @@ private:
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
-    std::shared_ptr<MainWindow> mainWindow = nullptr;
+    MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
     float xRot = 180.0f;

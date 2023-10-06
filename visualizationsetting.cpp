@@ -11,6 +11,8 @@ VisualizationSetting::VisualizationSetting()
     if (!program->link()) {
         qWarning() << program->log();
     }
+    transferFunctions = QVector< std::shared_ptr<TransferFuncProperty >>();
+    transferFunctions.append(std::make_shared<TransferFuncProperty>());
 }
 
 std::shared_ptr<QOpenGLShaderProgram> VisualizationSetting::getActiveProgram()
@@ -25,6 +27,11 @@ void VisualizationSetting::setUniforms()
     program->setUniformValue("intensityMin", intensityMin);
     program->setUniformValue("intensityMax", intensityMax);
     program->setUniformValue("stepLength", stepLength);
+}
+
+std::shared_ptr<TransferFuncProperty> VisualizationSetting::getActiveTransferFunction()
+{
+    return transferFunctions.at(0);
 }
 
 void VisualizationSetting::createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath)

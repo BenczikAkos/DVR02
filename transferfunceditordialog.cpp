@@ -1,8 +1,8 @@
 #include "transferfunceditordialog.h"
 
-TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent)
+TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent, std::shared_ptr<TransferFuncProperty> _transferFunc)
     : QWidget(parent, Qt::Window),
-    funcProperty(std::make_shared<TransferFuncProperty>())
+    funcProperty(_transferFunc)
 {
     this->resize(800, 200);
     this->setWindowTitle("Transfer function editor");
