@@ -123,7 +123,8 @@ void VolumeData::uploadTexture() {
 }
 
 
-const void VolumeData::bind(){
+void VolumeData::bind() 
+{
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_3D, location);
 }

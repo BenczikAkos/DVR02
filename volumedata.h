@@ -11,7 +11,7 @@ public:
 	VolumeData(GLuint loc, VolumeDataReader* _reader);
 	void loadVolume(QString path);
 	QChart* createChart() const;
-	const void bind();
+	void bind();
 private:
 	void uploadTexture();
 	char computeGrad(const int position, const QByteArray& values, const int stepsize);

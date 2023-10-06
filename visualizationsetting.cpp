@@ -12,7 +12,9 @@ VisualizationSetting::VisualizationSetting()
         qWarning() << program->log();
     }
     transferFunctions = QVector< std::shared_ptr<TransferFuncProperty >>();
-    transferFunctions.append(std::make_shared<TransferFuncProperty>());
+    GLuint transferFuncLocation = program->uniformLocation("TransferFunction");
+    Q_ASSERT(transferFuncLocation != -1);
+    transferFunctions.append(std::make_shared<TransferFuncProperty>(transferFuncLocation));
 }
 
 std::shared_ptr<QOpenGLShaderProgram> VisualizationSetting::getActiveProgram()
@@ -27,6 +29,7 @@ void VisualizationSetting::setUniforms()
     program->setUniformValue("intensityMin", intensityMin);
     program->setUniformValue("intensityMax", intensityMax);
     program->setUniformValue("stepLength", stepLength);
+    transferFunctions.at(0)->bind();
 }
 
 std::shared_ptr<TransferFuncProperty> VisualizationSetting::getActiveTransferFunction()

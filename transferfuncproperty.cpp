@@ -1,9 +1,11 @@
 #include "transferfuncproperty.h"
 
 
-TransferFuncProperty::TransferFuncProperty() 
+TransferFuncProperty::TransferFuncProperty(GLuint _loc) :
+	textureLocation(_loc)
 {
 	init_keys();
+	initializeOpenGLFunctions();
 }
 
 QVector<float> TransferFuncProperty::getAllIntensities() const
@@ -31,6 +33,12 @@ QVector<QColor> TransferFuncProperty::getAllColors() const
 	std::transform(keys.begin(), keys.end(), std::back_inserter(result),
 		[](std::shared_ptr<TransferFuncKey> key) { auto res = key->color; res.setAlpha(255); return res; });
 	return result;
+}
+
+void TransferFuncProperty::bind()
+{
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textureLocation);
 }
 
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
@@ -77,6 +85,18 @@ void TransferFuncProperty::updateTFTexture()
 			TFTable[x * 4 + 3] = final_alpha;
 		}
 	}
+
+	glDeleteTextures(1, &textureLocation);
+	glGenTextures(1, &textureLocation);
+	glBindTexture(GL_TEXTURE_2D, textureLocation);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //tightly packed
+	glPixelStorei(GL_UNPACK_LSB_FIRST, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 1, 0, GL_RGBA, GL_INT, TFTable);
 }
 
 void TransferFuncProperty::getBlendedColors(float coeff, QColor c1, QColor c2, int& final_red, int& final_green, int& final_blue, int& final_alpha)

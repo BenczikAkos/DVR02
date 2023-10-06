@@ -6,6 +6,7 @@ uniform vec2 WindowSize;
 uniform vec3 CameraPos;
 uniform vec3 AABBScale;
 uniform sampler3D Volume;
+uniform sampler2D TransferFunction;
 uniform float intensityMin;
 uniform float intensityMax;
 uniform float stepLength;
@@ -42,14 +43,6 @@ float cap(float value, float min, float max) {
     }
 }
 
-vec4 color_transfer(float intensity)
-{
-    vec3 high = vec3(1.0f);
-    vec3 low = vec3(0.0f);
-    float alpha = (exp(intensity) - 1.0) / (exp(1.0) - 1.0);
-    return vec4(intensity * high + (1.0 - intensity) * low, alpha);
-}
-
 void main()
 {
    vec3 rayDirection;
@@ -74,9 +67,9 @@ void main()
         {
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);
-            vec4 act_tex = color_transfer(intensity);
-            color.rgb += act_tex.rgb * (1 - color.a) * act_tex.a;
-            color.a += (1 - color.a) * act_tex.a;
+            vec4 transferColor = texture(TransferFunction, vec2(intensity, 0.0f));
+            color.rgb += transferColor.rgb * (1 - color.a) * transferColor.a;
+            color.a += (1 - color.a) * transferColor.a;
             travel -= stepLength;
             pos += step;
         }

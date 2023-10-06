@@ -6,6 +6,7 @@ uniform vec2 WindowSize;
 uniform vec3 CameraPos;
 uniform vec3 AABBScale;
 uniform sampler3D Volume;
+uniform sampler2D TransferFunction;
 uniform float intensityMin;
 uniform float intensityMax;
 uniform float stepLength;
@@ -80,7 +81,7 @@ void main()
             intensity_sum += intensity;
         }
         float avg_intensity = intensity_sum / i * 5.0f;
-        fragColor = vec4(color_transfer(avg_intensity));
+        fragColor = texture(TransferFunction, vec2(avg_intensity, 0));
     }
    else{
        fragColor = vec4(0.0f);
