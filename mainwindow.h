@@ -23,7 +23,6 @@ public:
 	VolumeDataReader* getReader() const;
 	QChart* generateChart() const;
 	void initializeContext();
-	~MainWindow();
 
 signals:
 	void AABBChangedX(float value);

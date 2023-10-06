@@ -96,11 +96,6 @@ void MainWindow::initializeContext()
     QObject::connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)), visualizationSetting.get(), SLOT(setMode(int)));
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
 void MainWindow::on_loadVolumeButton_clicked(bool checked)
 {
     Q_UNUSED(checked)

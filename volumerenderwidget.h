@@ -11,7 +11,6 @@ class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
     Q_OBJECT
 public:
     explicit VolumeRenderWidget(QWidget* parent = nullptr);
-    ~VolumeRenderWidget();
 
     void initializeGL() override;
     void paintGL() override;
@@ -46,7 +45,7 @@ private:
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
-    MainWindow* mainWindow = nullptr;
+    std::shared_ptr<MainWindow> mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
     float xRot = 180.0f;

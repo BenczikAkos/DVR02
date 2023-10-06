@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/Ákos/Downloads/cube.png</normaloff>C:/Users/Ákos/Downloads/cube.png</iconset>
+    <normaloff>cube.png</normaloff>cube.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">

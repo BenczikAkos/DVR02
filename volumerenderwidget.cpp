@@ -7,11 +7,9 @@ VolumeRenderWidget::VolumeRenderWidget(QWidget* parent)
     : QOpenGLWidget {parent}
 {
     setFocusPolicy(Qt::StrongFocus);
-    mainWindow = (MainWindow*)parentWidget()->parentWidget();
+    mainWindow = std::static_pointer_cast<MainWindow>(std::shared_ptr<QWidget>(parentWidget()->parentWidget()));
     update();
 }
-
-VolumeRenderWidget::~VolumeRenderWidget() = default;
 
 void VolumeRenderWidget::initializeGL()
 {
@@ -41,10 +39,6 @@ void VolumeRenderWidget::paintGL()
     program->setUniformValue("ViewMatrix", ViewMatrix);
     program->setUniformValue("CameraPos", CameraPos);
     visualizationSetting->setUniforms();
-    //program->setUniformValue("AABBScale", AABBScale);
-    //program->setUniformValue("intensityMin", intensityMin);
-    //program->setUniformValue("intensityMax", intensityMax);
-    //program->setUniformValue("stepLength", stepLength);
 
     volume->bind();
     //TODO: ne kerjuk már el minden frameben legyen tagvaltozo
