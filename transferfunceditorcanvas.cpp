@@ -96,3 +96,10 @@ void TransferFuncEditorCanvas::mouseReleaseEvent(QMouseEvent* event)
     QWidget::mouseReleaseEvent(event);
     mouseMoving = false;
 }
+
+void TransferFuncEditorCanvas::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    QWidget::mouseDoubleClickEvent(event);
+    auto funcPos = event->pos() * t_device2func;
+    funcProperty->addKey(funcPos.x(), QColor(100, 100, 100, 255));
+}

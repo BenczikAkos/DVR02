@@ -9,6 +9,7 @@ public:
 	QVector<float> getAllIntensities() const;
 	QVector<float> getAllOpacities() const;
 	QVector<QColor> getAllColors() const;
+	void addKey(float _intensity, const QColor& _color);
 	void bind();
 public slots:
 	void intensityOpacityChangedAt(int index, float newIntensity, float newOpacity);

@@ -36,6 +36,18 @@ QVector<QColor> TransferFuncProperty::getAllColors() const
 	return result;
 }
 
+void TransferFuncProperty::addKey(float _intensity, const QColor& _color)
+{
+	for(auto key : keys)
+	{
+		if (key->intensity > _intensity)
+		{
+			keys.insert(keys.indexOf(key), std::make_shared<TransferFuncKey>(_intensity, _color));
+			return;
+		}
+	}
+}
+
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
 {
 	auto currKey = keys.at(index);
