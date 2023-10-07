@@ -67,7 +67,7 @@ void main()
         {
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);
-            vec4 transferColor = texture(TransferFunction, vec2(intensity, 0.0f));
+            vec4 transferColor = texture(TransferFunction, vec2(intensity, 0.5f));
             color.rgb += transferColor.rgb * (1 - color.a) * transferColor.a;
             color.a += (1 - color.a) * transferColor.a;
             travel -= stepLength;

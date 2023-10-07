@@ -34,7 +34,7 @@ TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent, std::shared_
     //signals
     QObject::connect(colorDialogWidget.get(), SIGNAL(currentColorChanged(const QColor&)), this, SLOT(colorChanged(const QColor&)));
     QObject::connect(this, SIGNAL(colorChangedAt(int, QColor)), funcProperty.get(), SLOT(colorChangedAt(int, QColor)));
-    //QObject::connect(transferFuncCanvas.get(), SIGNAL(selectedPointColor(const QColor&)), colorDialogWidget.get(), SLOT(QColorDialog::setCurrentColor(const QColor&)));
+    QObject::connect(transferFuncCanvas.get(), SIGNAL(selectedPointColor(const QColor&)), this, SLOT(setColorPickerDialogColor(const QColor&)));
 }
 
 void TransferFuncEditorDialog::colorChanged(const QColor& newColor)
@@ -44,6 +44,11 @@ void TransferFuncEditorDialog::colorChanged(const QColor& newColor)
     {
         emit colorChangedAt(transferFuncCanvas->getActivePointIndex(), newColor);
     }
+}
+
+void TransferFuncEditorDialog::setColorPickerDialogColor(const QColor& newColor)
+{
+    colorDialogWidget->setCurrentColor(newColor);
 }
 
 

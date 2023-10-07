@@ -38,18 +38,34 @@ QVector<QColor> TransferFuncProperty::getAllColors() const
 
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
 {
+	auto currKey = keys.at(index);
 	if (index == keys.size() - 1) 
 	{
-		newIntensity = 255;
+		currKey->color.setAlpha(newOpacity);
+		updateTFTexture();
+		return;
 	}
-	if (index == 0)
+	else if (index == 0)
 	{
-		newIntensity = 0;
+		currKey->color.setAlpha(newOpacity);
+		updateTFTexture();
+		return;
 	}
-	auto changedKey = keys.at(index);
-	changedKey->intensity = newIntensity;
-	changedKey->color.setAlpha(newOpacity);
-	updateTFTexture();
+	else {
+		auto left = keys.at(index - 1);
+		auto right = keys.at(index + 1);
+		if (newIntensity <= left->intensity)
+		{
+			newIntensity = left->intensity + 1.0;
+		}
+		if (newIntensity > right->intensity)
+		{
+			newIntensity = right->intensity - 1.0;
+		}
+		currKey->intensity = newIntensity;
+		currKey->color.setAlpha(newOpacity);
+		updateTFTexture();
+	}
 }
 
 void TransferFuncProperty::colorChangedAt(int index, QColor newColor)
@@ -67,13 +83,12 @@ void TransferFuncProperty::updateTFTexture()
 		auto currKey = key->get();
 		auto nextKey = std::next(key)->get();
 		int range = (int)nextKey->intensity - (int)currKey->intensity;
-		for (int x = currKey->intensity; x < nextKey->intensity; ++x)
+		for (int x = currKey->intensity; x <= nextKey->intensity; ++x)
 		{
 			float step = nextKey->intensity - x;
 			float coeff = step / range;
 			unsigned char final_red = 0; unsigned char final_green = 0; unsigned char final_blue = 0; unsigned char final_alpha = 0;
 			getBlendedColors(coeff, currKey->color, nextKey->color, final_red, final_green, final_blue, final_alpha);
-			qWarning() << x << "   " << final_red;
 			TFTable[x * 4 + 0] = final_red;
 			TFTable[x * 4 + 1] = final_green;
 			TFTable[x * 4 + 2] = final_blue;
@@ -116,7 +131,7 @@ void TransferFuncProperty::init_keys()
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
 	for (auto i : randomIntensities) 
 	{
-		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, 100, 100, 255)));
+		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, i, i, 255)));
 	}
 		
 

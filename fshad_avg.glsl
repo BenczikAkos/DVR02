@@ -81,7 +81,7 @@ void main()
             intensity_sum += intensity;
         }
         float avg_intensity = intensity_sum / i * 5.0f;
-        fragColor = texture(TransferFunction, vec2(avg_intensity, 0));
+        fragColor = texture(TransferFunction, vec2(avg_intensity, 0.5f));
     }
    else{
        fragColor = vec4(0.0f);

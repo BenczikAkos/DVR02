@@ -16,6 +16,7 @@ public:
     TransferFuncEditorDialog(QWidget* parent = nullptr, std::shared_ptr<TransferFuncProperty> _transferFunc = nullptr);
 public slots:
     void colorChanged(const QColor& newColor);
+    void setColorPickerDialogColor(const QColor& newColor);
 signals:
     void colorChangedAt(int index, QColor newColor);
 protected:
