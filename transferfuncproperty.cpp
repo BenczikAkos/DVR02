@@ -6,6 +6,7 @@ TransferFuncProperty::TransferFuncProperty(GLuint _loc) :
 {
 	init_keys();
 	initializeOpenGLFunctions();
+	updateTFTexture();
 }
 
 QVector<float> TransferFuncProperty::getAllIntensities() const
@@ -35,12 +36,6 @@ QVector<QColor> TransferFuncProperty::getAllColors() const
 	return result;
 }
 
-void TransferFuncProperty::bind()
-{
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, textureLocation);
-}
-
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
 {
 	if (index == keys.size() - 1) 
@@ -66,7 +61,7 @@ void TransferFuncProperty::colorChangedAt(int index, QColor newColor)
 
 void TransferFuncProperty::updateTFTexture()
 {
-	int TFTable[256*4];
+	unsigned char TFTable[256*4];
 	for (auto key = keys.begin(); key != std::prev(keys.end()); ++key)
 	{
 		auto currKey = key->get();
@@ -76,7 +71,7 @@ void TransferFuncProperty::updateTFTexture()
 		{
 			float step = nextKey->intensity - x;
 			float coeff = step / range;
-			int final_red = 0; int final_green = 0; int final_blue = 0; int final_alpha = 0;
+			unsigned char final_red = 0; unsigned char final_green = 0; unsigned char final_blue = 0; unsigned char final_alpha = 0;
 			getBlendedColors(coeff, currKey->color, nextKey->color, final_red, final_green, final_blue, final_alpha);
 			qWarning() << x << "   " << final_red;
 			TFTable[x * 4 + 0] = final_red;
@@ -96,13 +91,13 @@ void TransferFuncProperty::updateTFTexture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //tightly packed
 	glPixelStorei(GL_UNPACK_LSB_FIRST, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 1, 0, GL_RGBA, GL_INT, TFTable);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &TFTable);
 }
 
-void TransferFuncProperty::getBlendedColors(float coeff, QColor c1, QColor c2, int& final_red, int& final_green, int& final_blue, int& final_alpha)
+void TransferFuncProperty::getBlendedColors(float coeff, QColor c1, QColor c2, unsigned char& final_red, unsigned char& final_green, unsigned char& final_blue, unsigned char& final_alpha)
 {
-	int r1 = c1.red(); int g1 = c1.green(); int b1 = c1.blue(); int a1 = c1.alpha();
-	int r2 = c2.red(); int g2 = c2.green(); int b2 = c2.blue(); int a2 = c2.alpha();
+	unsigned char r1 = c1.red(); unsigned char g1 = c1.green(); unsigned char b1 = c1.blue(); unsigned char a1 = c1.alpha();
+	unsigned char r2 = c2.red(); unsigned char g2 = c2.green(); unsigned char b2 = c2.blue(); unsigned char a2 = c2.alpha();
 	float oneMinusCoeff = 1.0f - coeff;
 	final_red = coeff * r1 + oneMinusCoeff * r2;
 	final_green = coeff * g1 + oneMinusCoeff * g2;
@@ -110,12 +105,18 @@ void TransferFuncProperty::getBlendedColors(float coeff, QColor c1, QColor c2, i
 	final_alpha = coeff * a1 + oneMinusCoeff * a2;
 }
 
+void TransferFuncProperty::bind()
+{
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureLocation);
+}
+
 void TransferFuncProperty::init_keys()
 {
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
 	for (auto i : randomIntensities) 
 	{
-		keys.append(std::make_shared<TransferFuncKey>(i, QColor(100, 100, 100, 255)));
+		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, 100, 100, 255)));
 	}
 		
 

@@ -71,9 +71,9 @@ void main()
                 maximum_intensity = intensity;
             }
         }
-        fragColor = texture(TransferFunction, vec2(maximum_intensity, 0.0f));
+        fragColor = texture(TransferFunction, vec2(maximum_intensity, 0.5f));
     }
    else{
-       fragColor = vec4(0.0f);
+       fragColor = vec4(0.1f);
    }
 }

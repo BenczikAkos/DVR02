@@ -15,7 +15,7 @@ public slots:
 	void colorChangedAt(int index, QColor newColor);
 private:
 	void updateTFTexture();
-	void getBlendedColors(float coeff, QColor c1, QColor c2, int& final_red, int& final_green, int& final_blue, int& final_alpha);
+	void getBlendedColors(float coeff, QColor c1, QColor c2, unsigned char& final_red, unsigned char& final_green, unsigned char& final_blue, unsigned char& final_alpha);
 	void init_keys();
 	QVector<std::shared_ptr<TransferFuncKey>> keys;
 	GLuint textureLocation = 0;

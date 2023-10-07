@@ -99,7 +99,8 @@ void main()
                 vec3 viewDir = normalize(CameraPos - pos);
                 vec3 halfwayDir = normalize(lightDir + viewDir);  
                 float diff = max(dot(gradient, lightDir), 0.0);
-                vec3 diffuse = diff * vec3(1.0) * texture(TransferFunction, vec2(intensity, 0.0f)).rgb;
+                vec3 diffuse_color = vec3(0.9255, 0.5961, 0.102);//texture(TransferFunction, vec2(intensity, 0.0f)).rgb;
+                vec3 diffuse = diff * vec3(1.0) * diffuse_color;
                 
                 float spec = pow(max(dot(gradient, halfwayDir), 0.0), 20.0f);
                 vec3 spec_color = spec * vec3(0.3137, 0.2275, 0.6588);
