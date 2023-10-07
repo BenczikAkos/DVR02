@@ -100,6 +100,14 @@ void TransferFuncEditorCanvas::mouseReleaseEvent(QMouseEvent* event)
 void TransferFuncEditorCanvas::mouseDoubleClickEvent(QMouseEvent* event)
 {
     QWidget::mouseDoubleClickEvent(event);
-    auto funcPos = event->pos() * t_device2func;
-    funcProperty->addKey(funcPos.x(), QColor(100, 100, 100, 255));
+    auto buton = event->button();
+    if (event->button() == Qt::MouseButton::LeftButton)
+    {
+        auto funcPos = event->pos() * t_device2func;
+        funcProperty->addKey(funcPos.x(), QColor(100, 100, 100, funcPos.y()));
+    }
+    else if (event->button() == Qt::MouseButton::RightButton)
+    {
+        funcProperty->removeKeyAt(activePointIndex);
+    }
 }

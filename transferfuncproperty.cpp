@@ -48,6 +48,14 @@ void TransferFuncProperty::addKey(float _intensity, const QColor& _color)
 	}
 }
 
+void TransferFuncProperty::removeKeyAt(int _index)
+{
+	if (_index >= 0 && _index < keys.size()-1)
+	{
+		keys.remove(_index);
+	}
+}
+
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
 {
 	auto currKey = keys.at(index);
