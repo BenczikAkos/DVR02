@@ -48,7 +48,7 @@ private:
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
-    //QOpenGLFramebufferObject fbo;
+    std::unique_ptr<QOpenGLFramebufferObject> fbo = nullptr;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
@@ -60,4 +60,5 @@ private:
     QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
     void normalizeAngle(float& angle);
     float fromRadian(float angle);
+    void generateFBO();
 };

@@ -137,6 +137,9 @@
     <None Include="src\shaders\vshader.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="src\shaders\fshad_bounding.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\chartdialog.ui">
