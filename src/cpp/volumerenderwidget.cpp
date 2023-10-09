@@ -1,4 +1,4 @@
-#include "volumerenderwidget.h"
+#include "../include/volumerenderwidget.h"
 #include <QKeyEvent>
 #include <qfile.h>
 

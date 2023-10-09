@@ -1,4 +1,4 @@
-#include "volumedatareader.h"
+#include "../include/volumedatareader.h"
 
 VolumeDataReader::VolumeDataReader() = default;
 

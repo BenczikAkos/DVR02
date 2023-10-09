@@ -78,7 +78,7 @@
   </ImportGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;release;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Egyetem\6semester\Onlab\DVR02\src\include;D:\Egyetem\6semester\Onlab\DVR02\src\cpp;D:\Egyetem\6semester\Onlab\DVR02\src\shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -utf-8 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -204,64 +204,44 @@
     </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="chartdialog.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="transferfunceditorcanvas.cpp" />
-    <ClCompile Include="transferfunceditordialog.cpp" />
-    <ClCompile Include="transferfuncproperty.cpp" />
-    <ClCompile Include="visualizationsetting.cpp" />
-    <ClCompile Include="volumedata.cpp" />
-    <ClCompile Include="volumedatareader.cpp" />
-    <ClCompile Include="volumerenderwidget.cpp" />
+    <QtMoc Include="src\include\chartdialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="volumedatareader.h" />
-    <QtMoc Include="chartdialog.h">
-    </QtMoc>
-    <QtMoc Include="mainwindow.h">
-    </QtMoc>
-    <QtMoc Include="transferfunceditordialog.h" />
-    <QtMoc Include="transferfunceditorcanvas.h" />
-    <ClInclude Include="compositionmode.h" />
-    <ClInclude Include="transferfunckey.h" />
-    <QtMoc Include="transferfuncproperty.h" />
-    <QtMoc Include="visualizationsetting.h" />
-    <ClInclude Include="volumedata.h" />
-    <QtMoc Include="volumerenderwidget.h">
-    </QtMoc>
+    <ClInclude Include="src\include\compositionmode.h" />
+    <ClInclude Include="src\include\transferfunckey.h" />
+    <ClInclude Include="src\include\ui_chartdialog.h" />
+    <ClInclude Include="src\include\ui_mainwindow.h" />
+    <ClInclude Include="src\include\volumedata.h" />
+    <QtMoc Include="src\include\volumerenderwidget.h" />
+    <QtMoc Include="src\include\volumedatareader.h" />
+    <QtMoc Include="src\include\visualizationsetting.h" />
+    <QtMoc Include="src\include\transferfuncproperty.h" />
+    <QtMoc Include="src\include\transferfunceditordialog.h" />
+    <QtMoc Include="src\include\transferfunceditorcanvas.h" />
+    <QtMoc Include="src\include\mainwindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="debug\moc_predefs.h.cbt">
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -Zi -MDd -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;debug\moc_predefs.h</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generate moc_predefs.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">debug\moc_predefs.h;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="release\moc_predefs.h.cbt">
-      <FileType>Document</FileType>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -O2 -MD -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E $(QTDIR)\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;release\moc_predefs.h</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generate moc_predefs.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">release\moc_predefs.h;%(Outputs)</Outputs>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </CustomBuild>
+    <ClCompile Include="src\cpp\chartdialog.cpp" />
+    <ClCompile Include="src\cpp\main.cpp" />
+    <ClCompile Include="src\cpp\mainwindow.cpp" />
+    <ClCompile Include="src\cpp\transferfunceditorcanvas.cpp" />
+    <ClCompile Include="src\cpp\transferfunceditordialog.cpp" />
+    <ClCompile Include="src\cpp\transferfuncproperty.cpp" />
+    <ClCompile Include="src\cpp\visualizationsetting.cpp" />
+    <ClCompile Include="src\cpp\volumedata.cpp" />
+    <ClCompile Include="src\cpp\volumedatareader.cpp" />
+    <ClCompile Include="src\cpp\volumerenderwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="chartdialog.ui">
-    </QtUic>
-    <QtUic Include="mainwindow.ui">
-    </QtUic>
+    <None Include="src\shaders\fshad_accumulate.glsl" />
+    <None Include="src\shaders\fshad_avg.glsl" />
+    <None Include="src\shaders\fshad_isosurface.glsl" />
+    <None Include="src\shaders\fshad_mip.glsl" />
+    <None Include="src\shaders\vshader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fshad_accumulate.glsl" />
-    <None Include="fshad_avg.glsl" />
-    <None Include="fshad_mip.glsl" />
-    <QtRcc Include="shaders.qrc">
-    </QtRcc>
-    <None Include="vshader.glsl" />
+    <QtUic Include="src\chartdialog.ui" />
+    <QtUic Include="src\mainwindow.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

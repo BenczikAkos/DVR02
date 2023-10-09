@@ -1,9 +1,9 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "../include/mainwindow.h"
+#include "../include/ui_mainwindow.h"
 
 #include "qstatusbar.h"
 #include "QtCore/QTime"
-#include "chartdialog.h"
+#include "../include/chartdialog.h"
 #include <QtOpenGL/QOpenGLShaderProgram>
 
 MainWindow::MainWindow(QWidget* parent)

@@ -1,5 +1,5 @@
-#include "chartdialog.h"
-#include "ui_chartdialog.h"
+#include "../include/chartdialog.h"
+#include "../include/ui_chartdialog.h"
 
 
 ChartDialog::ChartDialog(MainWindow* parent)

@@ -13,6 +13,8 @@ INSTALLS += target
 
 FORMS = mainwindow.ui chartdialog.ui
 
+INCLUDEPATH = src/include
+
 HEADERS += \
     volumerenderwidget.h \
     ui_mainwindow.h \

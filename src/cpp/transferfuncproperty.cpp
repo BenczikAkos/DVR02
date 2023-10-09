@@ -1,4 +1,4 @@
-#include "transferfuncproperty.h"
+#include "../include/transferfuncproperty.h"
 
 
 TransferFuncProperty::TransferFuncProperty(GLuint _loc) :
@@ -151,7 +151,7 @@ void TransferFuncProperty::init_keys()
 	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
 	for (auto i : randomIntensities) 
 	{
-		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, i, i, 255)));
+		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, i, i, i)));
 	}
 		
 

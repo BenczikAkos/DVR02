@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>vshader.glsl</file>
-        <file>fshad_mip.glsl</file>
-        <file>fshad_accumulate.glsl</file>
-        <file>fshad_avg.glsl</file>
-        <file>fshad_isosurface.glsl</file>
+        <file>src/shaders/vshader.glsl</file>
+        <file>src/shaders/fshad_mip.glsl</file>
+        <file>src/shaders/fshad_accumulate.glsl</file>
+        <file>src/shaders/fshad_avg.glsl</file>
+        <file>src/shaders/fshad_isosurface.glsl</file>
     </qresource>
 </RCC>

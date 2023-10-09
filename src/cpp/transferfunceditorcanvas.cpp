@@ -1,4 +1,4 @@
-#include "transferfunceditorcanvas.h"
+#include "../include/transferfunceditorcanvas.h"
 
 TransferFuncEditorCanvas::TransferFuncEditorCanvas(QWidget* parent, std::shared_ptr<TransferFuncProperty> _funcProperty) :
     QWidget(parent),

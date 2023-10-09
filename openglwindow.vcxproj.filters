@@ -45,113 +45,105 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\TransferFunc">
-      <UniqueIdentifier>{916a80e5-6911-4e45-9f4b-e43a80db6cd5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\TransferFunc">
-      <UniqueIdentifier>{9e8e14b5-6588-465b-ba36-331fa4224709}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="chartdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="volumedata.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="volumerenderwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="volumedatareader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="transferfunceditorcanvas.cpp">
-      <Filter>Source Files\TransferFunc</Filter>
-    </ClCompile>
-    <ClCompile Include="transferfunceditordialog.cpp">
-      <Filter>Source Files\TransferFunc</Filter>
-    </ClCompile>
-    <ClCompile Include="transferfuncproperty.cpp">
-      <Filter>Source Files\TransferFunc</Filter>
-    </ClCompile>
-    <ClCompile Include="visualizationsetting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <QtMoc Include="src\include\chartdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\transferfunceditorcanvas.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\transferfunceditordialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\transferfuncproperty.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\visualizationsetting.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\volumedatareader.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\include\volumerenderwidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="chartdialog.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClInclude Include="volumedata.h">
+    <ClInclude Include="src\include\compositionmode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <QtMoc Include="volumerenderwidget.h">
+    <ClInclude Include="src\include\transferfunckey.h">
       <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="volumedatareader.h">
+    </ClInclude>
+    <ClInclude Include="src\include\ui_chartdialog.h">
       <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="transferfunceditorcanvas.h">
-      <Filter>Header Files\TransferFunc</Filter>
-    </QtMoc>
-    <QtMoc Include="transferfunceditordialog.h">
-      <Filter>Header Files\TransferFunc</Filter>
-    </QtMoc>
-    <QtMoc Include="transferfuncproperty.h">
-      <Filter>Header Files\TransferFunc</Filter>
-    </QtMoc>
-    <QtMoc Include="visualizationsetting.h">
+    </ClInclude>
+    <ClInclude Include="src\include\ui_mainwindow.h">
       <Filter>Header Files</Filter>
-    </QtMoc>
+    </ClInclude>
+    <ClInclude Include="src\include\volumedata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="debug\moc_predefs.h.cbt">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="release\moc_predefs.h.cbt">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
+    <ClCompile Include="src\cpp\chartdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\transferfunceditorcanvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\transferfunceditordialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\transferfuncproperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\visualizationsetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\volumedata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\volumedatareader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\volumerenderwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="chartdialog.ui">
+    <None Include="src\shaders\fshad_accumulate.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\shaders\fshad_avg.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\shaders\fshad_isosurface.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\shaders\fshad_mip.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\shaders\vshader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="src\chartdialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="mainwindow.ui">
+    <QtUic Include="src\mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fshad_accumulate.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="fshad_avg.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="fshad_mip.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <QtRcc Include="shaders.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-    <None Include="vshader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="transferfunckey.h">
-      <Filter>Header Files\TransferFunc</Filter>
-    </ClInclude>
-    <ClInclude Include="compositionmode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

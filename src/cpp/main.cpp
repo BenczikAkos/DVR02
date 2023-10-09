@@ -1,7 +1,7 @@
 #pragma once
 
-#include "mainwindow.h"
-#include "volumerenderwidget.h"
+#include "../include/mainwindow.h"
+#include "../include/volumerenderwidget.h"
 #include "qmainwindow.h"
 #include "qapplication.h"
 

@@ -1,4 +1,4 @@
-#include "transferfunceditordialog.h"
+#include "../include/transferfunceditordialog.h"
 
 TransferFuncEditorDialog::TransferFuncEditorDialog(QWidget* parent, std::shared_ptr<TransferFuncProperty> _transferFunc)
     : QWidget(parent, Qt::Window),

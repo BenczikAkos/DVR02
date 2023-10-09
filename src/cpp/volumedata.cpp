@@ -1,4 +1,4 @@
-#include "volumedata.h"
+#include "../include/volumedata.h"
 #include <QVector3D>
 #include <QChart>
 #include <qfile.h>
