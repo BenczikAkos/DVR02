@@ -3,6 +3,7 @@
 #include "QtOpenGLWidgets/qopenglwidget.h"
 #include "QtWidgets/qfiledialog.h"
 #include <QtOpenGL/QOpenGLShaderProgram>
+#include <QOpenGLFramebufferObject>
 #include "volumedata.h"
 #include "visualizationsetting.h"
 
@@ -24,6 +25,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
+    void resizeEvent(QResizeEvent* event) override;
     void setRotation(float& changeable, float angle);
     void rotateScene(float phi, float theta);
 
@@ -42,9 +44,11 @@ private:
     //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();
+    QSize windowSize;
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
+    //QOpenGLFramebufferObject fbo;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;

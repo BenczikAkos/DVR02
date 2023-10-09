@@ -23,6 +23,7 @@ void VolumeRenderWidget::initializeGL()
     Q_ASSERT(VolumeLocation != -1);
     volume = std::make_shared<VolumeData>(VolumeLocation, mainWindow->getReader());
 
+
 }
 
 void VolumeRenderWidget::paintGL()
@@ -41,8 +42,6 @@ void VolumeRenderWidget::paintGL()
     visualizationSetting->setUniforms();
 
     volume->bind();
-    //TODO: ne kerjuk már el minden frameben legyen tagvaltozo
-    QVector2D windowSize = QVector2D(this->width(), this->height());
     program->setUniformValue("WindowSize", windowSize);
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glEnableVertexAttribArray(m_posAttr);
@@ -125,6 +124,12 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
 
 void VolumeRenderWidget::wheelEvent(QWheelEvent* event) {
     CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.0033f) * ViewMatrix;
+}
+
+void VolumeRenderWidget::resizeEvent(QResizeEvent* event)
+{
+    QOpenGLWidget::resizeEvent(event);
+    windowSize = QSize(this->width(), this->height());
 }
 
 void VolumeRenderWidget::rotateScene(float phi, float theta){
