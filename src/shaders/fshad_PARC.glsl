@@ -32,22 +32,24 @@ bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
 
 void main()
 {
-   vec3 rayDirection;
-   rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
-   rayDirection.z = 2.0f;
-   rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
+    vec3 rayDirection;
+    rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
+    rayDirection.z = 2.0f;
+    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
 
-   Ray eye = Ray(CameraPos, normalize(rayDirection));
-   AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
+    Ray eye = Ray(CameraPos, normalize(rayDirection));
+    AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
 
-   float tnear, tfar;
+    float tnear = -1.0f;
+    float tfar  = -1.0f;
+
     if(IntersectBox(eye, aabb, tnear, tfar))
     {
-        intersections = vec2(0.7f, 0.0f);
+        intersections = vec2(tnear, tfar);
     }
    else
    {
-       intersections = vec2(0.2f, 0.0f);
+       intersections = vec2(0.2, 0.2);
    }
-   intersections = CameraPos.xy;
+   //intersections = rayDirection.xy;
 }

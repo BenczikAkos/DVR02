@@ -53,31 +53,41 @@ void main()
    Ray eye = Ray(CameraPos, normalize(rayDirection));
    AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
 
-   float tnear, tfar;
-    if(IntersectBox(eye, aabb, tnear, tfar)){
-        vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
-        vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
-        // Perform the ray marching:
-        vec3 pos = rayStart;
-        vec3 step = normalize(rayStop-rayStart) * stepLength;
-        float travel = distance(rayStart, rayStop);
-        float maximum_intensity = 0.0f;
-        vec4 color = vec4(0.0f);
-        while (travel > 0.0f && color.a < 1.0f)
-        {
-            float intensity = texture(Volume, pos).r;
-            intensity = cap(intensity, intensityMin, intensityMax);
-            vec4 transferColor = texture(TransferFunction, vec2(intensity, 0.5f));
-            color.rgb += transferColor.rgb * (1 - color.a) * transferColor.a;
-            color.a += (1 - color.a) * transferColor.a;
-            travel -= stepLength;
-            pos += step;
-        }
-        //color.rgb = color.a * color.rgb;
-        // color.a = 1.0;
-        fragColor = color;
+   float tnear = 0.2f;
+   float tfar  = 0.2f;
+    if(IntersectBox(eye, aabb, tnear, tfar))
+    {
+        fragColor = vec4(tnear, tfar, 0.0f, 1.0f);
     }
-   else{
-       fragColor = vec4(0.0f);
+   else
+   {
+       fragColor = vec4(0.2f);
    }
+//         vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
+//         vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
+//         // Perform the ray marching:
+//         vec3 pos = rayStart;
+//         vec3 step = normalize(rayStop-rayStart) * stepLength;
+//         float travel = distance(rayStart, rayStop);
+//         float maximum_intensity = 0.0f;
+//         vec4 color = vec4(0.0f);
+//         while (travel > 0.0f && color.a < 1.0f)
+//         {
+//             float intensity = texture(Volume, pos).r;
+//             intensity = cap(intensity, intensityMin, intensityMax);
+//             vec4 transferColor = texture(TransferFunction, vec2(intensity, 0.5f));
+//             color.rgb += transferColor.rgb * (1 - color.a) * transferColor.a;
+//             color.a += (1 - color.a) * transferColor.a;
+//             travel -= stepLength;
+//             pos += step;
+//         }
+//         //color.rgb = color.a * color.rgb;
+//         // color.a = 1.0;
+//         fragColor = color;
+//     }
+//    else
+//    {
+//        fragColor = vec4(0.0f);
+//    }
+//    fragColor = vec4(normalize(rayDirection).xy, 0.0f, 1.0f);
 }

@@ -28,11 +28,10 @@ void VolumeRenderWidget::initializeGL()
 
 void VolumeRenderWidget::paintGL()
 {
-    const qreal retinaScale = devicePixelRatio();
-    glViewport(0, 0, width() * retinaScale, height() * retinaScale);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    const qreal retinaScale = devicePixelRatio();
 
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -44,7 +43,8 @@ void VolumeRenderWidget::paintGL()
 
 	    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
 	    PARCProgram->setUniformValue("CameraPos", CameraPos);
-	    PARCProgram->setUniformValue("WindowSize", windowSize);
+	    PARCProgram->setUniformValue("WindowSize", windowSize * retinaScale);
+        PARCProgram->setUniformValue("AABBScale", QVector3D(1.0f, 1.0f, 1.0f));
 	    drawQuad();
 	    PARCProgram->release();
     QOpenGLFramebufferObject::bindDefault();
@@ -57,7 +57,7 @@ void VolumeRenderWidget::paintGL()
 
     program->setUniformValue("ViewMatrix", ViewMatrix);
     program->setUniformValue("CameraPos", CameraPos);
-    program->setUniformValue("WindowSize", windowSize);
+    program->setUniformValue("WindowSize", windowSize * retinaScale);
     program->setUniformValue("PARC", 1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, PARCTex);
@@ -170,9 +170,11 @@ void VolumeRenderWidget::generateFBO()
     glGenTextures(1, &PARCTex);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, PARCTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG32F, windowSize.width(), windowSize.height(), 0, GL_RG, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    auto wreal = width() * devicePixelRatio();
+    auto hreal = height() * devicePixelRatio();
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, wreal, hreal, 0, GL_RG, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, PARCTex, 0);
 
     GLenum attachments[1] = { GL_COLOR_ATTACHMENT0 };
@@ -181,11 +183,13 @@ void VolumeRenderWidget::generateFBO()
     unsigned int rboDepth;
     glGenRenderbuffers(1, &rboDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowSize.width(), windowSize.height());
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, wreal, hreal);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
         qWarning() << "Framebuffer not complete!";
+    }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
