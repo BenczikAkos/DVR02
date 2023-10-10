@@ -11,6 +11,7 @@ class VisualizationSetting : public QObject, protected QOpenGLExtraFunctions
 public:
 	explicit VisualizationSetting();
     std::shared_ptr<QOpenGLShaderProgram> getActiveProgram();
+    std::shared_ptr<QOpenGLShaderProgram> getPARCProgram();
     void setUniforms();
     std::shared_ptr<TransferFuncProperty> getActiveTransferFunction();
 public slots:

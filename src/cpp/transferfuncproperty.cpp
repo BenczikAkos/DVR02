@@ -148,7 +148,7 @@ void TransferFuncProperty::bind()
 
 void TransferFuncProperty::init_keys()
 {
-	QVector<int> randomIntensities = { 0, 100, 110, 120, 240, 255 };
+	QVector<int> randomIntensities = { 0, 64, 128, 192, 255 };
 	for (auto i : randomIntensities) 
 	{
 		keys.append(std::make_shared<TransferFuncKey>(i, QColor(i, i, i, i)));

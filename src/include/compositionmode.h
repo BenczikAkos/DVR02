@@ -7,7 +7,7 @@ enum class CompositionMode {
 	Accumulate = 1,
 	Average = 2,
 	Isosurface = 3,
-	BoundingPass = 4
+	PARCPass = 4
 };
 
 #endif // !COMPOSITION_MODE_H

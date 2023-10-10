@@ -58,6 +58,7 @@ private:
     float phi = (float)-M_PI_2;
     float elevation = 0.0f;
     QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
+    void drawQuad();
     void normalizeAngle(float& angle);
     float fromRadian(float angle);
     void generateFBO();

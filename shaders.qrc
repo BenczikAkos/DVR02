@@ -5,6 +5,6 @@
         <file>src/shaders/fshad_accumulate.glsl</file>
         <file>src/shaders/fshad_avg.glsl</file>
         <file>src/shaders/fshad_isosurface.glsl</file>
-        <file>src/shaders/fshad_bounding.glsl</file>
+        <file>src/shaders/fshad_PARC.glsl</file>
     </qresource>
 </RCC>

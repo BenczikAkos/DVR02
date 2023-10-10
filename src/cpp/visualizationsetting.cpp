@@ -7,7 +7,7 @@ VisualizationSetting::VisualizationSetting()
 	createShaderProgram(CompositionMode::Average, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_avg.glsl");
 	createShaderProgram(CompositionMode::Accumulate, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_accumulate.glsl");
 	createShaderProgram(CompositionMode::Isosurface, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_isosurface.glsl");
-	createShaderProgram(CompositionMode::BoundingPass, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_bounding.glsl");
+	createShaderProgram(CompositionMode::PARCPass, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_PARC.glsl");
 	QOpenGLShaderProgram* program = modes.value(activeMode).get();
 	if (!program->link()) {
 		qWarning() << program->log();
@@ -21,6 +21,11 @@ VisualizationSetting::VisualizationSetting()
 std::shared_ptr<QOpenGLShaderProgram> VisualizationSetting::getActiveProgram()
 {
 	return modes.value(activeMode);
+}
+
+std::shared_ptr<QOpenGLShaderProgram> VisualizationSetting::getPARCProgram()
+{
+	return modes.value(CompositionMode::PARCPass);
 }
 
 void VisualizationSetting::setUniforms()

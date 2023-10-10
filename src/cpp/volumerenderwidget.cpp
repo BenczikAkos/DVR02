@@ -38,8 +38,12 @@ void VolumeRenderWidget::paintGL()
     {
         qWarning() << "FBO not bounded!";
     }
-    //programot hasznááljuk uniformokat beállítjuk
-    //1st pass vhogyan, majd:
+    auto PARCProgram = visualizationSetting->getPARCProgram();
+    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
+    PARCProgram->setUniformValue("CameraPos", CameraPos);
+    PARCProgram->setUniformValue("WindowSize", windowSize);
+    drawQuad();
+    PARCProgram->release();
     QOpenGLFramebufferObject::bindDefault();
 
     auto program = visualizationSetting->getActiveProgram().get();
@@ -50,15 +54,11 @@ void VolumeRenderWidget::paintGL()
     program->setUniformValue("ViewMatrix", ViewMatrix);
     program->setUniformValue("CameraPos", CameraPos);
     program->setUniformValue("WindowSize", windowSize);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, fbo->takeTexture(0));
     visualizationSetting->setUniforms();
     volume->bind();
-
-    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glEnableVertexAttribArray(m_posAttr);
-    glBindVertexArray(m_posAttr);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glDisableVertexAttribArray(m_posAttr);
-
+    drawQuad();
     program->release();
     update();
 }
@@ -172,12 +172,21 @@ void VolumeRenderWidget::generateFBO()
     unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers(1, attachments);
 
-    unsigned int rboDepth;
-    glGenRenderbuffers(1, &rboDepth);
-    glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowSize.width(), windowSize.height());
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+    //unsigned int rboDepth;
+    //glGenRenderbuffers(1, &rboDepth);
+    //glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+    //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowSize.width(), windowSize.height());
+    //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void VolumeRenderWidget::drawQuad()
+{
+    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glEnableVertexAttribArray(m_posAttr);
+    glBindVertexArray(m_posAttr);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDisableVertexAttribArray(m_posAttr);
 }
 
 void VolumeRenderWidget::normalizeAngle(float &angle)

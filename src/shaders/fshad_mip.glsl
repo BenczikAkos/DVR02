@@ -7,6 +7,7 @@ uniform vec3 CameraPos;
 uniform vec3 AABBScale;
 uniform sampler3D Volume;
 uniform sampler2D TransferFunction;
+uniform sampler2D PARC;
 uniform float intensityMin;
 uniform float intensityMax;
 uniform float stepLength;
@@ -63,7 +64,7 @@ void main()
         float travel = distance(rayStart, rayStop);
         float maximum_intensity = 0.0f;
         vec4 color = vec4(0.0f);
-        for (int i=0; i < 1.0/stepLength && travel > 0.0; ++i, pos += step, travel -= stepLength)
+        for (int i=0; travel > 0.0; ++i, pos += step, travel -= stepLength)
         {
             float intensity = texture(Volume, pos).r;
             intensity = cap(intensity, intensityMin, intensityMax);
@@ -71,9 +72,10 @@ void main()
                 maximum_intensity = intensity;
             }
         }
-        fragColor = texture(TransferFunction, vec2(maximum_intensity, 0.5f));
+        // fragColor = texture(TransferFunction, vec2(maximum_intensity, 0.5f));
+        fragColor = vec4(texture(PARC, vec2(gl_FragCoord.xy / WindowSize)).xy, 0.2f, 1.0f);
     }
    else{
-       fragColor = vec4(0.1f);
+       fragColor = texture(TransferFunction, vec2(0.5f, 0.5f));
    }
 }
