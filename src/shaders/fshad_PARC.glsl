@@ -43,10 +43,11 @@ void main()
    float tnear, tfar;
     if(IntersectBox(eye, aabb, tnear, tfar))
     {
-        intersections = vec2(tnear, tfar);
+        intersections = vec2(0.7f, 0.0f);
     }
    else
    {
-       intersections = vec2(0.0f);
+       intersections = vec2(0.2f, 0.0f);
    }
+   intersections = CameraPos.xy;
 }

@@ -48,7 +48,8 @@ private:
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
-    std::unique_ptr<QOpenGLFramebufferObject> fbo = nullptr;
+    GLuint fbo = 0;
+    GLuint PARCTex = 0;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;

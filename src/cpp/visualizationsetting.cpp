@@ -14,7 +14,7 @@ VisualizationSetting::VisualizationSetting()
 	}
 	transferFunctions = QVector< std::shared_ptr<TransferFuncProperty >>();
 	GLuint transferFuncLocation = program->uniformLocation("TransferFunction");
-	Q_ASSERT(transferFuncLocation != -1);
+	//Q_ASSERT(transferFuncLocation != -1);
 	transferFunctions.append(std::make_shared<TransferFuncProperty>(transferFuncLocation));
 }
 

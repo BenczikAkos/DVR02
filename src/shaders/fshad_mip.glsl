@@ -5,8 +5,8 @@ uniform mat4 ViewMatrix;
 uniform vec2 WindowSize;
 uniform vec3 CameraPos;
 uniform vec3 AABBScale;
-uniform sampler3D Volume;
-uniform sampler2D TransferFunction;
+// uniform sampler3D Volume;
+// uniform sampler2D TransferFunction;
 uniform sampler2D PARC;
 uniform float intensityMin;
 uniform float intensityMax;
@@ -46,36 +46,31 @@ float cap(float value, float min, float max) {
 
 void main()
 {
-   vec3 rayDirection;
-   rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
-   rayDirection.z = 2.0f;
-   rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
-
-   Ray eye = Ray(CameraPos, normalize(rayDirection));
-   AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
-
-   float tnear, tfar;
-    if(IntersectBox(eye, aabb, tnear, tfar)){
-        vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
-        vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
-        // Perform the ray marching:
-        vec3 pos = rayStart;
-        vec3 step = normalize(rayStop-rayStart) * stepLength;
-        float travel = distance(rayStart, rayStop);
-        float maximum_intensity = 0.0f;
-        vec4 color = vec4(0.0f);
-        for (int i=0; travel > 0.0; ++i, pos += step, travel -= stepLength)
-        {
-            float intensity = texture(Volume, pos).r;
-            intensity = cap(intensity, intensityMin, intensityMax);
-            if (intensity > maximum_intensity) {
-                maximum_intensity = intensity;
-            }
-        }
-        // fragColor = texture(TransferFunction, vec2(maximum_intensity, 0.5f));
-        fragColor = vec4(texture(PARC, vec2(gl_FragCoord.xy / WindowSize)).xy, 0.2f, 1.0f);
-    }
-   else{
-       fragColor = texture(TransferFunction, vec2(0.5f, 0.5f));
-   }
+    vec3 rayDirection;
+    rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
+    rayDirection.z = 2.0f;
+    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;    
+    Ray eye = Ray(CameraPos, normalize(rayDirection));
+    AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
+    vec2 intersections = texture(PARC, vec2(gl_FragCoord.xy / WindowSize)).xy;
+    float tnear = intersections.x;
+    float tfar = intersections.y;
+    // vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
+    // vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
+    // // Perform the ray marching:
+    // vec3 pos = rayStart;
+    // vec3 step = normalize(rayStop-rayStart) * stepLength;
+    // float travel = distance(rayStart, rayStop);
+    // float maximum_intensity = 0.0f;
+    // vec4 color = vec4(0.0f);
+    // for (int i=0; travel > 0.0; ++i, pos += step, travel -= stepLength)
+    // {
+    //     float intensity = texture(Volume, pos).r;
+    //     intensity = cap(intensity, intensityMin, intensityMax);
+    //     if (intensity > maximum_intensity) {
+    //         maximum_intensity = intensity;
+    //     }
+    // }
+    // fragColor = texture(TransferFunction, vec2(maximum_intensity, 0.5f));
+    fragColor = vec4(tnear, tfar, 0.4f, 1.0f);
 }

@@ -20,7 +20,7 @@ void VolumeRenderWidget::initializeGL()
     Q_ASSERT(m_posAttr != -1);
 
     GLuint VolumeLocation = program->uniformLocation("Volume");
-    Q_ASSERT(VolumeLocation != -1);
+    //Q_ASSERT(VolumeLocation != -1);
     volume = std::make_shared<VolumeData>(VolumeLocation, mainWindow->getReader());
     generateFBO();
 
@@ -34,28 +34,33 @@ void VolumeRenderWidget::paintGL()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (!fbo->bind())
-    {
-        qWarning() << "FBO not bounded!";
-    }
-    auto PARCProgram = visualizationSetting->getPARCProgram();
-    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
-    PARCProgram->setUniformValue("CameraPos", CameraPos);
-    PARCProgram->setUniformValue("WindowSize", windowSize);
-    drawQuad();
-    PARCProgram->release();
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	    auto PARCProgram = visualizationSetting->getPARCProgram();
+	    if (!PARCProgram->bind()) 
+	    {
+		    qWarning() << "PARC program not bound!";
+	    };
+
+	    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
+	    PARCProgram->setUniformValue("CameraPos", CameraPos);
+	    PARCProgram->setUniformValue("WindowSize", windowSize);
+	    drawQuad();
+	    PARCProgram->release();
     QOpenGLFramebufferObject::bindDefault();
 
     auto program = visualizationSetting->getActiveProgram().get();
-    if (!program->bind()) {
+    if (!program->bind()) 
+    {
         qWarning() << "Program not bound!";
     };
 
     program->setUniformValue("ViewMatrix", ViewMatrix);
     program->setUniformValue("CameraPos", CameraPos);
     program->setUniformValue("WindowSize", windowSize);
+    program->setUniformValue("PARC", 1);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, fbo->takeTexture(0));
+    glBindTexture(GL_TEXTURE_2D, PARCTex);
     visualizationSetting->setUniforms();
     volume->bind();
     drawQuad();
@@ -160,23 +165,27 @@ float VolumeRenderWidget::fromRadian(float angle) {
 
 void VolumeRenderWidget::generateFBO()
 {
-    fbo = std::make_unique<QOpenGLFramebufferObject>(windowSize);
-    unsigned int intersections;
-    glGenTextures(1, &intersections);
-    glBindTexture(GL_TEXTURE_2D, intersections);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, windowSize.width(), windowSize.height(), 0, GL_RG, GL_FLOAT, NULL);
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    glGenTextures(1, &PARCTex);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, PARCTex);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG32F, windowSize.width(), windowSize.height(), 0, GL_RG, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, intersections, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, PARCTex, 0);
 
-    unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0 };
+    GLenum attachments[1] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers(1, attachments);
 
-    //unsigned int rboDepth;
-    //glGenRenderbuffers(1, &rboDepth);
-    //glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-    //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowSize.width(), windowSize.height());
-    //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+    unsigned int rboDepth;
+    glGenRenderbuffers(1, &rboDepth);
+    glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowSize.width(), windowSize.height());
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        qWarning() << "Framebuffer not complete!";
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
