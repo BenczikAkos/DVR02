@@ -6,6 +6,7 @@ uniform vec2 WindowSize;
 uniform vec3 CameraPos;
 uniform vec3 AABBScale;
 uniform sampler3D Volume;
+uniform float stepLength;
 
 struct Ray {
     vec3 Origin;
@@ -42,14 +43,35 @@ void main()
 
     float tnear = -1.0f;
     float tfar  = -1.0f;
-
+    bool inside = false;
     if(IntersectBox(eye, aabb, tnear, tfar))
     {
+        vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
+        vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
+        vec3 pos = rayStart;
+        vec3 step = normalize(rayStop-rayStart) * stepLength;
+        float travel = distance(rayStart, rayStop);
+        float rayParameter = tnear;
+        tnear = -1.0f;
+        for (int i=0; travel > 0.0; ++i, pos += step, travel -= stepLength, rayParameter += stepLength)
+        {
+            float intensity = texture(Volume, pos).r;
+            if(intensity > 0.001f && !inside)
+            {
+                tnear = rayParameter;
+                inside = true;
+            }
+            if(intensity < 0.001f && inside)
+            {
+                tfar = rayParameter;
+                break;
+            }
+        }
         intersections = vec2(tnear, tfar);
     }
    else
    {
-       intersections = vec2(0.2, 0.2);
+       intersections = vec2(-1.0f);
    }
    //intersections = rayDirection.xy;
 }

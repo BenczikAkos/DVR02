@@ -45,6 +45,7 @@ void VolumeRenderWidget::paintGL()
 	    PARCProgram->setUniformValue("CameraPos", CameraPos);
 	    PARCProgram->setUniformValue("WindowSize", windowSize * retinaScale);
         PARCProgram->setUniformValue("AABBScale", QVector3D(1.0f, 1.0f, 1.0f));
+        PARCProgram->setUniformValue("stepLength", 0.001f);
 	    drawQuad();
 	    PARCProgram->release();
     QOpenGLFramebufferObject::bindDefault();
