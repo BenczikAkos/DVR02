@@ -19,14 +19,12 @@ VolumeData::VolumeData(GLuint loc, VolumeDataReader* _reader)
 }
 
 void VolumeData::loadVolume(QString path) {
-    data = nullptr;
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
         qWarning() << "File opening not successful";
         return;
     };
-    int x, y, z;
-    reader->getTextureSizes(x, y, z);
+    reader->getTextureSizes(xSize, ySize, zSize);
     if (reader->getPrecomputeGradients())
     {
         QByteArray values = file.readAll();
@@ -34,8 +32,8 @@ void VolumeData::loadVolume(QString path) {
         {
             data.append(values.at(i));
             char grad_x = computeGrad(i, values, 1);
-            char grad_y = computeGrad(i, values, x);
-            char grad_z = computeGrad(i, values, x * y);
+            char grad_y = computeGrad(i, values, xSize);
+            char grad_z = computeGrad(i, values, xSize * ySize);
             data.append(grad_x);
             data.append(grad_y);
             data.append(grad_z);
@@ -49,6 +47,37 @@ void VolumeData::loadVolume(QString path) {
     file.close();
     qWarning() << "Nb of datapoints: " << data.size();
     uploadTexture();
+}
+
+int VolumeData::operator()(const int x, const int y, const int z)
+{
+    if (x >= xSize || x < 0 ||
+        y >= ySize || y < 0 ||
+        z >= zSize || z < 0)
+    {
+        return 0.0f;
+    }
+    int idx = z * xSize * ySize + y * xSize + x;
+    return (int)data.at(idx);
+}
+
+QVector<int> VolumeData::slice(const int x1, const int x2, const int y1, const int y2, const int z1, const int z2)
+{
+    auto result = QVector<int>();
+    Q_ASSERT(x1 < x2);
+    Q_ASSERT(y1 < y2);
+    Q_ASSERT(z1 < z2);
+    for (int x = x1; x < x2; ++x)
+    {
+        for (int y = y1; y < y2; ++y)
+        {
+            for (int z = z1; z < z2; ++z)
+            {
+                result.append(this->operator()(x, y, z));
+            }
+        }
+    }
+    return result;
 }
 
 char VolumeData::computeGrad(const int position, const QByteArray& values, const int stepsize) {

@@ -88,9 +88,6 @@
     <ClInclude Include="src\include\volumedata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="array3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cpp\chartdialog.cpp">
@@ -121,9 +118,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cpp\volumerenderwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="array3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
