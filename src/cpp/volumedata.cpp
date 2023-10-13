@@ -25,14 +25,14 @@ void VolumeData::loadVolume(QString path) {
         qWarning() << "File opening not successful";
         return;
     };
-    QByteArray values = file.readAll();
-    file.close();
     int x, y, z;
     reader->getTextureSizes(x, y, z);
-    for (int i = 0; i < values.size(); ++i) {
-        data.append(values.at(i));
-        if (reader->getPrecomputeGradients())
+    if (reader->getPrecomputeGradients())
+    {
+        QByteArray values = file.readAll();
+        for (int i = 0; i < values.size(); ++i)
         {
+            data.append(values.at(i));
             char grad_x = computeGrad(i, values, 1);
             char grad_y = computeGrad(i, values, x);
             char grad_z = computeGrad(i, values, x * y);
@@ -41,7 +41,12 @@ void VolumeData::loadVolume(QString path) {
             data.append(grad_z);
         }
     }
+    else
+    {
+        data = file.readAll();
+    }
 
+    file.close();
     qWarning() << "Nb of datapoints: " << data.size();
     uploadTexture();
 }

@@ -100,7 +100,6 @@ void TransferFuncEditorCanvas::mouseReleaseEvent(QMouseEvent* event)
 void TransferFuncEditorCanvas::mouseDoubleClickEvent(QMouseEvent* event)
 {
     QWidget::mouseDoubleClickEvent(event);
-    auto buton = event->button();
     if (event->button() == Qt::MouseButton::LeftButton)
     {
         auto funcPos = event->pos() * t_device2func;
