@@ -6,6 +6,7 @@
 #include <QOpenGLFramebufferObject>
 #include "volumedata.h"
 #include "visualizationsetting.h"
+#include "boundinggeometry.h"
 
 class VolumeRenderWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions
 {
@@ -34,13 +35,16 @@ private:
     inline static const GLfloat quadVertices[] = {
         1.0f,  1.0f,
         1.0f, -1.0f,
-        -1.0f, -1.0f,
-        -1.0f, -1.0f,
-        -1.0f, 1.0f,
-        1.0f, 1.0f
+        -0.01f, -1.0f,
+        -1.0f, 1.0f
+    };
+    inline static const GLuint quadIndices[] = {
+        0,1,2,
+        2,3,0
     };
     //uniform locations
     GLuint m_posAttr = 0;
+    GLuint EBO = 0;
     //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();

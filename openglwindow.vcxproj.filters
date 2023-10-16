@@ -71,6 +71,9 @@
     <QtMoc Include="src\include\volumerenderwidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\include\boundinggeometry.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\compositionmode.h">
@@ -118,6 +121,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cpp\volumerenderwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cpp\boundinggeometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

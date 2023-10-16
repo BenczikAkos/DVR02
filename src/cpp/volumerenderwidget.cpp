@@ -17,6 +17,7 @@ void VolumeRenderWidget::initializeGL()
     mainWindow->initializeContext();
     auto program = visualizationSetting->getActiveProgram().get();
     m_posAttr = program->attributeLocation("posAttr");
+    glGenBuffers(1, &EBO);
     Q_ASSERT(m_posAttr != -1);
 
     GLuint VolumeLocation = program->uniformLocation("Volume");
@@ -196,10 +197,13 @@ void VolumeRenderWidget::generateFBO()
 
 void VolumeRenderWidget::drawQuad()
 {
+    auto bg = new BoundingGeometry();
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, quadVertices);
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
+    glDrawElements(GL_TRIANGLES, sizeof(quadIndices) / sizeof(quadIndices[0]), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 

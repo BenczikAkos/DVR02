@@ -207,6 +207,7 @@
     <QtMoc Include="src\include\chartdialog.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\include\boundinggeometry.h" />
     <ClInclude Include="src\include\compositionmode.h" />
     <ClInclude Include="src\include\transferfunckey.h" />
     <ClInclude Include="src\include\ui_chartdialog.h" />
@@ -221,6 +222,7 @@
     <QtMoc Include="src\include\mainwindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\cpp\boundinggeometry.cpp" />
     <ClCompile Include="src\cpp\chartdialog.cpp" />
     <ClCompile Include="src\cpp\main.cpp" />
     <ClCompile Include="src\cpp\mainwindow.cpp" />

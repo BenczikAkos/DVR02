@@ -113,8 +113,8 @@ void MainWindow::on_chartButton_clicked(bool checked)
 void MainWindow::on_transferFunctionButton_clicked(bool checked)
 {
     Q_UNUSED(checked)
-    auto transfunc = new TransferFuncEditorDialog(this, visualizationSetting->getActiveTransferFunction());
-    transfunc->show();
+    auto transfuncDialog = new TransferFuncEditorDialog(this, visualizationSetting->getActiveTransferFunction());
+    transfuncDialog->show();
 }
 
 float MainWindow::normalizeSliderValue(const QSlider& slider, int value) const

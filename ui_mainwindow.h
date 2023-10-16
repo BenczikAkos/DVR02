@@ -64,6 +64,7 @@ public:
     QDoubleSpinBox *stepLengthSpinBox;
     QPushButton *chartButton;
     QPushButton *transferFunctionButton;
+    QLabel *XYZScaleLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -233,6 +234,9 @@ public:
         transferFunctionButton = new QPushButton(tab_vis);
         transferFunctionButton->setObjectName(QString::fromUtf8("transferFunctionButton"));
         transferFunctionButton->setGeometry(QRect(20, 430, 141, 24));
+        XYZScaleLabel = new QLabel(tab_vis);
+        XYZScaleLabel->setObjectName(QString::fromUtf8("XYZScaleLabel"));
+        XYZScaleLabel->setGeometry(QRect(10, 10, 91, 16));
         tabWidget->addTab(tab_vis, QString());
 
         gridLayout->addWidget(tabWidget, 0, 1, 1, 1);
@@ -271,6 +275,7 @@ public:
         MaximumValueLabel->setText(QCoreApplication::translate("MainWindow", "Maximum value", nullptr));
         chartButton->setText(QCoreApplication::translate("MainWindow", "Show chart", nullptr));
         transferFunctionButton->setText(QCoreApplication::translate("MainWindow", "Edit Transfer Function", nullptr));
+        XYZScaleLabel->setText(QCoreApplication::translate("MainWindow", "X, Y, Z scale:", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_vis), QCoreApplication::translate("MainWindow", "Visualization", nullptr));
     } // retranslateUi
 

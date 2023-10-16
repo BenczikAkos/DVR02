@@ -123,8 +123,7 @@ QChart* VolumeData::createChart() const {
 }
 
 void VolumeData::uploadTexture() {
-    int x, y, z;
-    reader->getTextureSizes(x, y, z);
+    reader->getTextureSizes(xSize, ySize, zSize);
     GLenum dataType = reader->getDataType();
     //if( (precompute_grads && x*y*z*4 != data.size()) || (!precompute_grads && x*y*z != data.size()) )
     //{
@@ -148,10 +147,10 @@ void VolumeData::uploadTexture() {
         glPixelStorei(GL_UNPACK_LSB_FIRST, 0);
     }
     if (reader->getPrecomputeGradients()) {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, x, y, z, 0, GL_RGBA, dataType, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, xSize, ySize, zSize, 0, GL_RGBA, dataType, data.data());
     }
     else {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, x, y, z, 0, GL_RED, dataType, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, xSize, ySize, zSize, 0, GL_RED, dataType, data.data());
     }
     glBindTexture(GL_TEXTURE_3D, 0);
 }
