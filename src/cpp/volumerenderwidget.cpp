@@ -197,13 +197,12 @@ void VolumeRenderWidget::generateFBO()
 
 void VolumeRenderWidget::drawQuad()
 {
-    auto bg = new BoundingGeometry();
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, quadVertices);
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices, GL_STATIC_DRAW);
-    glDrawElements(GL_TRIANGLES, sizeof(quadIndices) / sizeof(quadIndices[0]), GL_UNSIGNED_INT, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices.constData(), GL_STATIC_DRAW);
+    glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 

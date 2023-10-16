@@ -1,13 +1,19 @@
 #pragma once
 #include <QObject>
+#include "volumedata.h"
+#include "visualizationsetting.h"
 
 class BoundingGeometry: public QObject
 {
     Q_OBJECT
 public:
     BoundingGeometry() = default;
-    const float* getVertices();
-    const uint* getIndices();
+    BoundingGeometry(std::shared_ptr<VolumeData> _data, std::shared_ptr<VisualizationSetting> _visualization);
+    const float* getVertices() const;
+    const uint* getIndices() const;
+public slots:
+    void update();
+    void setBlockSize(int _blockSize);
 private:
     QVector<float> vertices = {
         0.0f, 0.0f, 0.0f, // 0
@@ -33,4 +39,9 @@ private:
         3, 2, 6,  // Back
         6, 7, 3
     };
+    uint blockSize = 8;
+    std::shared_ptr<VolumeData> volume;
+    std::shared_ptr<VisualizationSetting> visualizationSetting;
+    bool isContributing(QVector<int> voxels);
+    QSet<QPointF> addCube(const int x, const int y, const int z);
 };

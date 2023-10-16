@@ -35,10 +35,10 @@ private:
     inline static const GLfloat quadVertices[] = {
         1.0f,  1.0f,
         1.0f, -1.0f,
-        -0.01f, -1.0f,
+        -1.0f, -1.0f,
         -1.0f, 1.0f
     };
-    inline static const GLuint quadIndices[] = {
+    QVector<uint> quadIndices = {
         0,1,2,
         2,3,0
     };
