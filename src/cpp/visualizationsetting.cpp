@@ -43,6 +43,11 @@ std::shared_ptr<TransferFuncProperty> VisualizationSetting::getActiveTransferFun
 	return transferFunctions.at(0);
 }
 
+bool VisualizationSetting::isTransparent(int value) const
+{
+	return transferFunctions.at(0)->isTransparent(value, intensityMin);
+}
+
 void VisualizationSetting::createShaderProgram(CompositionMode mode, const QString& vertexPath, const QString& fragmentPath)
 {
 	auto program = std::make_shared<QOpenGLShaderProgram>();

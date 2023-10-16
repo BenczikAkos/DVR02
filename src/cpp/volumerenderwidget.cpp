@@ -196,7 +196,7 @@ void VolumeRenderWidget::generateFBO()
 
 void VolumeRenderWidget::drawQuad()
 {
-    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, quadVertices);
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
     glDrawArrays(GL_TRIANGLES, 0, 6);

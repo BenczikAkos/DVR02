@@ -14,6 +14,7 @@ public:
     std::shared_ptr<QOpenGLShaderProgram> getPARCProgram();
     void setUniforms();
     std::shared_ptr<TransferFuncProperty> getActiveTransferFunction();
+    bool isTransparent(int value) const;
 public slots:
     void setAABBScaleX(float value);
     void setAABBScaleY(float value);
@@ -37,7 +38,6 @@ private:
     float intensityMax = 1.0;
     float stepLength = 0.001f;
     /*
-    std::shared_ptr<VolumeData> volume = nullptr;
 
     float xRot = 180.0f;
     float yRot = 180.0f;

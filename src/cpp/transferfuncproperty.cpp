@@ -56,6 +56,12 @@ void TransferFuncProperty::removeKeyAt(int _index)
 	}
 }
 
+bool TransferFuncProperty::isTransparent(int value, float intensityMin)
+{
+	float _intensity = colorMap[value * 4 + 3];
+	return _intensity < intensityMin;
+}
+
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)
 {
 	auto currKey = keys.at(index);
@@ -97,7 +103,6 @@ void TransferFuncProperty::colorChangedAt(int index, QColor newColor)
 
 void TransferFuncProperty::updateTFTexture()
 {
-	unsigned char TFTable[256*4];
 	for (auto key = keys.begin(); key != std::prev(keys.end()); ++key)
 	{
 		auto currKey = key->get();
@@ -109,10 +114,10 @@ void TransferFuncProperty::updateTFTexture()
 			float coeff = step / range;
 			unsigned char final_red = 0; unsigned char final_green = 0; unsigned char final_blue = 0; unsigned char final_alpha = 0;
 			getBlendedColors(coeff, currKey->color, nextKey->color, final_red, final_green, final_blue, final_alpha);
-			TFTable[x * 4 + 0] = final_red;
-			TFTable[x * 4 + 1] = final_green;
-			TFTable[x * 4 + 2] = final_blue;
-			TFTable[x * 4 + 3] = final_alpha;
+			colorMap[x * 4 + 0] = final_red;
+			colorMap[x * 4 + 1] = final_green;
+			colorMap[x * 4 + 2] = final_blue;
+			colorMap[x * 4 + 3] = final_alpha;
 		}
 	}
 
@@ -126,7 +131,7 @@ void TransferFuncProperty::updateTFTexture()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //tightly packed
 	glPixelStorei(GL_UNPACK_LSB_FIRST, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &TFTable);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, &colorMap);
 }
 
 void TransferFuncProperty::getBlendedColors(float coeff, QColor c1, QColor c2, unsigned char& final_red, unsigned char& final_green, unsigned char& final_blue, unsigned char& final_alpha)

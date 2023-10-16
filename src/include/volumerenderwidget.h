@@ -31,7 +31,7 @@ protected:
 
 
 private:
-    inline static const GLfloat vertices[] = {
+    inline static const GLfloat quadVertices[] = {
         1.0f,  1.0f,
         1.0f, -1.0f,
         -1.0f, -1.0f,
