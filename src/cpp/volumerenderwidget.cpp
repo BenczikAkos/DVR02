@@ -23,6 +23,8 @@ void VolumeRenderWidget::initializeGL()
     GLuint VolumeLocation = program->uniformLocation("Volume");
     //Q_ASSERT(VolumeLocation != -1);
     volume = std::make_shared<VolumeData>(VolumeLocation, mainWindow->getReader());
+    boundingGeometry = std::make_shared<BoundingGeometry>(volume, visualizationSetting);
+
     generateFBO();
 
 }
@@ -66,6 +68,7 @@ void VolumeRenderWidget::paintGL()
     visualizationSetting->setUniforms();
     volume->bind();
     drawQuad();
+    //drawBoundingGeometry();
     program->release();
     update();
 }
@@ -197,12 +200,23 @@ void VolumeRenderWidget::generateFBO()
 
 void VolumeRenderWidget::drawQuad()
 {
-    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, quadVertices);
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, quadVertices);
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices.constData(), GL_STATIC_DRAW);
     glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
+    glDisableVertexAttribArray(m_posAttr);
+}
+
+void VolumeRenderWidget::drawBoundingGeometry()
+{
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, boundingGeometry->getVertices());
+    glEnableVertexAttribArray(m_posAttr);
+    glBindVertexArray(m_posAttr);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boundingGeometry->getIndices()), boundingGeometry->getIndices(), GL_STATIC_DRAW);
+    glDrawElements(GL_TRIANGLES, boundingGeometry->getIndexCount(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 

@@ -16,9 +16,19 @@ const uint* BoundingGeometry::getIndices() const
 	return indices.constData();
 }
 
+const GLsizei BoundingGeometry::getIndexCount() const
+{
+	return GLsizei(indices.size());
+}
+
+uint qHash(const QVector3D& v)
+{
+	return qHash(QString("%1x%2x%3").arg(v.x()).arg(v.y()).arg(v.z()));
+}
+
 void BoundingGeometry::update()
 {
-	QSet<QPointF> pointCloud = {};
+	QSet<QVector3D> pointCloud;
 	vertices.clear();
 	indices.clear();
 	int xMax = volume->xsize();
@@ -38,8 +48,7 @@ void BoundingGeometry::update()
 			}
 		}
 	}
-	// vertices = convexHull(pointCloud);
-	// indices???
+	generateConvexHull(pointCloud, vertices, indices);
 }
 
 void BoundingGeometry::setBlockSize(int _blockSize)
@@ -65,13 +74,28 @@ bool BoundingGeometry::isContributing(QVector<int> voxels)
 	return isContributing;
 }
 
-QSet<QPointF> BoundingGeometry::addCube(const int x, const int y, const int z)
+QSet<QVector3D> BoundingGeometry::addCube(const int x, const int y, const int z)
 {
-	auto result = new QSet<QPointF>();
+	auto result = QSet<QVector3D>();
 	int xMax = volume->xsize();
 	int yMax = volume->ysize();
 	int zMax = volume->zsize();
-	float xSideLenght = blockSize / xMax;
-	float ySideLenght = blockSize / yMax;
-	float zSideLenght = blockSize / zMax;
+	float xSideLenght = blockSize / xMax; auto xSideVector = QVector3D(xSideLenght, 0, 0);
+	float ySideLenght = blockSize / yMax; auto ySideVector = QVector3D(0, ySideLenght, 0);
+	float zSideLenght = blockSize / zMax; auto zSideVector = QVector3D(0, 0, zSideLenght);
+	auto left_bottom_back_corner = QVector3D((float)x / xMax, (float)y / yMax, (float)z / zMax);
+
+	result.insert(left_bottom_back_corner);
+	result.insert(left_bottom_back_corner + xSideVector);
+	result.insert(left_bottom_back_corner + ySideVector);
+	result.insert(left_bottom_back_corner + zSideVector);
+	result.insert(left_bottom_back_corner + xSideVector + ySideVector);
+	result.insert(left_bottom_back_corner + xSideVector + zSideVector);
+	result.insert(left_bottom_back_corner + ySideVector + zSideVector);
+	result.insert(left_bottom_back_corner + xSideVector + ySideVector + zSideVector);
+	return result;
+}
+
+void BoundingGeometry::generateConvexHull(QSet<QVector3D> _pointCloud, QVector<float>& _vertices, QVector<uint>& indices)
+{
 }

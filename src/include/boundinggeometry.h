@@ -11,6 +11,7 @@ public:
     BoundingGeometry(std::shared_ptr<VolumeData> _data, std::shared_ptr<VisualizationSetting> _visualization);
     const float* getVertices() const;
     const uint* getIndices() const;
+    const GLsizei getIndexCount() const;
 public slots:
     void update();
     void setBlockSize(int _blockSize);
@@ -43,5 +44,6 @@ private:
     std::shared_ptr<VolumeData> volume;
     std::shared_ptr<VisualizationSetting> visualizationSetting;
     bool isContributing(QVector<int> voxels);
-    QSet<QPointF> addCube(const int x, const int y, const int z);
+    QSet<QVector3D> addCube(const int x, const int y, const int z);
+    void generateConvexHull(QSet<QVector3D> _pointCloud, QVector<float>& _vertices, QVector<uint>& indices);
 };

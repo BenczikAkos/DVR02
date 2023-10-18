@@ -32,15 +32,39 @@ protected:
 
 
 private:
+    //inline static const GLfloat quadVertices[] = {
+    //    1.0f,  1.0f,
+    //    1.0f, -1.0f,
+    //    -1.0f, -1.0f,
+    //    -1.0f, 1.0f
+    //};
+    //QVector<uint> quadIndices = {
+    //    0,1,2,
+    //    2,3,0
+    //};
     inline static const GLfloat quadVertices[] = {
-        1.0f,  1.0f,
-        1.0f, -1.0f,
-        -1.0f, -1.0f,
-        -1.0f, 1.0f
+        0.0f, 0.0f, 0.0f, // 0
+        1.0f, 0.0f, 0.0f, // 1
+        1.0f, 1.0f, 0.0f, // 2
+        0.0f, 1.0f, 0.0f, // 3
+        0.0f, 0.0f, 1.0f, // 4
+        1.0f, 0.0f, 1.0f, // 5
+        1.0f, 1.0f, 1.0f, // 6
+        0.0f, 1.0f, 1.0f  // 7
     };
     QVector<uint> quadIndices = {
-        0,1,2,
-        2,3,0
+        0, 1, 2,  // Front
+        2, 3, 0,
+        1, 5, 6,  // Right
+        6, 2, 1,
+        7, 6, 5,  // Top
+        5, 4, 7,
+        4, 0, 3,  // Left
+        3, 7, 4,
+        4, 5, 1,  // Bottom
+        1, 0, 4,
+        3, 2, 6,  // Back
+        6, 7, 3
     };
     //uniform locations
     GLuint m_posAttr = 0;
@@ -52,6 +76,7 @@ private:
 
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
+    std::shared_ptr<BoundingGeometry> boundingGeometry;
     GLuint fbo = 0;
     GLuint PARCTex = 0;
     MainWindow* mainWindow = nullptr;
@@ -63,7 +88,9 @@ private:
     float phi = (float)-M_PI_2;
     float elevation = 0.0f;
     QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
+    //functions
     void drawQuad();
+    void drawBoundingGeometry();
     void normalizeAngle(float& angle);
     float fromRadian(float angle);
     void generateFBO();
