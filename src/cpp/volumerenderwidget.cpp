@@ -36,22 +36,22 @@ void VolumeRenderWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     const qreal retinaScale = devicePixelRatio();
 
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	    auto PARCProgram = visualizationSetting->getPARCProgram();
-	    if (!PARCProgram->bind()) 
-	    {
-		    qWarning() << "PARC program not bound!";
-	    };
+    //glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+	   // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	   // auto PARCProgram = visualizationSetting->getPARCProgram();
+	   // if (!PARCProgram->bind()) 
+	   // {
+		  //  qWarning() << "PARC program not bound!";
+	   // };
 
-	    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
-	    PARCProgram->setUniformValue("CameraPos", CameraPos);
-	    PARCProgram->setUniformValue("WindowSize", windowSize * retinaScale);
-        PARCProgram->setUniformValue("AABBScale", QVector3D(1.0f, 1.0f, 1.0f));
-        PARCProgram->setUniformValue("stepLength", 0.001f);
-	    drawQuad();
-	    PARCProgram->release();
-    QOpenGLFramebufferObject::bindDefault();
+	   // PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
+	   // PARCProgram->setUniformValue("CameraPos", CameraPos);
+	   // PARCProgram->setUniformValue("WindowSize", windowSize * retinaScale);
+    //    PARCProgram->setUniformValue("AABBScale", QVector3D(1.0f, 1.0f, 1.0f));
+    //    PARCProgram->setUniformValue("stepLength", 0.001f);
+	   // drawQuad();
+	   // PARCProgram->release();
+    //QOpenGLFramebufferObject::bindDefault();
 
     auto program = visualizationSetting->getActiveProgram().get();
     if (!program->bind()) 
@@ -200,12 +200,13 @@ void VolumeRenderWidget::generateFBO()
 
 void VolumeRenderWidget::drawQuad()
 {
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, quadVertices);
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, quadVertices.constData());
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(quadIndices), quadIndices.constData(), GL_STATIC_DRAW);
-    glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quadIndices.size()*sizeof(GLuint), quadIndices.constData(), GL_STATIC_DRAW);
+    //glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_LINES, quadIndices.size(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 

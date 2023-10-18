@@ -42,7 +42,7 @@ private:
     //    0,1,2,
     //    2,3,0
     //};
-    inline static const GLfloat quadVertices[] = {
+    QVector<GLfloat> quadVertices = {
         0.0f, 0.0f, 0.0f, // 0
         1.0f, 0.0f, 0.0f, // 1
         1.0f, 1.0f, 0.0f, // 2
@@ -52,7 +52,7 @@ private:
         1.0f, 1.0f, 1.0f, // 6
         0.0f, 1.0f, 1.0f  // 7
     };
-    QVector<uint> quadIndices = {
+    QVector<GLuint> quadIndices = {
         0, 1, 2,  // Front
         2, 3, 0,
         1, 5, 6,  // Right
