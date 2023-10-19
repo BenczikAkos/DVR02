@@ -98,4 +98,48 @@ QSet<QVector3D> BoundingGeometry::addCube(const int x, const int y, const int z)
 
 void BoundingGeometry::generateConvexHull(QSet<QVector3D> _pointCloud, QVector<float>& _vertices, QVector<uint>& indices)
 {
+  // from pointcloud return the biggest tethahedron based on this pseudo code:
+	// For each principle direction (X-axis, Y-axis, Z-axis) find the minimum and maximum point in that dimension
+	// The two points with the greatest distance between them are the first two points of the tetrahedron
+	// The third point is the point with the greatest distance from the line between the first two points
+	// The fourth point is the point with the greatest distance from the plane defined by the first three points
+	// The tetrahedron is now defined by the four points
+	QVector3D xMin = QVector3D(1.0f, 0.0f, 0.0f);
+	QVector3D xMax = QVector3D(0.0f, 0.0f, 0.0f);
+	QVector3D yMin = QVector3D(0.0f, 1.0f, 0.0f);
+	QVector3D yMax = QVector3D(0.0f, 0.0f, 0.0f);
+	QVector3D zMin = QVector3D(0.0f, 0.0f, 1.0f);
+	QVector3D zMax = QVector3D(0.0f, 0.0f, 0.0f);
+	for (auto point : _pointCloud)
+	{
+		if (point.x() < xMin.x())
+		{
+			xMin = point;
+		}
+		if (point.x() > xMax.x())
+		{
+			xMax = point;
+		}
+		if (point.y() < yMin.y())
+		{
+			yMin = point;
+		}
+		if (point.y() > yMax.y())
+		{
+			yMax = point;
+		}
+		if (point.z() < zMin.z())
+		{
+			zMin = point;
+		}
+		if (point.z() > zMax.z())
+		{
+			zMax = point;
+		}
+
+	}
+
+
+
+
 }

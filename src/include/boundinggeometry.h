@@ -9,14 +9,14 @@ class BoundingGeometry: public QObject
 public:
     BoundingGeometry() = default;
     BoundingGeometry(std::shared_ptr<VolumeData> _data, std::shared_ptr<VisualizationSetting> _visualization);
-    const float* getVertices() const;
-    const uint* getIndices() const;
+    const GLfloat* getVertices() const;
+    const GLuint* getIndices() const;
     const GLsizei getIndexCount() const;
 public slots:
     void update();
     void setBlockSize(int _blockSize);
 private:
-    QVector<float> vertices = {
+    QVector<GLfloat> vertices = {
         0.0f, 0.0f, 0.0f, // 0
         1.0f, 0.0f, 0.0f, // 1
         1.0f, 1.0f, 0.0f, // 2
@@ -26,7 +26,7 @@ private:
         1.0f, 1.0f, 1.0f, // 6
         0.0f, 1.0f, 1.0f  // 7
     };
-    QVector<uint> indices = {
+    QVector<GLuint> indices = {
         0, 1, 2,  // Front
         2, 3, 0,
         1, 5, 6,  // Right

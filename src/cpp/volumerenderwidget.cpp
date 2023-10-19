@@ -58,17 +58,21 @@ void VolumeRenderWidget::paintGL()
     {
         qWarning() << "Program not bound!";
     };
-
+    ViewMatrix.translate(CameraPos);
     program->setUniformValue("ViewMatrix", ViewMatrix);
+    ViewMatrix.translate(-CameraPos);
     program->setUniformValue("CameraPos", CameraPos);
     program->setUniformValue("WindowSize", windowSize * retinaScale);
     program->setUniformValue("PARC", 1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, PARCTex);
     visualizationSetting->setUniforms();
+    //testing something
+    QMatrix4x4 projectionMatrix;
+    projectionMatrix.perspective(45.0f, width()/height(), 0.1f, 10.0f);
+    program->setUniformValue("ProjectionMatrix", projectionMatrix);
     volume->bind();
-    drawQuad();
-    //drawBoundingGeometry();
+    drawBoundingGeometry();
     program->release();
     update();
 }
@@ -200,24 +204,24 @@ void VolumeRenderWidget::generateFBO()
 
 void VolumeRenderWidget::drawQuad()
 {
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, quadVertices.constData());
+    glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, quadVertices.constData());
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, quadIndices.size()*sizeof(GLuint), quadIndices.constData(), GL_STATIC_DRAW);
-    //glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
-    glDrawElements(GL_LINES, quadIndices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 
 void VolumeRenderWidget::drawBoundingGeometry()
 {
+    auto nbOfIndices = boundingGeometry->getIndexCount();
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, boundingGeometry->getVertices());
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boundingGeometry->getIndices()), boundingGeometry->getIndices(), GL_STATIC_DRAW);
-    glDrawElements(GL_TRIANGLES, boundingGeometry->getIndexCount(), GL_UNSIGNED_INT, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, nbOfIndices * sizeof(GLuint), boundingGeometry->getIndices(), GL_STATIC_DRAW);
+    glDrawElements(GL_TRIANGLES, nbOfIndices, GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 

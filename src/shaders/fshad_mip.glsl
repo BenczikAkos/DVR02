@@ -35,6 +35,8 @@ float cap(float value, float min, float max) {
 
 void main()
 {
+    fragColor = vec4(0.5f);
+    return;
     vec3 rayDirection;
     rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
     rayDirection.z = 2.0f;
