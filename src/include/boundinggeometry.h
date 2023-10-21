@@ -40,10 +40,25 @@ private:
         3, 2, 6,  // Back
         6, 7, 3
     };
+    QVector<GLuint> indicesTemplate = {
+    0, 1, 2,  // Front
+    2, 3, 0,
+    1, 5, 6,  // Right
+    6, 2, 1,
+    7, 6, 5,  // Top
+    5, 4, 7,
+    4, 0, 3,  // Left
+    3, 7, 4,
+    4, 5, 1,  // Bottom
+    1, 0, 4,
+    3, 2, 6,  // Back
+    6, 7, 3
+    };
     uint blockSize = 8;
     std::shared_ptr<VolumeData> volume;
     std::shared_ptr<VisualizationSetting> visualizationSetting;
-    bool isContributing(QVector<int> voxels);
+    bool isContributing(QVector<int> voxelValues);
+    void addTriangle(const QVector3D& p1, const QVector3D& p2, const QVector3D& p3, QList<QVector3D>& _vertexList, QList<QVector3D>& _indexList);
     QSet<QVector3D> addCube(const int x, const int y, const int z);
-    void generateConvexHull(QSet<QVector3D> _pointCloud, QVector<float>& _vertices, QVector<uint>& indices);
+    void generateConvexHull(QSet<QVector3D> _pointCloud);
 };

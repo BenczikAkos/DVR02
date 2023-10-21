@@ -42,9 +42,11 @@ private:
         0,1,2,
         2,3,0
     };
+
     //uniform locations
     GLuint m_posAttr = 0;
-    GLuint EBO = 0;
+    GLuint BoundingEBO = 0;
+    GLuint QuadEBO = 0;
     //uniforms
     QVector3D CameraPos = QVector3D(0.0f, 0.0f, -3.0f);
     QMatrix4x4 ViewMatrix = QMatrix4x4();

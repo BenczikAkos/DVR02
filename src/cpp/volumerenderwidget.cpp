@@ -17,13 +17,25 @@ void VolumeRenderWidget::initializeGL()
     mainWindow->initializeContext();
     auto program = visualizationSetting->getActiveProgram().get();
     m_posAttr = program->attributeLocation("posAttr");
-    glGenBuffers(1, &EBO);
     Q_ASSERT(m_posAttr != -1);
 
+
+
     GLuint VolumeLocation = program->uniformLocation("Volume");
-    //Q_ASSERT(VolumeLocation != -1);
     volume = std::make_shared<VolumeData>(VolumeLocation, mainWindow->getReader());
     boundingGeometry = std::make_shared<BoundingGeometry>(volume, visualizationSetting);
+
+    glGenBuffers(1, &BoundingEBO);
+    Q_ASSERT(BoundingEBO != -1);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BoundingEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), boundingGeometry->getIndices(), GL_STATIC_DRAW);
+
+
+    glGenBuffers(1, &QuadEBO);
+    Q_ASSERT(QuadEBO != -1);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLuint), quadIndices.constData(), GL_STATIC_DRAW);
+
 
     generateFBO();
 
@@ -102,6 +114,7 @@ void VolumeRenderWidget::openFile() {
     QString path = QFileDialog::getOpenFileName(this, tr("Open volume"), "..\\datasets\\raw", tr("RAW images(*.raw);;DAT files(*.dat)"));
     if (!path.isNull()) {
         volume->loadVolume(path);
+        boundingGeometry->update();
     }
 }
 
@@ -207,19 +220,19 @@ void VolumeRenderWidget::drawQuad()
     glVertexAttribPointer(m_posAttr, 2, GL_FLOAT, GL_FALSE, 0, quadVertices.constData());
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quadIndices.size()*sizeof(GLuint), quadIndices.constData(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, quadIndices.size() * sizeof(GLuint), quadIndices.constData(), GL_STATIC_DRAW);
     glDrawElements(GL_TRIANGLES, quadIndices.size(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
 }
 
 void VolumeRenderWidget::drawBoundingGeometry()
 {
-    auto nbOfIndices = boundingGeometry->getIndexCount();
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, boundingGeometry->getVertices());
     glEnableVertexAttribArray(m_posAttr);
     glBindVertexArray(m_posAttr);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    auto nbOfIndices = boundingGeometry->getIndexCount();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BoundingEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, nbOfIndices * sizeof(GLuint), boundingGeometry->getIndices(), GL_STATIC_DRAW);
     glDrawElements(GL_TRIANGLES, nbOfIndices, GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(m_posAttr);
