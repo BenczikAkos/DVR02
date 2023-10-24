@@ -59,7 +59,7 @@ void TransferFuncProperty::removeKeyAt(int _index)
 bool TransferFuncProperty::isTransparent(int value, float intensityMin)
 {
 	float _intensity = colorMap[value * 4 + 3];
-	return _intensity < intensityMin;
+	return _intensity < intensityMin*255;
 }
 
 void TransferFuncProperty::intensityOpacityChangedAt(int index, float newIntensity, float newOpacity)

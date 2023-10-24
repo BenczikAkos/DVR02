@@ -3,11 +3,11 @@
 VisualizationSetting::VisualizationSetting()
 {
 	initializeOpenGLFunctions();
-	createShaderProgram(CompositionMode::MIP, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_mip.glsl");
-	createShaderProgram(CompositionMode::Average, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_avg.glsl");
-	createShaderProgram(CompositionMode::Accumulate, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_accumulate.glsl");
-	createShaderProgram(CompositionMode::Isosurface, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_isosurface.glsl");
-	createShaderProgram(CompositionMode::PARCPass, "src\\shaders\\vshader.glsl", "src\\shaders\\fshad_PARC.glsl");
+	createShaderProgram(CompositionMode::MIP, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_mip.glsl");
+	createShaderProgram(CompositionMode::Average, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_avg.glsl");
+	createShaderProgram(CompositionMode::Accumulate, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_accumulate.glsl");
+	createShaderProgram(CompositionMode::Isosurface, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface.glsl");
+	createShaderProgram(CompositionMode::PARCPass, "src\\shaders\\vshader_bounding.glsl", "src\\shaders\\fshad_mip.glsl");
 	QOpenGLShaderProgram* program = modes.value(activeMode).get();
 	if (!program->link()) {
 		qWarning() << program->log();

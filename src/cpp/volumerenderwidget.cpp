@@ -15,7 +15,7 @@ void VolumeRenderWidget::initializeGL()
 {
     initializeOpenGLFunctions();
     mainWindow->initializeContext();
-    auto program = visualizationSetting->getActiveProgram().get();
+    auto program = visualizationSetting->getActiveProgram();
     m_posAttr = program->attributeLocation("posAttr");
     Q_ASSERT(m_posAttr != -1);
 
@@ -65,24 +65,20 @@ void VolumeRenderWidget::paintGL()
 	   // PARCProgram->release();
     //QOpenGLFramebufferObject::bindDefault();
 
-    auto program = visualizationSetting->getActiveProgram().get();
+    auto program = visualizationSetting->getPARCProgram();
     if (!program->bind()) 
     {
         qWarning() << "Program not bound!";
     };
-    ViewMatrix.translate(CameraPos);
+    //ViewMatrix.translate(CameraPos);
     program->setUniformValue("ViewMatrix", ViewMatrix);
-    ViewMatrix.translate(-CameraPos);
+    //ViewMatrix.translate(-CameraPos);
     program->setUniformValue("CameraPos", CameraPos);
     program->setUniformValue("WindowSize", windowSize * retinaScale);
     program->setUniformValue("PARC", 1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, PARCTex);
     visualizationSetting->setUniforms();
-    //testing something
-    QMatrix4x4 projectionMatrix;
-    projectionMatrix.perspective(45.0f, width()/height(), 0.1f, 10.0f);
-    program->setUniformValue("ProjectionMatrix", projectionMatrix);
     volume->bind();
     drawBoundingGeometry();
     program->release();
