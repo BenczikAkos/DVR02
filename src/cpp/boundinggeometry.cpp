@@ -29,8 +29,8 @@ uint qHash(const QVector3D& v)
 void BoundingGeometry::update()
 {
 	QSet<QVector3D> pointCloud;
-	vertices.clear();
-	indices.clear();
+	vertices.clear();    
+	indices.clear();     
 	int xMax = volume->xsize();
 	int yMax = volume->ysize();
 	int zMax = volume->zsize();
@@ -106,9 +106,9 @@ QSet<QVector3D> BoundingGeometry::addCube(const int x, const int y, const int z)
 	int xMax = volume->xsize();
 	int yMax = volume->ysize();
 	int zMax = volume->zsize();
-	float xSideLenght = blockSize / xMax; auto xSideVector = QVector3D(xSideLenght, 0, 0);
-	float ySideLenght = blockSize / yMax; auto ySideVector = QVector3D(0, ySideLenght, 0);
-	float zSideLenght = blockSize / zMax; auto zSideVector = QVector3D(0, 0, zSideLenght);
+	float xSideLenght = blockSize / (float)xMax; auto xSideVector = QVector3D(xSideLenght, 0, 0);
+	float ySideLenght = blockSize / (float)yMax; auto ySideVector = QVector3D(0, ySideLenght, 0);
+	float zSideLenght = blockSize / (float)zMax; auto zSideVector = QVector3D(0, 0, zSideLenght);
 	auto left_bottom_back_corner = QVector3D((float)x / xMax, (float)y / yMax, (float)z / zMax);
 
 	result.insert(left_bottom_back_corner);
