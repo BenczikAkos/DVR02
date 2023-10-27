@@ -61,7 +61,7 @@ void VolumeRenderWidget::paintGL()
 	   // PARCProgram->setUniformValue("WindowSize", windowSize * retinaScale);
     //    PARCProgram->setUniformValue("AABBScale", QVector3D(1.0f, 1.0f, 1.0f));
     //    PARCProgram->setUniformValue("stepLength", 0.001f);
-	   // drawQuad();
+    //    drawBoundingGeometry();
 	   // PARCProgram->release();
     //QOpenGLFramebufferObject::bindDefault();
 
@@ -80,6 +80,7 @@ void VolumeRenderWidget::paintGL()
     glBindTexture(GL_TEXTURE_2D, PARCTex);
     visualizationSetting->setUniforms();
     volume->bind();
+    //drawQuad();
     drawBoundingGeometry();
     program->release();
     update();
@@ -190,12 +191,12 @@ void VolumeRenderWidget::generateFBO()
     glBindTexture(GL_TEXTURE_2D, PARCTex);
     auto wreal = width() * devicePixelRatio();
     auto hreal = height() * devicePixelRatio();
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, wreal, hreal, 0, GL_RG, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, wreal, hreal, 0, GL_RGB, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, PARCTex, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, PARCTex, 0);
 
-    GLenum attachments[1] = { GL_COLOR_ATTACHMENT0 };
+    GLenum attachments[1] = { GL_DEPTH_ATTACHMENT };
     glDrawBuffers(1, attachments);
 
     unsigned int rboDepth;

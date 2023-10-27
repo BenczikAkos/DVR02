@@ -1,77 +1,19 @@
 #version 330 core
-layout (location = 0) out vec2 intersections;
+// layout (location = 0) out vec3 intersection;
+out highp vec4 intersection;
 
-uniform mat4 ViewMatrix;
-uniform vec2 WindowSize;
-uniform vec3 CameraPos;
-uniform vec3 AABBScale;
-uniform sampler3D Volume;
-uniform float stepLength;
-
-struct Ray {
-    vec3 Origin;
-    vec3 Dir;
-};
-
-struct AABB {
-    vec3 Min;
-    vec3 Max;
-};
-
-bool IntersectBox(Ray r, AABB aabb, out float t0, out float t1)
-{
-    vec3 invR = 1.0 / r.Dir;
-    vec3 tbot = invR * (aabb.Min-r.Origin);
-    vec3 ttop = invR * (aabb.Max-r.Origin);
-    vec3 t_enter = min(ttop, tbot);
-    vec3 t_exit = max(ttop, tbot);
-    t0 = max(t_enter.x, max(t_enter.y, t_enter.z));
-    t0 = max(0, t0);
-    t1 = min(t_exit.x, min(t_exit.y, t_exit.z));
-    return t1 > t0;
-}
+in vec3 modelPos;
 
 void main()
 {
-    vec3 rayDirection;
-    rayDirection.xy = 2.0f * gl_FragCoord.xy / WindowSize - 1.0;
-    rayDirection.z = 2.0f;
-    rayDirection = (vec4(rayDirection, 0) * ViewMatrix).xyz;
-
-    Ray eye = Ray(CameraPos, normalize(rayDirection));
-    AABB aabb = AABB(vec3(-1.0f)*AABBScale, vec3(1.0f)*AABBScale);
-
-    float tnear = -1.0f;
-    float tfar  = -1.0f;
-    bool inside = false;
-    if(IntersectBox(eye, aabb, tnear, tfar))
-    {
-        vec3 rayStart = (eye.Origin + eye.Dir * tnear - aabb.Min) / (aabb.Max - aabb.Min);
-        vec3 rayStop = (eye.Origin + eye.Dir * tfar - aabb.Min) / (aabb.Max - aabb.Min);
-        vec3 pos = rayStart;
-        vec3 step = normalize(rayStop-rayStart) * stepLength;
-        float travel = distance(rayStart, rayStop);
-        float rayParameter = tnear;
-        tnear = -1.0f;
-        for (int i=0; travel > 0.0; ++i, pos += step, travel -= stepLength, rayParameter += stepLength)
-        {
-            float intensity = texture(Volume, pos).r;
-            if(intensity > 0.001f && !inside)
-            {
-                tnear = rayParameter;
-                inside = true;
-            }
-            if(intensity < 0.001f && inside)
-            {
-                tfar = rayParameter;
-                break;
-            }
-        }
-        intersections = vec2(tnear, tfar);
+    if(modelPos.z < 0.0){
+        intersection = vec4(0.8471, 0.4471, 0.4471, 1.0);
+        return;
     }
-   else
-   {
-       intersections = vec2(-1.0f);
-   }
-   //intersections = rayDirection.xy;
+    if(modelPos.z > 1.0){
+        intersection = vec4(0.3529, 0.5961, 0.8588, 1.0);
+        return;
+    }
+    intersection = vec4(vec3(modelPos.z), 1.0);
+    return;
 }
