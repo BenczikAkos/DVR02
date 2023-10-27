@@ -19,6 +19,6 @@ void main() {
                         0.0, 0.0, 0.0, 1.0);
    vec4 translated = translateMtx * posAttr;
    vec4 rotated = ViewMatrix * translated;
-   modelPos = (ViewMatrix * posAttr).xyz;
+   modelPos = (posAttr).xyz;
    gl_Position = scaleMtx * rotated;
 }
