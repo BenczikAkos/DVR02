@@ -55,8 +55,8 @@ private:
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
     std::shared_ptr<BoundingGeometry> boundingGeometry;
-    GLuint fbo = 0;
-    GLuint PARCTex = 0;
+    GLuint enterFBO = 0;
+    GLuint enterTexture = 0;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
