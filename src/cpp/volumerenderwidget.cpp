@@ -49,6 +49,7 @@ void VolumeRenderWidget::paintGL()
     const qreal retinaScale = devicePixelRatio();
     //enter pass
     glBindFramebuffer(GL_FRAMEBUFFER, enterFBO);
+        glClearDepthf(1.0f);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glDisable(GL_CULL_FACE);
@@ -65,20 +66,20 @@ void VolumeRenderWidget::paintGL()
 	    PARCProgram->release();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     //exit pass
-    //glBindFramebuffer(GL_FRAMEBUFFER, exitFBO);
-    //    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //    glDisable(GL_CULL_FACE);
-    //    glEnable(GL_DEPTH_TEST);
-    //    glDepthFunc(GL_GREATER);
-    //    if (!PARCProgram->bind())
-    //    {
-    //        qWarning() << "PARC program not bound!";
-    //    };
-    //    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
-    //    drawBoundingGeometry();
-    //    PARCProgram->release();
-    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, exitFBO);
+        glClearDepthf(0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glDisable(GL_CULL_FACE);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_GREATER);
+        if (!PARCProgram->bind())
+        {
+            qWarning() << "PARC program not bound!";
+        };
+        PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
+        drawBoundingGeometry();
+        PARCProgram->release();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     // render pass
     auto program = visualizationSetting->getActiveProgram();
     if (!program->bind()) 
@@ -86,9 +87,12 @@ void VolumeRenderWidget::paintGL()
         qWarning() << "Program not bound!";
     };
     program->setUniformValue("WindowSize", windowSize * retinaScale);
-    program->setUniformValue("PARC", 1);
+    program->setUniformValue("enterTexture", 1);
+    program->setUniformValue("exitTexture", 2);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, enterTexture);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, exitTexture);
     visualizationSetting->setUniforms();
     volume->bind();
     drawQuad();
@@ -198,7 +202,6 @@ void VolumeRenderWidget::generateFBO(GLuint& fbo, GLuint& tex)
     glGenFramebuffers(1, &fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
     glGenTextures(1, &tex);
-    glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, tex);
     auto wreal = width() * devicePixelRatio();
     auto hreal = height() * devicePixelRatio();
