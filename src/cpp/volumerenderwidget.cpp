@@ -37,8 +37,8 @@ void VolumeRenderWidget::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLuint), quadIndices.constData(), GL_STATIC_DRAW);
 
 
-    generateFBO();
-
+    generateFBO(enterFBO, enterTexture);
+    generateFBO(exitFBO, exitTexture);
 }
 
 void VolumeRenderWidget::paintGL()
@@ -47,7 +47,7 @@ void VolumeRenderWidget::paintGL()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     const qreal retinaScale = devicePixelRatio();
-
+    //enter pass
     glBindFramebuffer(GL_FRAMEBUFFER, enterFBO);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -64,7 +64,22 @@ void VolumeRenderWidget::paintGL()
         drawBoundingGeometry();
 	    PARCProgram->release();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    // second pass
+    //exit pass
+    //glBindFramebuffer(GL_FRAMEBUFFER, exitFBO);
+    //    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //    glDisable(GL_CULL_FACE);
+    //    glEnable(GL_DEPTH_TEST);
+    //    glDepthFunc(GL_GREATER);
+    //    if (!PARCProgram->bind())
+    //    {
+    //        qWarning() << "PARC program not bound!";
+    //    };
+    //    PARCProgram->setUniformValue("ViewMatrix", ViewMatrix);
+    //    drawBoundingGeometry();
+    //    PARCProgram->release();
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    // render pass
     auto program = visualizationSetting->getActiveProgram();
     if (!program->bind()) 
     {
@@ -77,7 +92,6 @@ void VolumeRenderWidget::paintGL()
     visualizationSetting->setUniforms();
     volume->bind();
     drawQuad();
-    //drawBoundingGeometry();
     program->release();
     update();
 }
@@ -160,7 +174,8 @@ void VolumeRenderWidget::resizeEvent(QResizeEvent* event)
 {
     QOpenGLWidget::resizeEvent(event);
     windowSize = QSize(this->width(), this->height());
-    generateFBO();
+    generateFBO(enterFBO, enterTexture);
+    generateFBO(exitFBO, exitTexture);
 }
 
 void VolumeRenderWidget::rotateScene(float phi, float theta){
@@ -178,19 +193,19 @@ float VolumeRenderWidget::fromRadian(float angle) {
     return angle * 180 / M_PI;
 }
 
-void VolumeRenderWidget::generateFBO()
+void VolumeRenderWidget::generateFBO(GLuint& fbo, GLuint& tex)
 {
-    glGenFramebuffers(1, &enterFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, enterFBO);
-    glGenTextures(1, &enterTexture);
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    glGenTextures(1, &tex);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, enterTexture);
+    glBindTexture(GL_TEXTURE_2D, tex);
     auto wreal = width() * devicePixelRatio();
     auto hreal = height() * devicePixelRatio();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, wreal, hreal, 0, GL_RGB, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, enterTexture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex, 0);
 
     GLenum attachments[1] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers(1, attachments);

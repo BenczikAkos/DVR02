@@ -55,8 +55,8 @@ private:
     std::shared_ptr<VolumeData> volume = nullptr;
     std::shared_ptr<VisualizationSetting> visualizationSetting = nullptr;
     std::shared_ptr<BoundingGeometry> boundingGeometry;
-    GLuint enterFBO = 0;
-    GLuint enterTexture = 0;
+    GLuint enterFBO, exitFBO = 0;
+    GLuint enterTexture, exitTexture = 0;
     MainWindow* mainWindow = nullptr;
     //for display purposes
     boolean MouseFirstPressed = true;
@@ -71,5 +71,5 @@ private:
     void drawBoundingGeometry();
     void normalizeAngle(float& angle);
     float fromRadian(float angle);
-    void generateFBO();
+    void generateFBO(GLuint& fbo, GLuint& tex);
 };
