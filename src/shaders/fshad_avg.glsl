@@ -17,8 +17,7 @@ void main()
     float travelLength = length(travel);
     vec3 pos = enterPoint;
     float sumIntensity = 0.0f;
-    int i = 0;
-    for(float t = 0.0f; t < travelLength; t += stepLength, ++i)
+    for(float t = 0.0f; t < travelLength; t += stepLength)
     {
         pos = enterPoint + t * normalize(travel);
         sumIntensity += texture(Volume, pos).r;
