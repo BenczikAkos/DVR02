@@ -152,12 +152,18 @@ void VolumeData::uploadTexture() {
     else {
         glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, xSize, ySize, zSize, 0, GL_RED, dataType, data.data());
     }
+    int width, height, depth, internalFormat = 0;
+    glGetTexLevelParameteriv(GL_TEXTURE_3D, 0, GL_TEXTURE_WIDTH, &width);
+    glGetTexLevelParameteriv(GL_TEXTURE_3D, 0, GL_TEXTURE_HEIGHT, &height);
+    glGetTexLevelParameteriv(GL_TEXTURE_3D, 0, GL_TEXTURE_DEPTH, &depth);
+    glGetTexLevelParameteriv(GL_TEXTURE_3D, 0, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, &internalFormat);
+    qDebug() << "Texture size: " << width << "x" << height << "x" << depth << " internal format: " << internalFormat;
     glBindTexture(GL_TEXTURE_3D, 0);
 }
 
 
 void VolumeData::bind() 
 {
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0 + location);
     glBindTexture(GL_TEXTURE_3D, location);
 }

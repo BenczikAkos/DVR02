@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/">
-        <file>src/shaders/vshader.glsl</file>
+        <file>src/shaders/vshader_bounding.glsl</file>
+        <file>src/shaders/vshader_quad.glsl</file>
         <file>src/shaders/fshad_mip.glsl</file>
         <file>src/shaders/fshad_accumulate.glsl</file>
         <file>src/shaders/fshad_avg.glsl</file>
         <file>src/shaders/fshad_isosurface.glsl</file>
         <file>src/shaders/fshad_PARC.glsl</file>
+        <file>src/shaders/fshad_boundingVis.glsl</file>
     </qresource>
 </RCC>

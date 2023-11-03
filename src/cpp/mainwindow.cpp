@@ -31,6 +31,7 @@ void MainWindow::populateModesComboBox() {
     ui->modeComboBox->addItem("Accumulate");
     ui->modeComboBox->addItem("Average");
     ui->modeComboBox->addItem("Isosurface");
+    ui->modeComboBox->addItem("PARCVis");
 }
 
 void MainWindow::populateDataTypesComboBox() {

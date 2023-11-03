@@ -8,6 +8,7 @@ VisualizationSetting::VisualizationSetting()
 	createShaderProgram(CompositionMode::Accumulate, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_accumulate.glsl");
 	createShaderProgram(CompositionMode::Isosurface, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface.glsl");
 	createShaderProgram(CompositionMode::PARCPass, "src\\shaders\\vshader_bounding.glsl", "src\\shaders\\fshad_PARC.glsl");
+	createShaderProgram(CompositionMode::PARCVis, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_boundingVis.glsl");
 	QOpenGLShaderProgram* program = modes.value(activeMode).get();
 	if (!program->link()) {
 		qWarning() << program->log();
@@ -35,7 +36,7 @@ void VisualizationSetting::setUniforms()
 	program->setUniformValue("intensityMin", intensityMin);
 	program->setUniformValue("intensityMax", intensityMax);
 	program->setUniformValue("stepLength", stepLength);
-	transferFunctions.at(0)->bind();
+	//transferFunctions.at(0)->bind();
 }
 
 std::shared_ptr<TransferFuncProperty> VisualizationSetting::getActiveTransferFunction()

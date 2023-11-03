@@ -2,9 +2,9 @@
 #include "QtOpenGLWidgets/qopenglwidget.h"
 #include "mainwindow.h"
 #include <qopenglextrafunctions.h>
+#include <qopenglfunctions_4_5_core.h>
 
-
-class VolumeData : protected QOpenGLExtraFunctions
+class VolumeData : protected QOpenGLFunctions_4_5_Core
 {
 private:
 	int xSize = 128;
