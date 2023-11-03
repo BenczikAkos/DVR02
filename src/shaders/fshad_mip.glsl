@@ -6,6 +6,7 @@ uniform float stepLength;
 uniform sampler2D enterTexture;
 uniform sampler2D exitTexture;
 uniform sampler3D Volume;
+uniform sampler2D TransferFunction;
 
 void main()
 {   
@@ -25,7 +26,6 @@ void main()
             maxIntensity = intensity;
         }
     }
-    float small = texture(Volume, enterPoint).r;
-    fragColor = vec4(maxIntensity, maxIntensity, maxIntensity, 1.0f);
+    fragColor = texture(TransferFunction, vec2(maxIntensity, 0.5f));
     return;
 }
