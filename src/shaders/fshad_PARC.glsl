@@ -6,6 +6,6 @@ in vec3 modelPos;
 
 void main()
 {
-    intersection = vec3(modelPos.z);
+    intersection = modelPos;
     return;
 }

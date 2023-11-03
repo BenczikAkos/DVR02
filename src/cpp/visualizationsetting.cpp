@@ -8,6 +8,7 @@ VisualizationSetting::VisualizationSetting()
 	createShaderProgram(CompositionMode::Accumulate, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_accumulate.glsl");
 	createShaderProgram(CompositionMode::Isosurface, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface.glsl");
 	createShaderProgram(CompositionMode::PARCPass, "src\\shaders\\vshader_bounding.glsl", "src\\shaders\\fshad_PARC.glsl");
+	createShaderProgram(CompositionMode::PARCEnter, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_enter.glsl");
 	QOpenGLShaderProgram* program = modes.value(activeMode).get();
 	if (!program->link()) {
 		qWarning() << program->log();
