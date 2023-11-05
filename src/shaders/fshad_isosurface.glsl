@@ -32,6 +32,7 @@ void main()
     vec3 color = vec3(0.0f);
     for(float t = 0.0f; t < travelLength; t += stepLength)
     {
+        pos = enterPoint + t * normalize(travel);
         float intensity = texture(Volume, pos).r;
         vec3 sample0, sample1;
         // vec3 scaledPosition = pos * 256.0f - vec3(0.5f);
@@ -53,7 +54,7 @@ void main()
             // vec3 spec_color = spec * vec3(0.3137, 0.2275, 0.6588);
             // color = 0.1f * vec3(1.0) + 0.5f * diffuse + 0.4f * spec_color;
             t += travelLength;
-            color = gradient;
+            color = abs(gradient);
         }
     }
     fragColor = vec4(color, 1.0f);
