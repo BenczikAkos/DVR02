@@ -38,7 +38,7 @@ void main()
             vec3 gradient = computeGradient(pos);
             gradient = normalize(gradient);
             t += travelLength;
-            color = (gradient + 1.0f) / 2.0;
+            color = (gradient + 1.0f) / 2.0f;
         }
     }
     fragColor = vec4(color, 1.0f);
