@@ -43,18 +43,17 @@ void main()
             // vec3 gradient = data.gba;
             vec3 gradient = computeGradient(pos, sample0, sample1);
             gradient = normalize(gradient);
-            // vec3 lightDir = normalize(CameraPos - pos) * -1.0f;
-            // vec3 viewDir = normalize(CameraPos - pos);
-            // vec3 halfwayDir = normalize(lightDir + viewDir);  
-            // float diff = max(dot(gradient, lightDir), 0.0);
-            // vec3 diffuse_color = texture(TransferFunction, vec2(intensity, 0.5f)).rgb;
-            // vec3 diffuse = diff * vec3(1.0) * diffuse_color;
+            vec3 lightDir = normalize(CameraPos - pos) * -1.0f;
+            vec3 viewDir = normalize(CameraPos - pos);
+            vec3 halfwayDir = normalize(lightDir + viewDir);  
+            float diff = max(dot(gradient, lightDir), 0.0);
+            vec3 diffuse_color = texture(TransferFunction, vec2(intensity, 0.5f)).rgb;
+            vec3 diffuse = diff * vec3(1.0) * diffuse_color;
             
-            // float spec = pow(max(dot(gradient, halfwayDir), 0.0), 20.0f);
-            // vec3 spec_color = spec * vec3(0.3137, 0.2275, 0.6588);
-            // color = 0.1f * vec3(1.0) + 0.5f * diffuse + 0.4f * spec_color;
+            float spec = pow(max(dot(gradient, halfwayDir), 0.0), 20.0f);
+            vec3 spec_color = spec * vec3(0.3137, 0.2275, 0.6588);
+            color = 0.1f * vec3(1.0) + 0.5f * diffuse + 0.4f * spec_color;
             t += travelLength;
-            color = abs(gradient);
         }
     }
     fragColor = vec4(color, 1.0f);

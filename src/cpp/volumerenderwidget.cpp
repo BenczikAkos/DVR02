@@ -87,6 +87,7 @@ void VolumeRenderWidget::paintGL()
         qWarning() << "Program not bound!";
     };
     program->setUniformValue("WindowSize", windowSize * retinaScale);
+    program->setUniformValue("CameraPos", CameraPos);   
     program->setUniformValue("enterTexture", 1);
     program->setUniformValue("exitTexture", 2);
     glActiveTexture(GL_TEXTURE1);
