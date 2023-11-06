@@ -32,6 +32,7 @@ void MainWindow::populateModesComboBox() {
     ui->modeComboBox->addItem("Average");
     ui->modeComboBox->addItem("Isosurface");
     ui->modeComboBox->addItem("Gradient");
+    ui->modeComboBox->addItem("Curvature");
     ui->modeComboBox->addItem("PARC Enter");
 }
 

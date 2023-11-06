@@ -8,8 +8,9 @@ enum class CompositionMode {
 	Average = 2,
 	Isosurface = 3,
 	Gradient = 4,
-	PARCEnter = 5,
-	PARCPass = 6
+	Curvature = 5,
+	PARCEnter = 6,
+	PARCPass = 7
 };
 
 #endif // !COMPOSITION_MODE_H

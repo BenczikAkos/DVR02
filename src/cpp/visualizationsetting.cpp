@@ -7,7 +7,8 @@ VisualizationSetting::VisualizationSetting()
 	createShaderProgram(CompositionMode::Average, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_avg.glsl");
 	createShaderProgram(CompositionMode::Accumulate, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_accumulate.glsl");
 	createShaderProgram(CompositionMode::Isosurface, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface.glsl");
-	createShaderProgram(CompositionMode::Gradient, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface_gradientColor.glsl");
+	createShaderProgram(CompositionMode::Gradient, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface_gradient.glsl");
+	createShaderProgram(CompositionMode::Curvature, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_isosurface_curvature.glsl");
 	createShaderProgram(CompositionMode::PARCEnter, "src\\shaders\\vshader_quad.glsl", "src\\shaders\\fshad_enter.glsl");
 	createShaderProgram(CompositionMode::PARCPass, "src\\shaders\\vshader_bounding.glsl", "src\\shaders\\fshad_PARC.glsl");
 	QOpenGLShaderProgram* program = modes.value(activeMode).get();
