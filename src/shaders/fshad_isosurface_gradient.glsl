@@ -18,7 +18,7 @@ vec3 computeGradient(vec3 pos) {
     sample1.x = texture(Volume, vec3(pos.x + step.x, pos.y, pos.z)).r;
     sample1.y = texture(Volume, vec3(pos.x, pos.y + step.y, pos.z)).r;
     sample1.z = texture(Volume, vec3(pos.x, pos.y, pos.z + step.z)).r;
-    return normalize(sample1 - sample0);
+    return (sample1 - sample0) / 2.0f;
 }
 
 void main()
