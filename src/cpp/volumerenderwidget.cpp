@@ -190,10 +190,10 @@ void VolumeRenderWidget::generateFBO(GLuint& fbo, GLuint& tex)
     glBindTexture(GL_TEXTURE_2D, tex);
     auto wreal = width() * devicePixelRatio();
     auto hreal = height() * devicePixelRatio();
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, wreal, hreal, 0, GL_RGB, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, wreal, hreal, 0, GL_RGB, GL_FLOAT, NULL);
     qDebug() << "wreal: " << wreal << " hreal: " << hreal <<" fbo: " << fbo <<" tex: " << tex;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex, 0);
 
     GLenum attachments[1] = { GL_COLOR_ATTACHMENT0 };

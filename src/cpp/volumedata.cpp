@@ -137,8 +137,8 @@ void VolumeData::uploadTexture() {
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1); //tightly packed
     if (reader->getLittleEndian()) {
         glPixelStorei(GL_UNPACK_LSB_FIRST, 1);
@@ -150,7 +150,7 @@ void VolumeData::uploadTexture() {
         glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, xSize, ySize, zSize, 0, GL_RGBA, dataType, data.data());
     }
     else {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, xSize, ySize, zSize, 0, GL_RED, dataType, data.data());
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_R16F, xSize, ySize, zSize, 0, GL_RED, dataType, data.data());
     }
     glBindTexture(GL_TEXTURE_3D, 0);
 }

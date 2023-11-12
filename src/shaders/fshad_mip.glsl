@@ -17,13 +17,16 @@ void main()
     float travelLength = length(travel);
     vec3 pos = enterPoint;
     float maxIntensity = 0.0f;
+    float maxAlpha = 0.0f;
     for(float t = 0.0f; t < travelLength; t += stepLength)
     {
         pos = enterPoint + t * normalize(travel);
         float intensity = texture(Volume, pos).r;
-        if(intensity > maxIntensity)
+        float alpha = texture(TransferFunction, vec2(intensity, 0.5f)).a;
+        if(alpha > maxAlpha)
         {
             maxIntensity = intensity;
+            maxAlpha = alpha;
         }
     }
     fragColor = texture(TransferFunction, vec2(maxIntensity, 0.5f));
