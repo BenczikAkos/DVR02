@@ -9,10 +9,6 @@ void main() {
                             0.0, 1.0, 0.0, 0.0,
                             0.0, 0.0, 1.0, 0.0,
                             -0.5, -0.5, -0.5, 1.0);
-   mat4 backtranslateMtx = mat4(1.0, 0.0, 0.0, 0.0,
-                              0.0, 1.0, 0.0, 0.0,
-                              0.0, 0.0, 1.0, 0.0,
-                              0.5, 0.5, 0.5, 1.0);
    mat4 scaleMtx = mat4(2.0, 0.0, 0.0, 0.0,
                         0.0, 2.0, 0.0, 0.0,
                         0.0, 0.0, 2.0, 0.0,
@@ -20,5 +16,6 @@ void main() {
    vec4 translated = translateMtx * posAttr;
    vec4 rotated = ViewMatrix * translated;
    modelPos = (posAttr).xyz;
-   gl_Position = scaleMtx * rotated;
+   // gl_Position = scaleMtx * rotated;
+   gl_Position = ViewMatrix * posAttr;
 }

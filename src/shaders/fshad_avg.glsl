@@ -23,7 +23,7 @@ void main()
         sumIntensity += texture(Volume, pos).r;
         
     }
-    float avgInstensity = sumIntensity / (travelLength/stepLength);
+    float avgInstensity = sumIntensity * stepLength;
     fragColor = texture(TransferFunction, vec2(avgInstensity, 0.5f));
     return;
 }

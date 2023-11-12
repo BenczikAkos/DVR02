@@ -81,11 +81,13 @@ void VolumeRenderWidget::paintGL()
         PARCProgram->release();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     // render pass
+    glViewport(0, 0, width() * retinaScale, height() * retinaScale);
     auto program = visualizationSetting->getActiveProgram();
     if (!program->bind()) 
     {
         qWarning() << "Program not bound!";
     };
+
     program->setUniformValue("WindowSize", windowSize * retinaScale);
     program->setUniformValue("CameraPos", CameraPos);   
     program->setUniformValue("enterTexture", 1);
@@ -138,15 +140,6 @@ QChart* VolumeRenderWidget::generateChart() const
 void VolumeRenderWidget::mousePressEvent(QMouseEvent *event)
 {
     mouse_lastPos = event->pos();
-    if(MouseFirstPressed){
-        MouseFirstPressed = false;
-    }
-}
-
-void VolumeRenderWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    MouseFirstPressed = true;
 }
 
 void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
@@ -154,25 +147,18 @@ void VolumeRenderWidget::mouseMoveEvent(QMouseEvent *event)
     int dx = event->x() - mouse_lastPos.x();
     int dy = event->y() - mouse_lastPos.y();
 
-    if (event->buttons() & Qt::LeftButton) {
-        setRotation(xRot, xRot - dy);
-        //setRotation(zRot - dy, zRot);
-        setRotation(yRot, yRot + dx);
-    }
-    else if (event->buttons() & Qt::RightButton) {
+    if (event->buttons() & Qt::RightButton) {
         phi -= (float)dx / 40;
         elevation += (float)dy / 40;
-        rotateScene(phi, elevation);
+        //rotateScene(phi, elevation);
     }
-    ViewMatrix.setToIdentity();
-    ViewMatrix.rotate(xRot, 1, 0, 0);
-    ViewMatrix.rotate(yRot, 0, 1, 0);
-    ViewMatrix.rotate(zRot, 0, 0, 1);
+    updateViewMatrix();
     mouse_lastPos = event->pos();
 }
 
 void VolumeRenderWidget::wheelEvent(QWheelEvent* event) {
-    CameraPos += event->angleDelta().y() * QVector3D(0.0f, 0.0f, 0.0033f) * ViewMatrix;
+    distance += event->angleDelta().y() / 100.0f;
+    updateViewMatrix();
 }
 
 void VolumeRenderWidget::resizeEvent(QResizeEvent* event)
@@ -190,8 +176,6 @@ void VolumeRenderWidget::rotateScene(float phi, float theta){
     CameraPos.setX(radius * cos(phi) * cos(theta));
     CameraPos.setY(radius * sin(theta));
     CameraPos.setZ(radius * sin(phi) * cos(theta));
-    setRotation(xRot, fromRadian(M_PI - theta));
-    setRotation(yRot, fromRadian(M_PI / 2 - phi));
 }
 
 float VolumeRenderWidget::fromRadian(float angle) {
@@ -207,6 +191,7 @@ void VolumeRenderWidget::generateFBO(GLuint& fbo, GLuint& tex)
     auto wreal = width() * devicePixelRatio();
     auto hreal = height() * devicePixelRatio();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, wreal, hreal, 0, GL_RGB, GL_FLOAT, NULL);
+    qDebug() << "wreal: " << wreal << " hreal: " << hreal <<" fbo: " << fbo <<" tex: " << tex;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex, 0);
@@ -225,6 +210,16 @@ void VolumeRenderWidget::generateFBO(GLuint& fbo, GLuint& tex)
         qWarning() << "Framebuffer not complete!";
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void VolumeRenderWidget::updateViewMatrix()
+{
+    CameraPos.setX(distance * cos(phi) * cos(elevation));
+    CameraPos.setY(distance * sin(elevation));
+    CameraPos.setZ(distance * sin(phi) * cos(elevation));
+    ViewMatrix.setToIdentity();
+    ViewMatrix.perspective(45.0f, 1.0f, 0.1f, 100.0f);
+    ViewMatrix.lookAt(CameraPos, QVector3D(0.5f, 0.5f, 0.5f), QVector3D(0.0f, 1.0f, 0.0f));
 }
 
 void VolumeRenderWidget::drawQuad()
@@ -256,10 +251,5 @@ void VolumeRenderWidget::normalizeAngle(float &angle)
         angle += 360.0;
     while (angle > 360.0)
         angle -= 360.0;
-}
-
-void VolumeRenderWidget::setRotation(float& changeable, float angle) {
-    normalizeAngle(angle);
-    changeable = angle;
 }
 

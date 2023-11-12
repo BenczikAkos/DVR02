@@ -23,7 +23,6 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *ev) override;
     void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
     void resizeEvent(QResizeEvent* event) override;
@@ -65,11 +64,13 @@ private:
     float zRot = 180.0f;
     float phi = (float)-M_PI_2;
     float elevation = 0.0f;
+    float distance = 3.0f;
     QPoint mouse_lastPos = QPoint(0.0f, 0.0f);
     //functions
     void drawQuad();
     void drawBoundingGeometry();
     void normalizeAngle(float& angle);
     float fromRadian(float angle);
+    void updateViewMatrix();
     void generateFBO(GLuint& fbo, GLuint& tex);
 };
