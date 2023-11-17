@@ -30,12 +30,12 @@ mat3 computeHessian(vec3 pos, vec3 sample_1minus, vec3 sample_1plus, float inten
     sample_2plus.x = texture(Volume, vec3(pos.x, pos.y + step.y, pos.z + step.z)).r;
     sample_2plus.y = texture(Volume, vec3(pos.x + step.x, pos.y, pos.z + step.z)).r;
     sample_2plus.z = texture(Volume, vec3(pos.x + step.x, pos.y + step.y, pos.z)).r;
-    float dfdxdy = (sample_2plus.z - sample_1plus.x - sample_1plus.y + 2.0f * intensity - sample_1minus.x - sample_1minus.y + sample_2minus.z) / 2.0f;
-    float dfdxdz = (sample_2plus.y - sample_1plus.x - sample_1plus.z + 2.0f * intensity - sample_1minus.x - sample_1minus.z + sample_2minus.y) / 2.0f;
-    float dfdydz = (sample_2plus.x - sample_1plus.y - sample_1plus.z + 2.0f * intensity - sample_1minus.y - sample_1minus.z + sample_2minus.x) / 2.0f;
-    float dfdxdx = (sample_1plus.x - 2.0f * intensity + sample_1minus.x) / 2.0f;
-    float dfdydy = (sample_1plus.y - 2.0f * intensity + sample_1minus.y) / 2.0f;
-    float dfdzdz = (sample_1plus.z - 2.0f * intensity + sample_1minus.z) / 2.0f;
+    float dfdxdy = (sample_2plus.z - sample_1plus.x - sample_1plus.y + 2.0f * intensity - sample_1minus.x - sample_1minus.y + sample_2minus.z) / (2.0f * step.x *step.y);
+    float dfdxdz = (sample_2plus.y - sample_1plus.x - sample_1plus.z + 2.0f * intensity - sample_1minus.x - sample_1minus.z + sample_2minus.y) / (2.0f * step.x *step.z);
+    float dfdydz = (sample_2plus.x - sample_1plus.y - sample_1plus.z + 2.0f * intensity - sample_1minus.y - sample_1minus.z + sample_2minus.x) / (2.0f * step.y *step.z);
+    float dfdxdx = (sample_1plus.x - 2.0f * intensity + sample_1minus.x) / (step.x * step.x);
+    float dfdydy = (sample_1plus.y - 2.0f * intensity + sample_1minus.y) / (step.y * step.y);
+    float dfdzdz = (sample_1plus.z - 2.0f * intensity + sample_1minus.z) / (step.z * step.z);
     return mat3(dfdxdx, dfdxdy, dfdxdz, dfdxdy, dfdydy, dfdydz, dfdxdz, dfdydz, dfdzdz);
 }
 
@@ -68,7 +68,7 @@ void main()
             float kappa2 = (traceG - determinant) / 2.0f;
             float mean = (kappa1 + kappa2) / 2.0f;
             t += travelLength;
-            color = vec3(mean, mean, mean);
+            color = normalize(vec3(abs(kappa1), abs(kappa2), 0.0f));
         }
     }
     fragColor = vec4(color, 1.0f);
